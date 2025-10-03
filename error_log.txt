@@ -1,0 +1,18 @@
+[2025-10-01 17:53:30] Exception: Unknown column 'p.author_id' in 'on clause' in C:\xampp\htdocs\edupack\blog.php on line 45
+[2025-10-01 17:54:53] Exception: Unknown column 'p.author_id' in 'on clause' in C:\xampp\htdocs\edupack\blog.php on line 45
+[2025-10-01 17:55:16] Exception: Unknown column 'p.author_id' in 'on clause' in C:\xampp\htdocs\edupack\blog.php on line 45
+[2025-10-01 17:56:47] Exception: Unknown column 'p.author_id' in 'on clause' in C:\xampp\htdocs\edupack\blog.php on line 47
+[2025-10-01 17:58:33] Exception: Table 'portalv2.bpg_posts' doesn't exist in C:\xampp\htdocs\edupack\blog.php on line 80
+[2025-10-01 18:29:01] Exception: Unknown column 'posts.author_id' in 'on clause' in C:\xampp\htdocs\edupack\post.php on line 20
+[2025-10-01 18:32:04] E_ERROR: [2] Undefined variable $post_id in C:\xampp\htdocs\edupack\post.php on line 25
+[2025-10-01 18:32:04] Exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4 in C:\xampp\htdocs\edupack\post.php on line 27
+[2025-10-01 18:34:40] E_ERROR: [2] Undefined variable $post_id in C:\xampp\htdocs\edupack\post.php on line 25
+[2025-10-01 18:34:40] Exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4 in C:\xampp\htdocs\edupack\post.php on line 27
+[2025-10-01 18:35:42] E_ERROR: [2] Attempt to read property "num_rows" on bool in C:\xampp\htdocs\edupack\post.php on line 17
+[2025-10-01 20:46:42] E_ERROR: [2] move_uploaded_file(img/blog/dove.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\edupack\save_post.php on line 84
+[2025-10-01 20:46:42] E_ERROR: [2] move_uploaded_file(): Unable to move &quot;C:\xampp\tmp\phpD3.tmp&quot; to &quot;img/blog/dove.jpg&quot; in C:\xampp\htdocs\edupack\save_post.php on line 84
+[2025-10-01 20:56:06] Exception: Unknown column 'posts.title' in 'field list' in C:\xampp\htdocs\edupack\dashboard.php on line 118
+[2025-10-01 20:56:25] Exception: Unknown column 'posts.title' in 'field list' in C:\xampp\htdocs\edupack\dashboard.php on line 118
+[2025-10-01 20:57:23] Exception: Unknown column 'posts.title' in 'field list' in C:\xampp\htdocs\edupack\dashboard.php on line 118
+[2025-10-01 20:58:30] Exception: Unknown column 'posts.title' in 'field list' in C:\xampp\htdocs\edupack\dashboard.php on line 122
+[2025-10-01 20:59:26] Exception: Unknown column 'posts.title' in 'field list' in C:\xampp\htdocs\edupack\dashboard.php on line 118

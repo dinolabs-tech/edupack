@@ -1,0 +1,1 @@
+the feature of the eduhiveV2, has the attendance feature embeded, meaning that the teacher marks attendance and the number of dayspresent, days absent and total days schoolopened is present in the result automatically generated
