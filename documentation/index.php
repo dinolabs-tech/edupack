@@ -132,7 +132,6 @@ session_start();
                 <li class="open"><a href="#tuckshop_dashboard"><i class="zmdi zmdi-view-dashboard"></i><span>Tuckshop Dashboard</span></a></li>
                 <li class="open"><a href="#tuckshop_transactions"><i class="zmdi zmdi-money"></i><span>Tuckshop Transactions</span></a></li>
                 <li class="open"><a href="#bursary_dashboard"><i class="zmdi zmdi-view-dashboard"></i><span>Bursary Dashboard</span></a></li>
-                <li class="open"><a href="#fees_dashboard"><i class="zmdi zmdi-money-box"></i><span>Fees Dashboard</span></a></li>
                 <li class="open"><a href="#fees_management"><i class="zmdi zmdi-money"></i><span>Fees Management</span></a></li>
                 <li class="open"><a href="#student_payment"><i class="zmdi zmdi-card-travel"></i><span>Student Payment</span></a></li>
                 <li class="open"><a href="#parent_payment"><i class="zmdi zmdi-card-travel"></i><span>Parent Payment</span></a></li>
@@ -1902,41 +1901,6 @@ session_start();
                                                                 </div>
                                                             </div>
                                                             <div class="accordion-item">
-                                                                <h2 class="accordion-header" id="headingFeesDashboard">
-                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFeesDashboard" aria-expanded="false" aria-controls="collapseFeesDashboard">
-                                                                        How to View Fees Dashboard
-                                                                    </button>
-                                                                </h2>
-                                                                <div id="collapseFeesDashboard" class="accordion-collapse collapse" aria-labelledby="headingFeesDashboard" data-bs-parent="#bursaryManagementAccordion">
-                                                                    <div class="accordion-body">
-                                                                        <div id="fees_dashboard">
-                                                                            <p>The "Fees Dashboard" provides a detailed overview of all fees, payments, and outstanding balances across the school. It is designed for bursary staff and administrators to monitor the financial health of the institution, track payment statuses, and identify students with pending fees. This dashboard offers a granular view of fee-related data, complementing the broader Bursary Dashboard.</p>
-                                                                            <ol>
-                                                                                <li><strong>Navigate to the Fees Dashboard Page:</strong>
-                                                                                    <ul>
-                                                                                        <li>From the sidebar menu, go to <strong>Bursary > Fees Dashboard</strong>.</li>
-                                                                                        <li>This will take you to the Fees Dashboard page, which displays detailed fee information.</li>
-                                                                                    </ul>
-                                                                                </li>
-                                                                                <li><strong>Review Detailed Fee Information:</strong>
-                                                                                    <ul>
-                                                                                        <li>On the Fees Dashboard page, you will find various sections displaying important fee metrics, including:
-                                                                                            <ul>
-                                                                                                <li><strong>Fee Categories:</strong> Breakdown of fees by type (e.g., tuition, uniforms, extracurriculars).</li>
-                                                                                                <li><strong>Student-wise Fee Status:</strong> A list of students with their individual fee status (paid, partially paid, outstanding).</li>
-                                                                                                <li><strong>Payment Deadlines:</strong> Overview of upcoming and past payment due dates.</li>
-                                                                                                <li><strong>Graphical Representations:</strong> Charts illustrating fee collection progress and outstanding amounts.</li>
-                                                                                            </ul>
-                                                                                        </li>
-                                                                                        <li><strong>Benefit for Users:</strong> This dashboard allows for in-depth analysis of fee collection, helping bursary staff to manage financial operations more effectively and communicate clearly with parents regarding fee obligations.</li>
-                                                                                    </ul>
-                                                                                </li>
-                                                                            </ol>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="accordion-item">
                                                                 <h2 class="accordion-header" id="headingFeesManagement">
                                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFeesManagement" aria-expanded="false" aria-controls="collapseFeesManagement">
                                                                         How to Manage Fees (Setup Fee Structures)
@@ -1960,10 +1924,9 @@ session_start();
                                                                                         <li><strong>Important for Users:</strong> Clearly define each fee type and its amount to avoid confusion for parents and students.</li>
                                                                                     </ul>
                                                                                 </li>
-                                                                                <li><strong>Assign Fees to Classes/Students:</strong>
+                                                                                <li><strong>Assign Fees to Classes:</strong>
                                                                                     <ul>
-                                                                                        <li>You can assign specific fee structures to different classes, arms, or even individual students based on their enrollment status or special circumstances.</li>
-                                                                                        <li>Set up payment schedules and due dates for each fee component.</li>
+                                                                                        <li>You can assign specific fee structures to different classes or arms based on their enrollment status or special circumstances.</li>
                                                                                     </ul>
                                                                                 </li>
                                                                                 <li><strong>Update or Delete Fee Structures:</strong>
@@ -2044,8 +2007,6 @@ session_start();
                                                                                 <li><strong>Access the Parent Payment Portal:</strong>
                                                                                     <ul>
                                                                                         <li>Parents can access this feature through their dedicated parent dashboard.</li>
-                                                                                        <li>From the parent dashboard, navigate to <strong>Fees > Make Payment</strong>.</li>
-                                                                                        <li>This will take them to the Parent Payment page, where they can initiate payments.</li>
                                                                                     </ul>
                                                                                 </li>
                                                                                 <li><strong>Select Student and View Outstanding Fees:</strong>

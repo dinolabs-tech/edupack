@@ -401,7 +401,7 @@
                 </li>
                 <li>
                   <a href="fees_dashboard.php">
-                    <span class="sub-item">Fee Dashboard</span>
+                    <span class="sub-item">Fee Management</span>
                   </a>
                 </li>
                 <li>
