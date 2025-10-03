@@ -181,6 +181,7 @@ if ($result->num_rows > 0) {
                       <?php if (empty($notices)): ?>
                     <div class="alert alert-info">No notices to display.</div>
                   <?php else: ?>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -210,6 +211,7 @@ if ($result->num_rows > 0) {
 
                       </tbody>
                     </table>
+                    </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="noticeModal<?= htmlspecialchars($notice['id']) ?>" tabindex="-1"
