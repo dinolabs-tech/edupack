@@ -122,7 +122,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'successful') {
                         <div>
                             <h3 class="fw-bold mb-3">School Fees Payment</h3>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                                <li class="breadcrumb-item acive">Home</li>
                                 <li class="breadcrumb-item active">Bursary</li>
                                 <li class="breadcrumb-item active">School Fees Payment</li>
                             </ol>

@@ -56,7 +56,7 @@ $conn->close();
             <div>
               <h3 class="fw-bold mb-3">Bursary Dashboard</h3>
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                <li class="breadcrumb-item active">Home</li>
                 <li class="breadcrumb-item active">Students</li>
                 <li class="breadcrumb-item active">Bursary</li>
               </ol>

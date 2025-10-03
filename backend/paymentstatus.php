@@ -83,7 +83,7 @@
               <div>
                 <h3 class="fw-bold mb-3">Payment Status</h3>
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="students.php">Home</a></li>
+                  <li class="breadcrumb-item">Home</li>
                   <li class="breadcrumb-item active">Bursary</li>
                   <li class="breadcrumb-item active">Payment Status</li>
               </ol>
