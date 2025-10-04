@@ -2669,7 +2669,7 @@ session_start();
                                                                     <div id="collapseSendNotice" class="accordion-collapse collapse" aria-labelledby="headingSendNotice" data-bs-parent="#generalAdministrationAccordion">
                                                                         <div class="accordion-body">
                                                                             <div id="send_notice">
-                                                                                <p>The "Send Notice to Parents" feature is a vital communication tool that allows administrators and authorized staff to disseminate important announcements, updates, or urgent messages directly to parents. This ensures timely and consistent communication, keeping parents informed about school events, policy changes, student progress, or any other relevant information.</p>
+                                                                                <p>The "Send Notice to Parents" feature is a vital communication tool that allows administrators and authorized staff to disseminate important announcements, updates, or urgent messages directly to parents. This ensures timely and consistent communication, keeping parents informed about school events, policy changes, student progress, or any other relevant information. <strong>In addition to being displayed on the parent dashboard, notices are now also sent to parents' personal email addresses.</strong></p>
                                                                                 <ol>
                                                                                     <li><strong>Navigate to the Send Notice Page:</strong>
                                                                                         <ul>
@@ -2682,7 +2682,7 @@ session_start();
                                                                                             <li>On the Send Notice page, you will find fields to compose your notice:
                                                                                                 <ul>
                                                                                                     <li><strong>Title:</strong> Enter a clear and concise title for the notice (e.g., "Parent-Teacher Conference," "School Holiday").</li>
-                                                                                                    <li><strong>Message:</strong> Type the full content of your notice. Make sure it is clear and provides all necessary information.</li>
+                                                                                                <li><strong>Message:</strong> Type the full content of your notice. Make sure it is clear and provides all necessary information.</li>
                                                                                                 </ul>
                                                                                             </li>
                                                                                             <li><strong>Important for Users:</strong> Always proofread your message for clarity, grammar, and accuracy before sending. Misinformation can cause confusion.</li>
@@ -2692,7 +2692,7 @@ session_start();
                                                                                     <li><strong>Send the Notice:</strong>
                                                                                         <ul>
                                                                                             <li>After composing your message and selecting the target audience, click the "Send Notice" button.</li>
-                                                                                            <li>The system will then send the notice to the selected parents. Notices will be displayed on the parent dashboard system.</li>
+                                                                                            <li>The system will then send the notice to the selected parents. Notices will be displayed on the parent dashboard system <strong>and sent to their registered email addresses</strong>.</li>
                                                                                             <li><strong>Confirmation:</strong> A success message will usually appear, confirming that the notice has been successfully sent.</li>
                                                                                         </ul>
                                                                                     </li>
@@ -2702,6 +2702,7 @@ session_start();
                                                                                             <li><strong>Consistency:</strong> Ensures all parents receive the same official information.</li>
                                                                                             <li><strong>Record-Keeping:</strong> Creates a digital record of all communications sent to parents.</li>
                                                                                             <li><strong>Engagement:</strong> Keeps parents actively involved and informed about their child's education and school activities.</li>
+                                                                                            <li><strong>Multi-channel Delivery:</strong> Ensures important notices are received through both the portal and personal email, increasing visibility.</li>
                                                                                         </ul>
                                                                                     </li>
                                                                                 </ol>

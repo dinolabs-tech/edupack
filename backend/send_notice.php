@@ -1,4 +1,12 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../phpmailer/src/Exception.php';
+require '../phpmailer/src/PHPMailer.php';
+require '../phpmailer/src/SMTP.php';
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -22,6 +30,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         $success_message = "Notice saved successfully";
+
+        // Send email to parents
+        try {
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host       = 'mail.dinolabstech.com'; // Replace with your SMTP host
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'enquiries@dinolabstech.com'; // Replace with your email
+            $mail->Password   = 'Dinolabs@11';     // Replace with your email password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            $mail->setFrom('enquiries@dinolabstech.com', 'School Notice');
+            $mail->isHTML(true);
+            $mail->Subject = $title;
+            $mail->Body    = $message;
+
+            // Fetch all parent emails
+            $parent_emails = [];
+            $email_sql = "SELECT email FROM parent WHERE email IS NOT NULL AND email != ''";
+            $email_result = $conn->query($email_sql);
+
+            if ($email_result->num_rows > 0) {
+                while ($row = $email_result->fetch_assoc()) {
+                    $parent_emails[] = $row['email'];
+                }
+            }
+
+            foreach ($parent_emails as $parent_email) {
+                $mail->addAddress($parent_email);
+            }
+
+            if (!empty($parent_emails)) {
+                $mail->send();
+                $success_message .= " and email sent to parents.";
+            } else {
+                $success_message .= " but no parent emails found to send notice to.";
+            }
+        } catch (Exception $e) {
+            $error_message = "Notice saved, but email could not be sent to parents. Mailer Error: {$mail->ErrorInfo}";
+        }
     } else {
         $error_message = "Error saving notice: " . $conn->error;
     }
@@ -91,7 +140,7 @@ $stmt->close();
                         <div>
                             <h3 class="fw-bold mb-3">Notice</h3>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                                <li class="breadcrumb-item active">Home</li>
                                 <li class="breadcrumb-item active">Notice</li>
                             </ol>
                         </div>
