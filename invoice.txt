@@ -1,0 +1,86 @@
+
+
+## 🧾 **INVOICE**
+
+---
+
+**Invoice Number:** INV-EDUPACK-2025-001
+**Date Issued:** October 5, 2025
+**Due Date:** November 4, 2025 (30 days from invoice date)
+
+---
+
+### **BILL TO**
+
+**School Name:** [Client School Name]
+**Address:** [Client School Address]
+**City:** [Client School City]
+**State:** [Client School State]
+**Country:** Nigeria
+
+---
+
+### **SERVICE PROVIDER**
+
+**Dinolabs Tech Services**
+5th Floor, Wing B, TISCO Building, Alagbaka, Akure, Ondo State, Nigeria
+**Email:** [enquiries@dinolabstech.com]
+**Phone:** +234 704 324 7461
+**RC No:** [If available, insert registration number]
+
+---
+
+### **INVOICE DETAILS**
+
+| **Description**                              | **Quantity**         | **Unit Price (₦)** | **Amount (₦)**                  |
+| -------------------------------------------- | -------------------- | ------------------ | ------------------------------- |
+| Edupack Recurring Fee (Per Child)            | [Number of Students] | 3,000.00           | [Number of Students × 3,000.00] |
+| One-Time Setup & Service Fee                 | 1                    | 450,000.00         | 450,000.00                      |
+| Domain, Hosting & SSL (Annual Subscription)  | 1                    | 100,000.00         | 100,000.00                      |
+| Database Optimization & Server Configuration | 1                    | 235,000.00         | 235,000.00                      |
+
+---
+
+### **FINANCIAL SUMMARY**
+
+|                       |   |                           |
+| --------------------- | - | ------------------------- |
+| **Subtotal:**         |   | ₦[Sum of all items above] |
+| **Tax (0%)**          |   | ₦0.00                     |
+| **Total Amount Due:** |   | **₦[Total Amount]**       |
+
+---
+
+### **PAYMENT INFORMATION**
+
+**Bank Details:**
+**Bank Name:** Access BAnk Plc
+**Account Name:** **Dinolabs Tech Services**
+**Account Number:** 1897191817
+
+
+
+### **NOTES**
+
+1. The **Edupack Recurring Fee** covers access to the platform’s core modules (Student Management, Results, Bursary, Library, Tuck Shop, and CBT).
+2. The **One-Time Service Fee** includes platform setup, branding customization, and administrator training.
+3. The **Domain, Hosting, and SSL Fee** covers one year of secure hosting, domain renewal, and SSL certificate management.
+4. The **Database Optimization & Server Configuration** ensures maximum performance, security, and scalability of the Edupack system.
+5. Renewal notices for domain and hosting will be sent at least 30 days before expiry.
+
+---
+
+### **ACKNOWLEDGEMENT**
+
+Thank you for choosing **Edupack** by **Dinolabs Tech Services**.
+We value your trust and look forward to a long-term partnership in enhancing your school’s digital operations.
+
+For any inquiries or technical support, please contact:
+📧 **enquiries@dinolabstech.com** | ☎ **+234 704 324 7461**
+
+---
+
+**Authorized Signature:** _________________________
+**Name:** Omojola Daniel
+**Designation:** CEO / Lead Developer
+**Date:** _________________________
