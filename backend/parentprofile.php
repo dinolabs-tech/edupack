@@ -178,7 +178,7 @@ $conn->close();
                             name="confirm_password" class="form-control form-control" required>
                         </div>
                         <div class="form-group">
-                          <button class="btn btn-success" name="update_password" type="submit">Change Password</button>
+                          <button class="btn btn-success btn-icon btn-round ps-1" name="update_password" type="submit"><i class="fas fa-save"></i></button>
                         </div>
                       </form>
 
@@ -213,10 +213,10 @@ $conn->close();
                         class Peers.</small> -->
                     </div>
 
-                   
-                      <div class="form-group">
-                        <button class="btn btn-success" type="submit" name="update_profile"> Update </button>
-                      </div>
+
+                    <div class="form-group">
+                      <button class="btn btn-success btn-icon btn-round" type="submit" name="update_profile"> <i class="fas fa-save"></i> </button>
+                    </div>
 
                   </form>
 

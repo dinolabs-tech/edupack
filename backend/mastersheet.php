@@ -218,7 +218,7 @@ $stmt->close();
                           <form method="post">
 
                               <select name="class" required class="form-control form-select">
-                                  <option value="">Select Class</option>
+                                  <option value="" selected disabled>Select Class</option>
                                   <?php foreach ($classOptions as $option) : ?>
                                       <option value="<?= htmlspecialchars($option) ?>" <?= $class === $option ? 'selected' : '' ?>>
                                           <?= htmlspecialchars($option) ?>
@@ -227,7 +227,7 @@ $stmt->close();
                               </select>
                                     <br>
                               <select name="arm" required class="form-control form-select">
-                                  <option value="">Select Arm</option>
+                                  <option value="" selected disabled>Select Arm</option>
                                   <?php foreach ($armOptions as $option) : ?>
                                       <option value="<?= htmlspecialchars($option) ?>" <?= $arm === $option ? 'selected' : '' ?>>
                                           <?= htmlspecialchars($option) ?>
@@ -236,7 +236,7 @@ $stmt->close();
                               </select>
                                 <br>
                               <select name="term" required class="form-control form-select">
-                                  <option value="">Select Term</option>
+                                  <option value="" selected disabled>Select Term</option>
                                   <?php foreach ($termOptions as $option) : ?>
                                       <option value="<?= htmlspecialchars($option) ?>" <?= $term === $option ? 'selected' : '' ?>>
                                           <?= htmlspecialchars($option) ?>
@@ -246,7 +246,7 @@ $stmt->close();
                               <br>
 
                               <select name="session" required class="form-control form-select">
-                                  <option value="">Select Session</option>
+                                  <option value="" selected disabled>Select Session</option>
                                   <?php foreach ($sessionOptions as $option) : ?>
                                       <option value="<?= htmlspecialchars($option) ?>" <?= $session === $option ? 'selected' : '' ?>>
                                           <?= htmlspecialchars($option) ?>
@@ -254,7 +254,9 @@ $stmt->close();
                                   <?php endforeach; ?>
                               </select>
                               <br>
-                              <button type="submit" class="btn btn-success">Generate Master Sheet</button>
+                              <button type="submit" class="btn btn-success btn-icon btn-round">
+                                <span class="fas fa-cloud-download-alt"></span>
+                              </button>
                         </form>
 
                       </p>

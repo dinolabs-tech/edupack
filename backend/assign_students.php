@@ -1,4 +1,5 @@
 <?php
+
 /**
  * assign_students.php
  *
@@ -44,7 +45,7 @@ if (isset($_POST['parent_id']) && isset($_POST['student_ids'])) {
 
     // Insert new relationships for each selected student.
     foreach ($student_ids as $student_id) {
-       $stmt = $conn->prepare("INSERT INTO parent_student (parent_id, student_id) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO parent_student (parent_id, student_id) VALUES (?, ?)");
         $stmt->bind_param("is", $parent_id, $student_id); // Bind parent_id as integer, student_id as string.
         $stmt->execute();
         $stmt->close();
@@ -165,7 +166,7 @@ $stmt->close();
                                             <?php endif; ?>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary">Assign</button>
+                                        <button type="submit" class="btn btn-primary ps-1 btn-icon btn-round"><i class="fas fa-user-plus"></i></button>
                                     </form>
 
                                 </div>

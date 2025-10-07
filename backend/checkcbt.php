@@ -74,8 +74,8 @@ include('components/admin_logic.php');
                       <div class="mb-3">
                         <input type="text" class="form-control" id="check" name="check" placeholder="Enter Student ID" required>
                       </div>
-                      <button type="submit" name="checksubmit" class="btn btn-success"><span class="btn-label">
-                      <i class="fa fa-eye"></i>View Result</button>
+                      <button type="submit" name="checksubmit" class="btn btn-success btn-icon btn-round ps-1"><span class="btn-label">
+                      <i class="fa fa-eye"></i></button>
                     </form>
 
                    </div>
@@ -96,8 +96,8 @@ include('components/admin_logic.php');
 
                      <!-- Form to download the entire CBT result data -->
                      <form method="post" action="downloadcbt.php">
-                      <button type="submit" name="checksubmit" class="btn btn-secondary"><span class="btn-label">
-                      <i class="fa fa-cloud-download-alt"></i>Download Entire Result</button>
+                      <button type="submit" name="checksubmit" class="btn btn-secondary btn-icon btn-round ps-1"><span class="btn-label">
+                      <i class="fa fa-cloud-download-alt"></i></button>
                     </form>
 
                    </div>

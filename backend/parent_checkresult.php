@@ -140,6 +140,8 @@ $class_comments = $class_comments_result->num_rows > 0 ? $class_comments_result-
     'comment' => 'No comment available'
 ];
 
+$cc = $conn->query("SELECT * FROM classcomments WHERE id='$student_id' AND term='$term' AND csession='$session'")->fetch_assoc() ?: [];
+
 // Fetch principal comment
 $principal_comments_result = $conn->query("SELECT comment FROM principalcomments WHERE id = '$student_id' AND term = '$term' AND csession = '$session'");
 $principal_comment = $principal_comments_result->num_rows > 0 ? $principal_comments_result->fetch_assoc() : ['comment' => 'No comment available'];
@@ -231,43 +233,73 @@ $pdf->SetFont('Arial', 'I', 10);
 $pdf->Cell(0, 5, $class_comments['comment'], 'B', 1, 'C');
 $pdf->Cell(0, 5, "Class Teacher's Comment", 0, 1, 'C');
 
+
 $pdf->Ln(2);
 $pdf->Cell(0, 5, $principal_comment['comment'], 'B', 1, 'C');
 $pdf->Cell(0, 5, "Principal's Comment: ", 0, 1, 'C');
 
-// Add principal's signature
-$pdf->Ln(3);
-$pdf->SetX(-40);
-$pdf->Image('assets/img/signature.jpg', $pdf->GetX(), $pdf->GetY(), 30);
-$pdf->Ln(1);
-$pdf->SetX(-30);
-$pdf->Cell(10, -5, "Principal's Signature", 0, 1, 'C');
+// --- Principal's Signature ---
+$pdf->Ln(3); // Line break
+$pdf->SetX(-40); // Position for signature image.
+$pdf->Image('assets/img/signature.jpg',$pdf->GetX(),$pdf->GetY(),30); // Embed signature image.
+$pdf->Ln(1); // Line break
+$pdf->SetX(-30); // Position for signature label.
+$pdf->Cell(10,-5,"Principal's Signature",0,1,'C'); // Label for principal's signature.
 
-// Grading table
-$pdf->Ln(7);
-$pdf->SetFont('Arial', '', 11);
-$pdf->Cell(60, 7, 'Grading Table', 1, 1, 'C', true);
-$pdf->SetFont('Arial', '', 10);
+// --- Side-by-Side Tables (Grading and Skills Assessment) ---
+$pdf->Ln(7); // Line break
+$pdf->SetFont('Arial','B',10); // Set font for table titles.
+$startX=$pdf->GetX(); $startY=$pdf->GetY(); // Store current X and Y for table positioning.
+$pdf->SetXY($startX,$startY);
+$pdf->Cell(60,7,'Grading Table',1,0,'C',true); // Grading table title.
+$secondX=$startX+65; // Calculate X position for the second table.
+$pdf->SetXY($secondX,$startY);
+$pdf->Cell(90,7,'Skills Assessment',1,1,'C',true); // Skills assessment table title.
 
-$grading_data = [
-    ['A', '75 - 100', 'Excellent'],
-    ['B', '65 - 74', 'Very Good'],
-    ['C', '50 - 64', 'Good'],
-    ['D', '45 - 49', 'Fair'],
-    ['E', '40 - 44', 'Poor'],
-    ['F', '0 - 39', 'Very Poor']
+$pdf->SetFont('Arial','',10); // Set font for table data.
+$startY+=7; // Adjust Y position for table content.
+// Define grading scale data.
+$grading=[['A','75-100','Excellent'],['B','65-74','Very Good'],['C','50-64','Good'],['D','45-49','Fair'],['E','40-44','Poor'],['F','0-39','Very Poor']];
+// Define skills assessment data, retrieving values from class comments or defaulting to 'N/A'.
+$skills=[
+    ['Attentiveness',$cc['attentiveness']??'N/A','Relationship',$cc['relationship']??'N/A'],
+    ['Neatness',$cc['neatness']??'N/A','Handwriting',$cc['handwriting']??'N/A'],
+    ['Politeness',$cc['politeness']??'N/A','Music',$cc['music']??'N/A'],
+    ['Self-Control',$cc['selfcontrol']??'N/A','Club/Society',$cc['club']??'N/A'],
+    ['Punctuality',$cc['punctuality']??'N/A','Sport',$cc['sport']??'N/A']
 ];
-
-foreach ($grading_data as $row) {
-    $pdf->Cell(10, 6, $row[0], 1, 0, 'C');
-    $pdf->Cell(20, 6, $row[1], 1, 0, 'C');
-    $pdf->Cell(30, 6, $row[2], 1, 1, 'C');
+$rows = max(count($grading), count($skills)); // Determine the maximum number of rows needed for both tables.
+// Loop to draw rows for both tables side-by-side.
+for($i=0;$i<$rows;$i++){
+    $pdf->SetXY($startX,$startY); // Position for the grading table.
+    if(isset($grading[$i])){
+        $pdf->Cell(10,6,$grading[$i][0],1,0,'C');
+        $pdf->Cell(20,6,$grading[$i][1],1,0,'C');
+        $pdf->Cell(30,6,$grading[$i][2],1,0,'C');
+    } else {
+        // Draw empty cells if no more grading data to maintain table structure.
+        $pdf->Cell(10,6,'',1,0);
+        $pdf->Cell(20,6,'',1,0);
+        $pdf->Cell(30,6,'',1,0);
+    }
+    if(isset($skills[$i])){
+        $pdf->SetXY($secondX,$startY); // Position for the skills assessment table.
+        $pdf->Cell(30,6,$skills[$i][0],1,0,'C');
+        $pdf->Cell(15,6,$skills[$i][1],1,0,'C');
+        $pdf->Cell(30,6,$skills[$i][2],1,0,'C');
+        $pdf->Cell(15,6,$skills[$i][3],1,1,'C');
+    } else {
+        // If no more skills data, move to the next line to align with grading table.
+        $pdf->Ln(6);
+    }
+    $startY+=6; // Increment Y position for the next row.
 }
 
-// $pdf->SetFont('Arial','B',10);
-// $pdf->Cell(95,7,"Promotional Status: {$promotec}", 'B',0, 'C');
+// $pdf->SetFont('Arial','B',10); // Commented out, likely for a promotional status.
+// $pdf->Cell(95,7,"Promotional Status: {$promotec}", 'B',0, 'C'); // Commented out, likely for a promotional status.
 
-// Output the PDF
+// Output the generated PDF to the browser.
 $pdf->Output();
+// End output buffering and flush the output.
 ob_end_flush();
 ?>

@@ -254,7 +254,7 @@ $conn->close();
                             </td>
                             <td>
                               <a href="read_message.php?id=<?php echo $message['id']; ?>"
-                                class="btn btn-primary btn-sm">View</a>
+                                class="btn btn-primary btn-icon btn-round"><i class="fas fa-eye"></i></a>
                             </td>
                           </tr>
                         <?php endforeach; ?>

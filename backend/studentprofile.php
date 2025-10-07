@@ -175,7 +175,7 @@ $conn->close();
                               <input type="password" placeholder="Confirm New Password" id="confirm_password" name="confirm_password" class="form-control form-control" required>
                           </div>
                           <div class="form-group">
-                              <button class="btn btn-success" name="update_password" type="submit">Change Password</button>
+                              <button class="btn btn-success btn-icon btn-round" name="update_password" type="submit"><i class="fas fa-save"></i></button>
                           </div>
                           </form>
                          
@@ -231,7 +231,7 @@ $conn->close();
                         > <?php echo htmlspecialchars($student_details['address']); ?> </textarea>
 
                           <div class="form-group">
-                          <button class="btn btn-success" type="submit" name="update_profile"> Update </button>
+                          <button class="btn btn-success btn-icon btn-round" type="submit" name="update_profile"> <i class="fas fa-save"></i> </button>
                           </div>
 
                       </form>

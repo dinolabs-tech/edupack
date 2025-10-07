@@ -1,4 +1,5 @@
 <?php
+
 /**
  * addquestion.php
  *
@@ -43,11 +44,21 @@ if (isset($_POST['add_question'])) {
     // for storage in the database. Default to 1 if an invalid option is provided.
     $true_ans_num = 0;
     switch (strtoupper($true_ans)) {
-        case 'A': $true_ans_num = 1; break;
-        case 'B': $true_ans_num = 2; break;
-        case 'C': $true_ans_num = 3; break;
-        case 'D': $true_ans_num = 4; break;
-        default: $true_ans_num = 1; break; // Default to A if something unexpected is received
+        case 'A':
+            $true_ans_num = 1;
+            break;
+        case 'B':
+            $true_ans_num = 2;
+            break;
+        case 'C':
+            $true_ans_num = 3;
+            break;
+        case 'D':
+            $true_ans_num = 4;
+            break;
+        default:
+            $true_ans_num = 1;
+            break; // Default to A if something unexpected is received
     }
 
     // SQL query to insert the new question details into the 'question' table.
@@ -111,20 +122,20 @@ if ($result && $row = $result->fetch_assoc()) {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include('head.php');?> <!-- Includes the head section of the HTML document -->
+<?php include('head.php'); ?> <!-- Includes the head section of the HTML document -->
 
 <!-- Load TinyMCE CDN for rich text editing capabilities -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
 
 <body>
     <div class="wrapper">
-        <?php include('adminnav.php');?> <!-- Includes the admin navigation bar -->
+        <?php include('adminnav.php'); ?> <!-- Includes the admin navigation bar -->
         <div class="main-panel">
             <div class="main-header">
                 <div class="main-header-logo">
-                    <?php include('logo_header.php');?> <!-- Includes the logo and header section -->
+                    <?php include('logo_header.php'); ?> <!-- Includes the logo and header section -->
                 </div>
-                <?php include('navbar.php');?> <!-- Includes the main navigation bar -->
+                <?php include('navbar.php'); ?> <!-- Includes the main navigation bar -->
             </div>
 
             <div class="container">
@@ -157,7 +168,7 @@ if ($result && $row = $result->fetch_assoc()) {
                                         }
                                         ?>
                                         <!-- Form for adding a new question. Submits data via POST to this same page. -->
-                                        <form method="POST" action="">
+                                        <form method="POST" action="" class="row g-3">
                                             <div class="mb-3">
                                                 <label for="que_desc" class="form-label">Question</label>
                                                 <textarea class="form-control" name="que_desc" id="que_desc" rows="3" required></textarea>
@@ -178,17 +189,16 @@ if ($result && $row = $result->fetch_assoc()) {
                                                 <label for="ans4" class="form-label">Option D</label>
                                                 <textarea class="form-control" name="ans4" id="ans4" required></textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="true_ans" class="form-label">Correct Answer (Enter A, B, C, or D)</label>
+                                            <div class="col-md-3">
                                                 <select class="form-select" name="true_ans" id="true_ans" required>
-                                                    <option value="">Select Correct Answer</option>
+                                                    <option value="" selected disabled>Select Correct Answer (Enter A, B, C, or D)</option>
                                                     <option value="A">A</option>
                                                     <option value="B">B</option>
                                                     <option value="C">C</option>
                                                     <option value="D">D</option>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-3">
                                                 <select class="form-select" name="class" id="class" required>
                                                     <option value="">Select Class</option>
                                                     <?php foreach ($classes as $cls): ?>
@@ -196,7 +206,7 @@ if ($result && $row = $result->fetch_assoc()) {
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-3">
                                                 <select class="form-select" name="arm" id="arm" required>
                                                     <option value="">Select Arm</option>
                                                     <?php foreach ($arms as $a): ?>
@@ -204,20 +214,22 @@ if ($result && $row = $result->fetch_assoc()) {
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-3">
                                                 <select class="form-select" name="subject" id="subject" required>
                                                     <option value="">Select Subject</option>
                                                     <!-- Options will be dynamically loaded by JavaScript based on class and arm selection -->
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-3">
                                                 <input type="text" class="form-control" name="term" id="term" value="<?php echo htmlspecialchars($current_term); ?>" readonly>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-3">
                                                 <input type="text" class="form-control" name="session" id="session" value="<?php echo htmlspecialchars($current_session); ?>" readonly>
                                             </div>
-                                            <div class="d-grid gap-2">
-                                                <input type="submit" name="add_question" class="btn btn-success" value="Add Question">
+                                            <div class="col-md-3">
+                                                <button type="submit" name="add_question" class="btn btn-success btn-icon btn-round">
+                                                    <span class="fas fa-save"></span>
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -227,30 +239,30 @@ if ($result && $row = $result->fetch_assoc()) {
                     </div>
                 </div>
             </div>
-            <?php include('footer.php');?> <!-- Includes the footer section -->
+            <?php include('footer.php'); ?> <!-- Includes the footer section -->
         </div>
-        <?php include('cust-color.php');?> <!-- Includes custom color settings or scripts -->
+        <?php include('cust-color.php'); ?> <!-- Includes custom color settings or scripts -->
     </div>
-    <?php include('scripts.php');?> <!-- Includes general JavaScript scripts -->
+    <?php include('scripts.php'); ?> <!-- Includes general JavaScript scripts -->
 
     <!-- TinyMCE Initialization Script -->
-   <script>
+    <script>
         tinymce.init({
             selector: '#que_desc, #ans1, #ans2, #ans3, #ans4', // Apply TinyMCE to question description and all answer options
             menubar: false, // Hide the menubar for a cleaner interface
             toolbar: 'undo redo | formatselect | bold italic underline superscript subscript | alignleft aligncenter alignright | bullist numlist outdent indent | table | tableprops tablecellprops tableinsertrowbefore tableinsertrowafter tabledeleterow tableinsertcolbefore tableinsertcolafter tabledeletecol', // Customize toolbar buttons
             plugins: 'lists table', // Enable list and table plugins
             branding: false, // Hide TinyMCE branding
-            setup: function (editor) {
+            setup: function(editor) {
                 // Save content to the textarea on change, ensuring form submission gets the latest content.
-                editor.on('change', function () {
+                editor.on('change', function() {
                     editor.save();
                 });
             }
         });
 
         // Event listener for form submission to ensure TinyMCE content is saved before sending.
-        document.querySelector('form').addEventListener('submit', function () {
+        document.querySelector('form').addEventListener('submit', function() {
             tinymce.triggerSave(); // Manually trigger save for all TinyMCE instances
             // Debugging: Log TinyMCE content to console for verification (can be removed in production)
             console.log("Question: ", tinymce.get('que_desc').getContent());
@@ -304,4 +316,5 @@ if ($result && $row = $result->fetch_assoc()) {
         filterSubjects();
     </script>
 </body>
+
 </html>

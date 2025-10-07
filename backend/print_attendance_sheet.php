@@ -423,9 +423,9 @@ $conn->close();
                       
                     </form>
                     
-                    <button class="btn btn-secondary"
+                    <button class="btn btn-secondary btn-icon btn-round"
                       onclick="window.location.href='?class=<?= $selected_class ?>&arm=<?= $selected_arm ?>&download=1'">
-                      Print Detailed Sheet
+                      <span class="fas fa-print"></span>
                     </button>
                     <p></p>
                   </div>

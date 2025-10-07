@@ -1,4 +1,5 @@
 <?php
+
 /**
  * classteachercomment.php
  *
@@ -93,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['csv_upload'])) {
     // Close the CSV file.
     fclose($file);
     // Set a success message to be displayed to the user.
-    $bulk_upload ='CSV file uploaded and records saved successfully';
+    $bulk_upload = 'CSV file uploaded and records saved successfully';
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // --- Handle Form Submission for Adding/Updating Records ---
@@ -131,7 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['csv_upload'])) {
       '$attentiveness', '$neatness', '$politeness', '$selfcontrol', '$punctuality',
       '$relationship', '$handwriting', '$music', '$club', '$sport'
   )";
-
   } else {
     // SQL query to update an existing record in the 'classcomments' table.
     $sql = "UPDATE classcomments SET
@@ -227,11 +227,11 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
 
           <!-- Display Save and Bulk Upload Messages -->
           <?php if (!empty($save_message)): ?>
-                      <div class="alert alert-info"><?php echo htmlspecialchars($save_message); ?></div>
-                    <?php endif; ?>
-                    <?php if (!empty($bulk_upload)): ?>
-                      <div class="alert alert-info"><?php echo htmlspecialchars($bulk_upload); ?></div>
-                    <?php endif; ?>
+            <div class="alert alert-info"><?php echo htmlspecialchars($save_message); ?></div>
+          <?php endif; ?>
+          <?php if (!empty($bulk_upload)): ?>
+            <div class="alert alert-info"><?php echo htmlspecialchars($bulk_upload); ?></div>
+          <?php endif; ?>
 
           <!-- Download Template and Bulk Upload Section -->
           <div class="row">
@@ -270,11 +270,10 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
 
                       <!-- DOWNLOAD Button -->
                       <div class="text-end mt-3">
-                        <button type="submit" name="bulk_upload" class="btn btn-primary">
+                        <button type="submit" name="bulk_upload" class="btn btn-primary btn-icon btn-round ps-1">
                           <span class="btn-label">
                             <i class="fa fa-cloud-download-alt"></i>
                           </span>
-                          Download Score Template
                         </button>
                       </div>
 
@@ -296,7 +295,7 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
                   <div class="mb-4 mt-2">
                     <p>
 
-                    <!-- Form for adding or editing class teacher comments -->
+                      <!-- Form for adding or editing class teacher comments -->
                     <form method="post">
                       <input type="hidden" name="hidden_id" id="hidden_id" class="form-control" placeholder="Hidden ID">
 
@@ -341,7 +340,7 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
                         $classes->data_seek(0); // rewind
                         while ($row = $classes->fetch_assoc()): ?>
                           <option value="<?php echo htmlspecialchars($row['class']); ?>" <?php if ($class == $row['class'])
-                               echo 'selected'; ?>>
+                                                                                            echo 'selected'; ?>>
                             <?php echo htmlspecialchars($row['class']); ?>
                           </option>
                         <?php endwhile; ?>
@@ -354,41 +353,41 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
                         $arms->data_seek(0); // rewind
                         while ($row = $arms->fetch_assoc()): ?>
                           <option value="<?php echo htmlspecialchars($row['arm']); ?>" <?php if ($arm == $row['arm'])
-                               echo 'selected'; ?>>
+                                                                                          echo 'selected'; ?>>
                             <?php echo htmlspecialchars($row['arm']); ?>
                           </option>
                         <?php endwhile; ?>
                       </select>
 
                       <br>
-                    <!-- TERM Dropdown -->
-<select name="term" id="term" class="form-control form-select" required>
-  <?php
-  // Rewind and fetch terms
-  $terms->data_seek(0);
-  while ($row = $terms->fetch_assoc()): ?>
-    <option value="<?php echo htmlspecialchars($row['cterm']); ?>"><?php echo htmlspecialchars($row['cterm']); ?></option>
-  <?php endwhile; ?>
-</select>
-<br>
+                      <!-- TERM Dropdown -->
+                      <select name="term" id="term" class="form-control form-select" required>
+                        <?php
+                        // Rewind and fetch terms
+                        $terms->data_seek(0);
+                        while ($row = $terms->fetch_assoc()): ?>
+                          <option value="<?php echo htmlspecialchars($row['cterm']); ?>"><?php echo htmlspecialchars($row['cterm']); ?></option>
+                        <?php endwhile; ?>
+                      </select>
+                      <br>
 
-<!-- SESSION Dropdown -->
-<select name="session" id="session" class="form-control form-select" required>
-  <?php
-  // Rewind and fetch sessions
-  $sessions->data_seek(0);
-  while ($row = $sessions->fetch_assoc()): ?>
-    <option value="<?php echo htmlspecialchars($row['csession']); ?>"><?php echo htmlspecialchars($row['csession']); ?></option>
-  <?php endwhile; ?>
-</select>
-<br>
+                      <!-- SESSION Dropdown -->
+                      <select name="session" id="session" class="form-control form-select" required>
+                        <?php
+                        // Rewind and fetch sessions
+                        $sessions->data_seek(0);
+                        while ($row = $sessions->fetch_assoc()): ?>
+                          <option value="<?php echo htmlspecialchars($row['csession']); ?>"><?php echo htmlspecialchars($row['csession']); ?></option>
+                        <?php endwhile; ?>
+                      </select>
+                      <br>
 
-                      <button type="submit" class="btn btn-success">
+                      <button type="submit" class="btn btn-success btn-icon btn-round ps-1">
                         <span class="btn-label">
-                          <i class="fa fa-save"></i>Save</button>
-                      <button type="reset" class="btn btn-secondary">
+                          <i class="fa fa-save"></i></button>
+                      <button type="reset" class="btn btn-secondary btn-icon btn-round ps-1">
                         <span class="btn-label">
-                          <i class="fa fa-undo"></i>Reset</button>
+                          <i class="fa fa-undo"></i></button>
                     </form>
 
                     </p>
@@ -447,9 +446,9 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
                         <?php endwhile; ?>
                       </select>
                       <br>
-                      <button type="submit" class="btn btn-primary" name="csv_upload">
+                      <button type="submit" class="btn btn-primary btn-icon btn-round ps-1" name="csv_upload">
                         <span class="btn-label">
-                          <i class="fa fa-cloud-upload-alt"></i>Upload CSV</button>
+                          <i class="fa fa-cloud-upload-alt"></i></button>
                     </form>
 
                   </div>
@@ -510,14 +509,15 @@ $records = $conn->query("SELECT * FROM classcomments where term = '$term' AND cs
                               <td><?php echo htmlspecialchars($row['club']); ?></td>
                               <td><?php echo htmlspecialchars($row['sport']); ?></td>
 
-                              <td>
+                              <td class="d-flex">
                                 <!-- Edit button: calls JavaScript function to populate form for editing -->
                                 <a href="javascript:void(0);"
                                   onclick="editClassCommentRecord('<?php echo htmlspecialchars($row['id']); ?>', '<?php echo htmlspecialchars($row['name']); ?>', '<?php echo htmlspecialchars($row['comment']); ?>', '<?php echo htmlspecialchars($row['attentiveness']); ?>', '<?php echo htmlspecialchars($row['neatness']); ?>', '<?php echo htmlspecialchars($row['politeness']); ?>', '<?php echo htmlspecialchars($row['selfcontrol']); ?>', '<?php echo htmlspecialchars($row['punctuality']); ?>', '<?php echo htmlspecialchars($row['relationship']); ?>', '<?php echo htmlspecialchars($row['handwriting']); ?>', '<?php echo htmlspecialchars($row['music']); ?>', '<?php echo htmlspecialchars($row['club']); ?>', '<?php echo htmlspecialchars($row['sport']); ?>', '<?php echo htmlspecialchars($row['class']); ?>', '<?php echo htmlspecialchars($row['arm']); ?>', '<?php echo htmlspecialchars($row['term']); ?>', '<?php echo htmlspecialchars($row['csession']); ?>')"
-                                  class="btn btn-warning"><span class="btn-label">
+                                  class="btn btn-warning btn-icon btn-round ps-1 me-2"><span class="btn-label">
                                     <i class="fa fa-edit"></i></span></a>
                                 <!-- Delete button: links to delete the record -->
-                                <a href="?delete=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-danger"><span
+                                <a href="?delete=<?php echo htmlspecialchars($row['id']); ?>"
+                                  class="btn btn-danger btn-icon btn-round ps-1"><span
                                     class="btn-label">
                                     <i class="fa fa-trash"></i></span></a>
                               </td>

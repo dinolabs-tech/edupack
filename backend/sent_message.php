@@ -250,13 +250,13 @@ $conn->close();
                             </td>
                             <td>
                               <!-- Instead of a link, we add a button that triggers a modal -->
-                              <button type="button" class="btn btn-primary btn-sm view-message"
+                              <button type="button" class="btn btn-primary btn-icon btn-round view-message"
                                 data-subject="<?php echo htmlspecialchars($message['subject'], ENT_QUOTES); ?>"
                                 data-recipient="<?php echo htmlspecialchars($message['recipient'], ENT_QUOTES); ?>"
                                 data-date="<?php echo htmlspecialchars($message['date_created'], ENT_QUOTES); ?>"
                                 data-status="<?php echo $message['status']; ?>"
                                 data-message="<?php echo htmlspecialchars($message['message'], ENT_QUOTES); ?>">
-                                View
+                                <i class="fas fa-eye"></i>
                               </button>
                             </td>
                           </tr>
@@ -303,7 +303,7 @@ $conn->close();
           <div id="modalMessage"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-icon btn-round" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
 
         </div>
       </div>

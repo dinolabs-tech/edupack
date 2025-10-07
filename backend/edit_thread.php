@@ -1,7 +1,4 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Start the session to maintain user state
 session_start();
@@ -225,7 +222,7 @@ $conn->close();
             <div>
               <h3 class="fw-bold mb-3">Discussion Threads</h3>
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="students.php">Home</a></li>
+                <li class="breadcrumb-item">Home</li>
                 <li class="breadcrumb-item active">Create Thread</li>
               </ol>
             </div>

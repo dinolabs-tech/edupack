@@ -21,9 +21,6 @@
           </a>
         </li>
 
-
-
-
         <?php if ($_SESSION['access'] == 0) { ?>
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#" onclick="showPopup()">
@@ -40,8 +37,6 @@
             </a>
           </li>
         <?php } ?>
-
-
 
         <li class="nav-item">
           <a href="viewassignment.php">
@@ -122,12 +117,12 @@
             <p></p>
             <p></p>
             <select id="session" name="session">
-              <option value="">Select Session</option>
+              <option value="" selected disabled>Select Session</option>
               <!-- Options will be added dynamically -->
             </select>
 
             <select id="term" name="term">
-              <option value="">Select Term</option>
+              <option value="" selected disabled>Select Term</option>
               <!-- Options will be added dynamically -->
             </select>
 

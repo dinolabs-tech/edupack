@@ -149,13 +149,12 @@ if (isset($_POST['bulk_upload']) && isset($_FILES['student_file'])) {
       $id = $conn->real_escape_string($data[0]);
       $name = $conn->real_escape_string($data[1]);
       $dob = $conn->real_escape_string($data[2]);
-      $email = $conn->real_escape_string($data[3]);
-      $class = $conn->real_escape_string($data[4]);
-      $arm = $conn->real_escape_string($data[5]);
-      $password = $conn->real_escape_string($data[6]);
+      $class = $conn->real_escape_string($data[3]);
+      $arm = $conn->real_escape_string($data[4]);
+      $password = $conn->real_escape_string($data[5]);
 
-      $query = "INSERT INTO students (id, name, dob, email, class, arm, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
-      executeQuery($conn, $query, [$id, $name, $dob, $email, $class, $arm, $password], 'sssssss');
+      $query = "INSERT INTO students (id, name, dob, class, arm, password) VALUES (?, ?, ?, ?, ?, ?)";
+      executeQuery($conn, $query, [$id, $name, $dob, $class, $arm, $password], 'ssssss');
     }
     fclose($handle);
     $bulk_message = 'Bulk upload successful.';
@@ -269,9 +268,9 @@ $conn->close();
                       <input type="file" id="student_file" style="margin-top:10px;" name="student_file" accept=".csv"
                         class="form-control" required>
                       <br>
-                      <button type="submit" name="bulk_upload" class="btn btn-success"> <span class="btn-label">
+                      <button type="submit" name="bulk_upload" class="btn btn-success btn-icon btn-round ps-2"> <span class="btn-label">
                           <i class="fas fa-cloud-upload-alt"></i>
-                        </span>Upload</button>
+                        </span></button>
                     </form>
 
                     </p>
@@ -698,17 +697,17 @@ $conn->close();
                     </div>
                     <br />
                     <div class="card-action">
-                      <button type="submit" name="<?php echo isset($edit_id) && $edit_id ? 'update' : 'register'; ?>"
-                        class="btn btn-success">
+                      <button type="submit" name="register"
+                        class="btn btn-success btn-icon btn-round ps-2">
                         <span class="btn-label">
-                          <i class="fa fa-check"></i>
+                          <i class="fa fa-save"></i>
                         </span>
-                        <?php echo isset($edit_id) && $edit_id ? 'Update' : 'Register'; ?>
+                        
                       </button>
 
-                      <button type="reset" class="btn btn-black"><span class="btn-label">
-                          <i class="fa fa-archive"></i>
-                        </span> Reset</button>
+                      <button type="reset" class="btn btn-black btn-icon btn-round ps-1"><span class="btn-label">
+                          <i class="fa fa-undo"></i>
+                        </span></button>
                     </div>
                   </form>
 

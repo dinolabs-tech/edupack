@@ -98,20 +98,22 @@ $stmt->close();
                                                 $result = $conn->query($sql);
 
                                                 if ($result->num_rows > 0) {
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo "<tr>";
-                                                        echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row["username"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row["password"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row["mobile"]) . "</td>";
-                                                        echo "<td>
-                                <a href='?delete=" . $row["id"] . "' class='btn btn-sm btn-danger'>Delete</a>
-                              </td>";
-                                                        echo "</tr>";
-                                                    }
-                                                } else {
-                                                    echo "<tr><td colspan='4'>No Parents found.</td></tr>";
-                                                }
+                                                    while ($row = $result->fetch_assoc()) { ?>
+                                                        <tr>
+                                                            <td><?= htmlspecialchars($row["name"]) ?></td>
+                                                            <td><?= htmlspecialchars($row["username"]) ?></td>
+                                                            <td><?= htmlspecialchars($row["password"]) ?></td>
+                                                            <td><?= htmlspecialchars($row["mobile"]) ?></td>
+                                                            <td>
+                                                                <a href='?delete=<?= $row["id"] ?>' class='btn btn-danger btn-icon btn-round'><i class="fas fa-trash"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php  }
+                                                } else { ?>
+                                                    <tr>
+                                                        <td colspan='4'>No Parents found.</td>
+                                                    </tr>
+                                                <?php }
                                                 ?>
                                             </tbody>
                                         </table>

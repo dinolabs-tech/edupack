@@ -7,7 +7,7 @@ header('Content-Disposition: attachment; filename=question_template.csv');
 $output = fopen('php://output', 'w');
 
 // Define the CSV header row
-$header = ['test_id', 'que_desc', 'ans1', 'ans2', 'ans3', 'ans4', 'true_ans'];
+$header = ['id', 'question', 'ans1', 'ans2', 'ans3', 'ans4', 'true_ans'];
 
 // Write the header row to the CSV file
 fputcsv($output, $header);

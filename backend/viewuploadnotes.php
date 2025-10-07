@@ -172,11 +172,11 @@ $conn->close();
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Assignments</h3>
+                <h3 class="fw-bold mb-3">Notes</h3>
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                   <li class="breadcrumb-item active">E-Learning Resources</li>
-                  <li class="breadcrumb-item active">Assignments</li>
+                  <li class="breadcrumb-item active">Notes</li>
                   <li class="breadcrumb-item active">View</li>
               </ol>
               </div>
@@ -190,7 +190,7 @@ $conn->close();
                <div class="card card-round">
                  <div class="card-header">
                    <div class="card-head-row">
-                     <div class="card-title">Assignments</div>
+                     <div class="card-title">Notes</div>
                    </div>
                  </div>
                  <div class="card-body pb-0">
@@ -219,7 +219,7 @@ $conn->close();
                                             <form action="viewuploadnotes.php" method="post" style="display:inline;">
                                                 <input type="hidden" name="note_id" value="<?php echo $assignment['id']; ?>">
                                                 <input type="hidden" name="file_name" value="<?php echo $assignment['file_name']; ?>">
-                                                <button type="submit" name="delete" class="btn btn-danger"><span class="btn-label">
+                                                <button type="submit" name="delete" class="btn btn-danger btn-icon btn-round ps-1"><span class="btn-label">
                                                 <i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>

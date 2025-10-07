@@ -1,7 +1,4 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Start the session to maintain user state
 session_start();
@@ -39,7 +36,7 @@ if ($class_result->num_rows > 0) {
 $subjects = [];
 if (isset($_POST['Class'])) {
     $selected_class = $_POST['Class'];
-    $subject_sql = "SELECT subject FROM subject WHERE Class = ?";
+    $subject_sql = "SELECT subject FROM subject WHERE class = ?";
     $subject_stmt = $conn->prepare($subject_sql);
     if ($subject_stmt === false) {
         customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
@@ -96,17 +93,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
   $file_name = $_POST['file_name'];
 
   // Delete the file from the file system
-  $target_file = 'Curriculum/' . $file_name;
+  $target_file = 'assignment/' . $file_name;
   if (file_exists($target_file)) {
       unlink($target_file);
   }
 
   // Delete the record from the database
-  $delete_sql = "DELETE FROM curriculum WHERE id = ?";
+  $delete_sql = "DELETE FROM assignments WHERE id = ?";
   $delete_stmt = $conn->prepare($delete_sql);
   $delete_stmt->bind_param("i", $note_id);
   if ($delete_stmt->execute()) {
-      $message = 'Curriculum deleted successfully!';
+      $message = 'Assignment deleted successfully!';
   } else {
       $message = 'Error deleting Note: ' . $conn->error;
   }
@@ -114,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
 }
 
 // Fetch uploaded assignments
-$notes_sql = "SELECT * FROM curriculum";
+$notes_sql = "SELECT * FROM assignments";
 $notes_stmt = $conn->prepare($notes_sql);
 $notes_stmt->execute();
 $notes_result = $notes_stmt->get_result();
@@ -172,11 +169,11 @@ $conn->close();
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Curriculum</h3>
+                <h3 class="fw-bold mb-3">Assignment</h3>
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                   <li class="breadcrumb-item active">E-Learning Resources</li>
-                  <li class="breadcrumb-item active">Curriculum</li>
+                  <li class="breadcrumb-item active">Assignment</li>
                   <li class="breadcrumb-item active">View</li>
               </ol>
               </div>
@@ -190,7 +187,7 @@ $conn->close();
                <div class="card card-round">
                  <div class="card-header">
                    <div class="card-head-row">
-                     <div class="card-title">Curriculum</div>
+                     <div class="card-title">Assignment</div>
                    </div>
                  </div>
                  <div class="card-body pb-0">
@@ -216,10 +213,10 @@ $conn->close();
                                         <td><?php echo $assignment['class_name']; ?></td>
                                         <td><?php echo $assignment['file_name']; ?></td>
                                         <td>
-                                            <form action="viewuploadcurriculum.php" method="post" style="display:inline;">
+                                            <form action="viewuploadassignments.php" method="post" style="display:inline;">
                                                 <input type="hidden" name="note_id" value="<?php echo $assignment['id']; ?>">
                                                 <input type="hidden" name="file_name" value="<?php echo $assignment['file_name']; ?>">
-                                                <button type="submit" name="delete" class="btn btn-danger"><span class="btn-label">
+                                                <button type="submit" name="delete" class="btn btn-danger btn-icon btn-round ps-1"><span class="btn-label">
                                                 <i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>

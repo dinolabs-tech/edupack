@@ -216,7 +216,7 @@ $conn->close();
                           
                           <form method="post" enctype="multipart/form-data">
                               <select class="form-control form-select" id="class" name="class" onchange="fetchSubjects()" required>
-                                  <option value="">Select Class</option>
+                                  <option value="" selected disabled>Select Class</option>
                                   <?php foreach ($classes as $class): ?>
                                       <option value="<?php echo htmlspecialchars($class); ?>">
                                           <?php echo htmlspecialchars($class); ?>
@@ -226,7 +226,7 @@ $conn->close();
                                 <br>
                               <div id="subject-container">
                                   <select class="form-control form-select" id="subject" name="subject" required>
-                                      <option value="">Select Subject</option>
+                                      <option value="" selected disabled>Select Subject</option>
                                       <?php foreach ($subjects as $subject): ?>
                                           <option value="<?php echo htmlspecialchars($subject); ?>">
                                               <?php echo htmlspecialchars($subject); ?>
@@ -237,8 +237,8 @@ $conn->close();
           
                                 <br>
                               <input class="form-control" type="file" id="document" name="document" accept=".doc,.docx" required><br>
-                              <button type="submit" name="upload" class="btn btn-success"><span class="btn-label">
-                              <i class="fa fa-cloud-upload-alt"></i>Upload</button>
+                              <button type="submit" name="upload" class="ps-1 btn btn-success btn-icon btn-round"><span class="btn-label">
+                              <i class="fa fa-cloud-upload-alt"></i></button>
                           </form>
                           </p>
                           <?php if ($message): ?>

@@ -16,10 +16,6 @@
  * - Includes various UI components like head, navigation, header, footer, and scripts.
  */
 
-// Enable error reporting for debugging purposes.
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Start or resume a session. This is crucial for managing user login state.
 session_start();
 
@@ -255,7 +251,8 @@ $conn->close();
                   <br>
 
                   <!-- Submit button to send the message -->
-                  <input class="btn btn-success" type="submit" value="Send Message">
+                  <!-- <input class="btn btn-success" type="submit" value="Send Message"> -->
+                  <button class="btn btn-success btn-icon btn-round" type="submit"><i class="fab fa-telegram"></i></button>
                 </form>
               </div>
             </div>

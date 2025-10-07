@@ -271,7 +271,9 @@ $conn->close();
                       </div>
 
                       <div class="col-md-2">
-                      <button name="print" class="btn btn-primary">Print</button>
+                      <button name="print" class="btn btn-primary btn-icon btn-round">
+                        <span class="fas fa-print"></span>
+                      </button>
                       </div>
                     </div>
                       

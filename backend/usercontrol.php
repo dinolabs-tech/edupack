@@ -111,19 +111,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
 $sql = "SELECT id, staffname, username, role FROM login WHERE role != 'Superuser'";
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
-    customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
-    $students = [];
+  customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
+  $students = [];
 } else {
-    $stmt->execute();
-    $result = $stmt->get_result();
-    // Convert result set into an array so it can be looped over safely later
-    $students = [];
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
+  $stmt->execute();
+  $result = $stmt->get_result();
+  // Convert result set into an array so it can be looped over safely later
+  $students = [];
+  if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $students[] = $row;
     }
-    $stmt->close();
+  }
+  $stmt->close();
 }
 
 
@@ -198,24 +198,23 @@ $conn->close();
                       <div class="alert alert-info"><?php echo $message; ?></div>
                     <?php endif; ?>
 
-                    <form method="POST">
-                      <input type="hidden" name="edit_id"
-                        value="<?php echo $edit_mode ? htmlspecialchars($_GET['edit_id']) : ''; ?>">
-                      <div class="mb-3">
+                    <form method="POST" class="row g-2">
+                      <input type="hidden" name="edit_id" value="<?php echo $edit_mode ? htmlspecialchars($_GET['edit_id']) : ''; ?>">
+                      <div class="col-md-3">
                         <input type="text" id="name" name="name" class="form-control" placeholder="Staff Name"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_name) : ''; ?>">
                       </div>
-                      <div class="mb-3">
+                      <div class="col-md-3">
                         <input type="text" id="username" name="username" class="form-control" placeholder="Username"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_username) : ''; ?>">
                       </div>
-                      <div class="mb-3">
+                      <div class="col-md-3">
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_password) : ''; ?>">
                       </div>
-                      <div class="mb-3">
+                      <div class="col-md-3">
                         <select id="role" name="role" class="form-select">
-                          <option value="">Select Role</option>
+                          <option value="" selected disabled>Select Role</option>
                           <?php
                           $roles = ['Administrator', 'Tuckshop', 'Teacher', 'Bursary', 'Store', 'Library', 'Admission'];
                           foreach ($roles as $r) {
@@ -225,10 +224,10 @@ $conn->close();
                           ?>
                         </select>
                       </div>
-                      <button type="submit" class="btn btn-success"><span class="btn-label">
-                          <i class="fa fa-save"></i> <?php echo $edit_mode ? 'Update' : 'Save'; ?></button>
-                      <a href="usercontrol.php" class="btn btn-secondary"><span class="btn-label">
-                          <i class="fa fa-undo"></i> Reset</a>
+                      <button type="submit" class="ms-3 me-2 ps-1 btn btn-success btn-icon btn-round"><span class="btn-label">
+                          <i class="fa fa-save"></i></button>
+                      <a href="usercontrol.php" class="ps-1 btn btn-secondary btn-icon btn-round"><span class="btn-label">
+                          <i class="fa fa-undo"></i></a>
                     </form>
 
 
@@ -274,13 +273,13 @@ $conn->close();
                                 <td>
                                   <form method="POST" style="display:inline;">
                                     <a href="?edit_id=<?php echo htmlspecialchars($student['id']); ?>"
-                                      class="btn btn-primary btn-sm">
+                                      class="btn btn-warning btn-icon btn-round ps-1">
                                       <i class="fa fa-edit"></i>
                                     </a>
 
                                     <input type="hidden" name="delete_id"
                                       value="<?php echo htmlspecialchars($student['id']); ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm"><span class="btn-label">
+                                    <button type="submit" class="btn btn-danger btn-icon btn-round ps-1"><span class="btn-label">
                                         <i class="fa fa-trash"></i></button>
                                   </form>
                                 </td>

@@ -13,7 +13,6 @@ $student_id = "";
 $gname = "";
 $mobile = "";
 
-
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -26,7 +25,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $student = $result->fetch_assoc();
         $gname = $student['gname'];
         $mobile = $student['mobile'];
-        $email = $_POST['email'];
 
         // Check if the parent name already exists
         $sql = "SELECT id FROM parent WHERE name = '$gname'";
@@ -43,7 +41,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 $success = "Username already exists.";
             } else {
                 // Insert the new parent into the database
-                $sql = "INSERT INTO parent (username, password, name, mobile, email) VALUES ('$username', '$password', '$gname', '$mobile', '$email')";
+                $sql = "INSERT INTO parent (username, password, name, mobile) VALUES ('$username', '$password', '$gname', '$mobile')";
                 if ($conn->query($sql) === TRUE) {
                     $success = "Parent registered successfully.";
                 } else {
@@ -143,19 +141,21 @@ $stmt->close();
                                                 $result = $conn->query($sql);
 
                                                 if ($result && $result->num_rows > 0) {
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo "<tr>";
-                                                        echo "<td>" . htmlspecialchars($row['gname']) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row['mobile']) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row['goccupation']) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row['gaddress']) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($row['grelationship']) . "</td>";
-                                                        echo "<td><a href='?id=" . htmlspecialchars($row['id']) . "' class='btn btn-primary btn-sm'>Register</a></td>";
-                                                        echo "</tr>";
-                                                    }
-                                                } else {
-                                                    echo "<tr><td colspan='6' class='text-center'>No parent details found in the students table.</td></tr>";
-                                                }
+                                                    while ($row = $result->fetch_assoc()) { ?>
+                                                        <tr>
+                                                            <td><?= htmlspecialchars($row['gname']) ?></td>
+                                                            <td><?= htmlspecialchars($row['mobile']) ?></td>
+                                                            <td><?= htmlspecialchars($row['goccupation']) ?></td>
+                                                            <td><?= htmlspecialchars($row['gaddress']) ?></td>
+                                                            <td><?= htmlspecialchars($row['grelationship']) ?></td>
+                                                            <td><a href='?id=<?= htmlspecialchars($row['id']) ?>' class='btn btn-warning btn-icon btn-round'><i class="fas fa-edit"></i></a></td>
+                                                        </tr>
+                                                    <?php  }
+                                                } else { ?>
+                                                    <tr>
+                                                        <td colspan='6' class='text-center'>No parent details found in the students table.</td>
+                                                    </tr>
+                                                <?php  }
                                                 ?>
                                             </tbody>
                                         </table>
@@ -188,11 +188,6 @@ $stmt->close();
                                                 <label for="mobile" class="form-label">Mobile:</label>
                                                 <input type="text" id="mobile" name="mobile" class="form-control"
                                                     value="<?= htmlspecialchars($mobile) ?>" readonly>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email:</label>
-                                                <input type="email" id="email" name="email" class="form-control"
-                                                    required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="username" class="form-label">Username:</label>

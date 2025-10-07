@@ -102,7 +102,7 @@
                                   <?php foreach ($notes_files as $file): ?>
                                       <tr>
                                           <td><?php echo htmlspecialchars($file); ?></td>
-                                          <td><a href="<?php echo $notes_dir . $file; ?>" download class="btn btn-warning"><span class="btn-label">
+                                          <td><a href="<?php echo $notes_dir . $file; ?>" download class="btn btn-warning btn-icon btn-round ps-1"><span class="btn-label">
                                           <i class="fa fa-cloud-download-alt"></i></a></td>
                                       </tr>
                                   <?php endforeach; ?>

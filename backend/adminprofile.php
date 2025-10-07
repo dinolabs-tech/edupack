@@ -113,8 +113,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm New Password"required>
                     </div>
                     <div class="form-group">
-                    <button class="btn btn-success" type="submit"><span class="btn-label">
-                    <i class="fa fa-save"></i> Change Password</button>
+                    <button class="btn btn-success btn-icon btn-round ps-1" type="submit"><span class="btn-label">
+                    <i class="fa fa-save"></i></button>
                     </div>
                     </form>
                     <div class="message">

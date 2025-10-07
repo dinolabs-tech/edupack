@@ -1,54 +1,28 @@
 <?php
-/**
- * checkresult.php
- *
- * This file generates a result slip for a student based on their CBT (Computer Based Test) scores.
- * It retrieves student details, their scores from the 'mst_result' table, and calculates
- * the overall percentage. The result slip includes student information, subject-wise scores,
- * attendance information, class teacher and principal comments, a grading table, and a skills assessment.
- * The report is generated in PDF format using the FPDF library.
- *
- * Key functionalities include:
- * - Session management for user authentication.
- * - Database connection.
- * - Retrieval of student details, CBT scores, attendance, and comments.
- * - Dynamic generation of a PDF result slip with student information, subject scores,
- *   overall average, attendance details, and comments.
- * - Custom PDF class for consistent header, footer, and text rotation.
- */
-
-// Start or resume a session. This is crucial for checking user login status.
 session_start();
-// Start output buffering to prevent headers already sent errors.
+
+// Start output buffering to prevent headers already sent
 ob_start();
 
-// Check if the user is logged in. If not, redirect them to the login page
-// to ensure only authenticated users can access this result generation.
+// Check if the user is logged in, if not redirect to login page
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Check if session and term are set in the GET request.
+// Check if session and term are set
 if (isset($_GET['session'], $_GET['term'])) {
-    $csession = $_GET['session']; // Academic session (e.g., 2024/2025).
-    $term     = $_GET['term'];   // Academic term (e.g., 1st Term).
+    $csession = $_GET['session'];
+    $term     = $_GET['term'];
 } else {
-    // If session or term are not set, redirect to the login page.
     header('Location: login.php');
     exit();
 }
 
-// Includes the FPDF library for PDF generation and the database connection file.
+// Include FPDF library and database connection
 require('includes/fpdf.php');
 include 'db_connection.php';
 
-/**
- * Converts an integer into its ordinal representation (e.g., 1st, 2nd, 3rd, 4th).
- *
- * @param int $n The integer to convert.
- * @return string The ordinal string.
- */
 function ordinal(int $n): string
 {
     $suffixes = ['th','st','nd','rd','th','th','th','th','th','th'];
@@ -59,31 +33,20 @@ function ordinal(int $n): string
     return $n . $suffixes[$n % 10];
 }
 
-// Get the user ID from the session to identify the student.
 $user_id = $_SESSION['user_id'];
 
-/**
- * Custom PDF class extending FPDF to include custom header, footer, and text rotation.
- */
 class PDF extends FPDF {
-    public $studentImage; // Public property to hold the path to the student's image.
-    protected $angle = 0; // Initialize the angle property for text rotation.
+    public $studentImage;
+    protected $angle = 0;
 
-    /**
-     * Overrides the default FPDF Header method to create a custom header for the report.
-     * Includes school logo, student image, school name, address, and contact information.
-     */
     function Header() {
-        // Set font for the header.
         $this->SetFont('Arial','B',10);
-        $this->Image('assets/img/logo.png',10,8,20); // School logo
-        // Student photo in the top-right corner
+        $this->Image('assets/img/logo.png',10,8,20);
         if (!empty($this->studentImage) && file_exists($this->studentImage)) {
             $x = $this->GetPageWidth() - 30;
             $this->Image($this->studentImage, $x, 8, 20);
         }
-        $this->Ln(5); // Line break
-        // School Name and Address
+        $this->Ln(5);
         $this->SetFont('Arial','B',18);
         $this->Cell(0,5,'DINOLABS ACADEMY',0,1,'C');
         $this->SetFont('Arial','B',11);
@@ -91,16 +54,11 @@ class PDF extends FPDF {
         $this->Cell(0,5,'Akure, Ondo State, Nigeria.',0,1,'C');
         $this->Cell(0,5,'enquiries@dinolabstech.com',0,1,'C');
         $this->Cell(0,5,'+234-813-772-6887, +234-704-324-7461',0,1,'C');
-        $this->Ln(5); // Line break
-        // Draw a horizontal line across the page
+        $this->Ln(5);
         $this->Line(10, $this->GetY(), $this->GetPageWidth() - 10, $this->GetY());
         $this->Ln(5);
     }
 
-    /**
-     * Overrides the default FPDF Footer method to create a custom footer for the report.
-     * Displays the current date and time at the bottom of each page.
-     */
     function Footer() {
         $this->SetY(-15);
         $this->SetFont('Arial','I',8);
@@ -119,7 +77,7 @@ class PDF extends FPDF {
         $s = sin($angle);
         $cx = $x * $this->k;
         $cy = ($this->h - $y) * $this->k;
-        $this->_out(sprintf('q %.5f %.5f %.5f %.5f %.2f %.2f cm 1 0 0 1 %.2f %.2f cm',
+        $this->_out(sprintf('q %.5f %.5f %.5f %.5f %.2f %.2f cm 1 0 0 1 %.2f %.2f cm', 
             $c, $s, -$s, $c, $cx, $cy, -$cx, -$cy));
     }
 }
@@ -130,16 +88,6 @@ class PDF extends FPDF {
         $this->Rotate(0);
     }
 }
-
-// Create PDF and add header
-$pdf = new PDF();
-
-// Correct student image path
-$photo_fn = str_replace('/', '_', $student['id']) . '.jpg';
-$photo_path = 'studentimg/' . $photo_fn;
-$pdf->studentImage = file_exists($photo_path) ? $photo_path : 'studentimg/default.jpg';
-
-$pdf->AddPage();
 
 // Fetch student and term/session context
 $student = $conn->query("SELECT * FROM students WHERE id='$user_id'")->fetch_assoc();
@@ -169,6 +117,16 @@ $att = $conn->query(
 $days_present = (int)($att['days_present'] ?? 0);
 $days_absent  = (int)($att['days_absent'] ?? 0);
 
+// Create PDF and add header
+$pdf = new PDF();
+
+// Correct student image path
+$photo_fn = str_replace('/', '_', $student['id']) . '.jpg';
+$photo_path = 'studentimg/' . $photo_fn;
+$pdf->studentImage = file_exists($photo_path) ? $photo_path : 'studentimg/default.jpg';
+
+$pdf->AddPage();
+
 // Student info
 $pdf->SetFont('Arial','',10);
 $pdf->Cell(95,7,"Name: {$student['name']}", 'B',0);
@@ -195,6 +153,7 @@ foreach ($rot_headers as $i => $h) {
 }
 $pdf->Cell(40, 25, 'REMARK', 1, 1, 'C', true);
 
+
 // Fetch & print results
 $pdf->SetFont('Arial','',8);
 $results = $conn->query(
@@ -212,14 +171,14 @@ while ($r = $avg_query->fetch_assoc()) {
 }
 $total_score = 0; $num_sub = 0;
 while ($row = $results->fetch_assoc()) {
-    $pdf->Cell(80,5,htmlspecialchars($row['subject']),1,0);
+    $pdf->Cell(80,5,$row['subject'],1,0);
     foreach (['ca1','ca2','exam','lastcum','total','average','grade'] as $col) {
-        $pdf->Cell(8,5,htmlspecialchars($row[$col]),1,0,'C');
+        $pdf->Cell(8,5,$row[$col],1,0,'C');
     }
     $class_avg = $avg_map[$row['subject']] ?? '-';
-    $pdf->Cell(8,5,htmlspecialchars($class_avg),1,0,'C');
+    $pdf->Cell(8,5,$class_avg,1,0,'C');
     $pdf->Cell(8,5,ordinal((int)$row['position']),1,0,'C');
-    $pdf->Cell(40,5,htmlspecialchars($row['remark']),1,1,'C');
+    $pdf->Cell(40,5,$row['remark'],1,1,'C');
     $total_score += $row['average'];
     $num_sub++;
 }
@@ -228,15 +187,15 @@ while ($row = $results->fetch_assoc()) {
 $overall = $num_sub > 0 ? number_format($total_score / $num_sub, 2) : '0.00';
 $pdf->Ln(5);
 $pdf->SetFont('Arial','B',10);
-$pdf->Cell(190,7,"Overall Average: ".htmlspecialchars($overall),1,1,'C');
+$pdf->Cell(190,7,"Overall Average: $overall",1,1,'C');
 
 // Comments
 $pdf->Ln(2);
 $pdf->SetFont('Arial','I',10);
-$pdf->Cell(0,5,htmlspecialchars($class_comments['comment'] ?? 'No comment available'),'B',1,'C');
+$pdf->Cell(0,5,$class_comments['comment'] ?? 'No comment available','B',1,'C');
 $pdf->Cell(0,5,"Class Teacher's Comment",0,1,'C');
 $pdf->Ln(2);
-$pdf->Cell(0,5,htmlspecialchars($principal_comment),'B',1,'C');
+$pdf->Cell(0,5,$principal_comment,'B',1,'C');
 $pdf->Cell(0,5,"Principal's Comment",0,1,'C');
 
 // Signature
@@ -269,19 +228,19 @@ $grading = [
     ['F','0 - 39','Very Poor']
 ];
 $skills = [
-    ['Attentiveness',htmlspecialchars($class_comments['attentiveness'] ?? 'N/A'),'Relationship',htmlspecialchars($class_comments['relationship'] ?? 'N/A')],
-    ['Neatness',htmlspecialchars($class_comments['neatness'] ?? 'N/A'),'Handwriting',htmlspecialchars($class_comments['handwriting'] ?? 'N/A')],
-    ['Politeness',htmlspecialchars($class_comments['politeness'] ?? 'N/A'),'Music',htmlspecialchars($class_comments['music'] ?? 'N/A')],
-    ['Self-Control',htmlspecialchars($class_comments['selfcontrol'] ?? 'N/A'),'Club/Society',htmlspecialchars($class_comments['club'] ?? 'N/A')],
-    ['Punctuality',htmlspecialchars($class_comments['punctuality'] ?? 'N/A'),'Sport',htmlspecialchars($class_comments['sport'] ?? 'N/A')]
+    ['Attentiveness',$class_comments['attentiveness'] ?? 'N/A','Relationship',$class_comments['relationship'] ?? 'N/A'],
+    ['Neatness',$class_comments['neatness'] ?? 'N/A','Handwriting',$class_comments['handwriting'] ?? 'N/A'],
+    ['Politeness',$class_comments['politeness'] ?? 'N/A','Music',$class_comments['music'] ?? 'N/A'],
+    ['Self-Control',$class_comments['selfcontrol'] ?? 'N/A','Club/Society',$class_comments['club'] ?? 'N/A'],
+    ['Punctuality',$class_comments['punctuality'] ?? 'N/A','Sport',$class_comments['sport'] ?? 'N/A']
 ];
 $rows = max(count($grading), count($skills));
 for ($i = 0; $i < $rows; $i++) {
     $pdf->SetXY($startX, $currentY);
     if (isset($grading[$i])) {
-        $pdf->Cell(10,6,htmlspecialchars($grading[$i][0]),1,0,'C');
-        $pdf->Cell(20,6,htmlspecialchars($grading[$i][1]),1,0,'C');
-        $pdf->Cell(30,6,htmlspecialchars($grading[$i][2]),1,0,'C');
+        $pdf->Cell(10,6,$grading[$i][0],1,0,'C');
+        $pdf->Cell(20,6,$grading[$i][1],1,0,'C');
+        $pdf->Cell(30,6,$grading[$i][2],1,0,'C');
     } else {
         $pdf->Cell(10,6,'',1,0);
         $pdf->Cell(20,6,'',1,0);
@@ -289,10 +248,10 @@ for ($i = 0; $i < $rows; $i++) {
     }
     if (isset($skills[$i])) {
         $pdf->SetXY($secondX, $currentY);
-        $pdf->Cell(30,6,htmlspecialchars($skills[$i][0]),1,0,'C');
-        $pdf->Cell(15,6,htmlspecialchars($skills[$i][1]),1,0,'C');
-        $pdf->Cell(30,6,htmlspecialchars($skills[$i][2]),1,0,'C');
-        $pdf->Cell(15,6,htmlspecialchars($skills[$i][3]),1,1,'C');
+        $pdf->Cell(30,6,$skills[$i][0],1,0,'C');
+        $pdf->Cell(15,6,$skills[$i][1],1,0,'C');
+        $pdf->Cell(30,6,$skills[$i][2],1,0,'C');
+        $pdf->Cell(15,6,$skills[$i][3],1,1,'C');
     }
     $currentY += 6;
 }

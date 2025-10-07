@@ -1,7 +1,4 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Start the session to maintain user state
 session_start();
@@ -255,8 +252,9 @@ $conn->close();
                           </table>
 
 
-                          <button type="button" class="btn btn-primary" onclick="saveAttendance()">Save
-                            Attendance</button>
+                          <button type="button" class="btn btn-primary btn-icon btn-round" onclick="saveAttendance()">
+                            <span class="fas fa-save"></span>
+                          </button>
                         <?php endif; ?>
 
                       </div>

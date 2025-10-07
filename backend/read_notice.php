@@ -69,7 +69,7 @@ if ($result->num_rows > 0) {
                 <div class="card-header">
                   <div class="card-head-row">
                     <!-- <div class="card-title">My Ward(s) </div> -->
-                    
+
                   </div>
                   <div class="card-body pb-0">
                     <div class="mb-4 mt-2">
@@ -77,54 +77,54 @@ if ($result->num_rows > 0) {
                         <p>
 
                           <?php if (empty($notices)): ?>
-                          <div class="alert alert-info">No notices to display.</div>
-                        <?php else: ?>
-                          <table id="basic-datatables" class="table table-striped">
-                            <thead>
+                        <div class="alert alert-info">No notices to display.</div>
+                      <?php else: ?>
+                        <table id="basic-datatables" class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Title</th>
+                              <th>Date</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php foreach ($notices as $notice): ?>
                               <tr>
-                                <th>Title</th>
-                                <th>Date</th>
-                                <th>Action</th>
+                                <td><?= htmlspecialchars($notice['title']) ?></td>
+                                <td><?= htmlspecialchars(date('Y-m-d H:i:s', strtotime($notice['created_at']))) ?></td>
+                                <td>
+                                  <button type="button" class="btn btn-primary btn-icon btn-round ps-1" data-bs-toggle="modal"
+                                    data-bs-target="#noticeModal<?= htmlspecialchars($notice['id']) ?>"><i class="fas fa-eye"></i></button>
+                                </td>
                               </tr>
-                            </thead>
-                            <tbody>
-                              <?php foreach ($notices as $notice): ?>
-                                <tr>
-                                  <td><?= htmlspecialchars($notice['title']) ?></td>
-                                  <td><?= htmlspecialchars(date('Y-m-d H:i:s', strtotime($notice['created_at']))) ?></td>
-                                  <td>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                      data-bs-target="#noticeModal<?= htmlspecialchars($notice['id']) ?>">View</button>
-                                  </td>
-                                </tr>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="noticeModal<?= htmlspecialchars($notice['id']) ?>" tabindex="-1"
-                                  aria-labelledby="noticeModalLabel<?= htmlspecialchars($notice['id']) ?>"
-                                  aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="noticeModalLabel<?= htmlspecialchars($notice['id']) ?>">
-                                          <?= htmlspecialchars($notice['title']) ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                          aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <?= nl2br(htmlspecialchars($notice['message'])) ?>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                          data-bs-dismiss="modal">Close</button>
-                                      </div>
+                              <!-- Modal -->
+                              <div class="modal fade" id="noticeModal<?= htmlspecialchars($notice['id']) ?>" tabindex="-1"
+                                aria-labelledby="noticeModalLabel<?= htmlspecialchars($notice['id']) ?>"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="noticeModalLabel<?= htmlspecialchars($notice['id']) ?>">
+                                        <?= htmlspecialchars($notice['title']) ?></h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <?= nl2br(htmlspecialchars($notice['message'])) ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary btn-icon btn-round"
+                                        data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
                                     </div>
                                   </div>
                                 </div>
-                              <?php endforeach; ?>
-                            </tbody>
-                          </table>
-                        <?php endif; ?>
-                        </p>
+                              </div>
+                            <?php endforeach; ?>
+                          </tbody>
+                        </table>
+                      <?php endif; ?>
+                      </p>
                       </div>
                     </div>
 

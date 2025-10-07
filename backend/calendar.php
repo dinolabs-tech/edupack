@@ -16,6 +16,9 @@
  * - Includes various UI components like head, navigation, header, footer, and scripts.
  */
 
+// Enable error reporting for debugging purposes.
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Start the session to maintain user state across requests.
 session_start();
@@ -153,15 +156,18 @@ $conn->close();
                    <div class="mb-4 mt-2">
 
                     <!-- Form for adding or editing a calendar event -->
-                    <form method="POST">
+                    <form method="POST" class="row g-2">
+                      <div class="col-md-6">
                       <input class="form-control" type="date" id="date" name="date" required>
-                      <br>
+                      </div>
+                      <div class="col-md-6">
                       <input class="form-control" type="text" id="title" name="title" placeholder="Title" required>
-                      <br>
+                      </div>
+                      <div class="col-md-12">
                       <textarea class="form-control" id="description" name="description" rows="4" placeholder="Description..." required></textarea>
                       <br>
-                      <button class="btn btn-success" type="submit"><span class="btn-label">
-                      <i class="fa fa-save"></i> Add Event</button> <!-- Button text changes to "Update Event" in edit mode -->
+                      <button class="btn btn-success btn-icon btn-round ps-1" type="submit"><span class="btn-label">
+                      <i class="fa fa-save"></i> </button> <!-- Button text changes to "Update Event" in edit mode -->
                     </form>
 
                    </div>
@@ -205,10 +211,10 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($event['description']); ?></td>
                                 <td class="actions">
                                     <!-- Edit button: calls JavaScript function to populate form for editing -->
-                                    <button class="btn btn-warning mb-3" onclick="editEvent(<?php echo $event['id']; ?>, '<?php echo htmlspecialchars($event['date']); ?>', '<?php echo htmlspecialchars($event['title']); ?>', '<?php echo htmlspecialchars($event['description']); ?>')"><span class="btn-label">
+                                    <button class="btn btn-warning mb-3 btn-icon btn-round ps-2" onclick="editEvent(<?php echo $event['id']; ?>, '<?php echo htmlspecialchars($event['date']); ?>', '<?php echo htmlspecialchars($event['title']); ?>', '<?php echo htmlspecialchars($event['description']); ?>')"><span class="btn-label">
                                     <i class="fa fa-edit"></i></button>
                                     <!-- Delete button: calls JavaScript function to confirm and delete event -->
-                                    <button class="btn btn-danger mb-3" onclick="confirmDelete(<?php echo $event['id']; ?>)"><span class="btn-label">
+                                    <button class="btn btn-danger mb-3 btn-icon btn-round ps-1" onclick="confirmDelete(<?php echo $event['id']; ?>)"><span class="btn-label">
                                     <i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>

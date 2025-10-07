@@ -114,10 +114,10 @@ $conn->close();
                                 <td><?= htmlspecialchars($student['name'], ENT_QUOTES) ?></td>
                                 <td><?= htmlspecialchars($student['class'], ENT_QUOTES) ?></td>
                                 <td><?= htmlspecialchars($student['arm'], ENT_QUOTES) ?></td>
-                                <td>
+                                <td class="d-flex">
                                   <img src="<?= $imagePath ?>" width="100" class="img-thumbnail rounded-circle me-2">
 
-                                  <button class="btn btn-primary view-student-btn"
+                                  <button class="btn btn-primary view-student-btn btn-icon btn-round mt-5"
                                     data-bs-toggle="modal"
                                     data-bs-target="#studentModal"
                                     data-id="<?= htmlspecialchars($student['id'], ENT_QUOTES) ?>"
@@ -132,7 +132,7 @@ $conn->close();
                                     data-class="<?= htmlspecialchars($student['class'], ENT_QUOTES) ?>"
                                     data-arm="<?= htmlspecialchars($student['arm'], ENT_QUOTES) ?>"
                                     data-img="<?= $imagePath ?>">
-                                    View
+                                    <span class="fas fa-eye"></span>
                                   </button>
                                 </td>
                               </tr>

@@ -78,29 +78,35 @@ $stmt->close();
                                     <?php
                                     // Fetch assigned students and their parents
                                     $sql = "SELECT ps.id, s.name AS student_name, p.name AS parent_name
-                        FROM parent_student ps
-                        INNER JOIN students s ON ps.student_id = s.id
-                        INNER JOIN parent p ON ps.parent_id = p.id";
+                                            FROM parent_student ps
+                                            INNER JOIN students s ON ps.student_id = s.id
+                                            INNER JOIN parent p ON ps.parent_id = p.id";
                                     $result = $conn->query($sql);
 
-                                    if ($result->num_rows > 0) {
-                                        echo "<div class='table-responsive'>";
-                                        echo "<table id='basic-datatables' class='table table-striped'>";
-                                        echo "<thead><tr><th>Student Name</th><th>Parent Name</th><th>Action</th></tr></thead>";
-                                        echo "<tbody>";
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<tr>";
-                                            echo "<td>" . $row['student_name'] . "</td>";
-                                            echo "<td>" . $row['parent_name'] . "</td>";
-                                            echo "<td><a href='?unassign_id=" . $row['id'] . "' class='btn btn-danger btn-sm'>Unassign</a></td>";
-                                            echo "</tr>";
-                                        }
-                                        echo "</tbody>";
-                                        echo "</table>";
-                                        echo "</div>";
-                                    } else {
-                                        echo "<p>No students are currently assigned to parents.</p>";
-                                    }
+                                    if ($result->num_rows > 0) { ?>
+                                        <div class='table-responsive'>
+                                            <table id='basic-datatables' lass='table table-striped'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student Name</th>
+                                                        <th>Parent Name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php while ($row = $result->fetch_assoc()) { ?>
+                                                        <tr>
+                                                            <td><?= $row['student_name'] ?></td>
+                                                            <td><?= $row['parent_name'] ?></td>
+                                                            <td class="text-center"><a href='?unassign_id=<?= $row['id'] ?>' class='btn btn-danger btn-icon btn-round'><i class="fas fa-user-minus"></i></a></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    <?php } else { ?>
+                                        <p>No students are currently assigned to parents.</p>
+                                    <?php }
                                     ?>
 
                                 </div>

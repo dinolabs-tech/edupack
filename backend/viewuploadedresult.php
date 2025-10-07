@@ -136,7 +136,7 @@ $stmt->close();
                     <form onsubmit="loadRecords(event)">
                       <div class="form-group">
                         <select class="form-control form-select" id="class" name="class" onchange="loadSubjects()">
-                          <option value="">Select Class</option>
+                          <option value="" selected disabled>Select Class</option>
                           <?php
                           // Query to fetch classes
                           $sql = "SELECT class FROM class";
@@ -155,7 +155,7 @@ $stmt->close();
 
                       <div class="form-group">
                         <select class="form-control form-select" id="arm" name="arm" onchange="loadSubjects()">
-                          <option value="">Select Arm</option>
+                          <option value="" selected disabled>Select Arm</option>
                           <?php
                           // Query to fetch arms
                           $sql = "SELECT arm FROM arm";
@@ -174,7 +174,7 @@ $stmt->close();
 
                       <div class="form-group">
                         <select class="form-control form-select" id="term" name="term">
-                          <option value="">Select Term</option>
+                          <option value="" selected disabled>Select Term</option>
                           <option value="1st Term">1st Term</option>
                           <option value="2nd Term">2nd Term</option>
                           <option value="3rd Term">3rd Term</option>
@@ -183,12 +183,12 @@ $stmt->close();
 
                       <div class="form-group">
                         <select class="form-control form-select" id="subject" name="subject">
-                          <option value="">Select Subject</option>
+                          <option value="" selected-disabled>Select Subject</option>
                         </select>
                       </div>
 
-                      <button type="submit" class="btn btn-success"><span class="btn-label">
-                          <i class="fa fa-check-circle"></i>Submit</button>
+                      <button type="submit" class="btn btn-success btn-icon btn-round ps-1"><span class="btn-label">
+                          <i class="fa fa-filter"></i></button>
                     </form>
 
                     </p>

@@ -207,13 +207,15 @@ $conn->close();
                       <div class="form-group">
                         <input type="file" class="form-control" id="csv_file" name="csv_file" required>
                       </div>
-                      <button type="submit" name="bulk_submit" class="btn btn-success"><span class="btn-label">
-                          <i class="fa fa-cloud-upload-alt"></i>Upload</button>
+                     
 
                       <!-- Download Template Link -->
-                      <div class="mt-2">
-                        <a href="download_subject_template.php" class="btn btn-warning"><span class="btn-label">
-                            <i class="fa fa-cloud-download-alt"></i>Download Subject Template</a>
+                       <div class="mt-2  d-flex">
+                        <button type="submit" name="bulk_submit" class="btn btn-success btn-icon btn-round me-2 ms-3 ps-1"><span class="btn-label">
+                          <i class="fa fa-cloud-upload-alt"></i></button>
+                      
+                        <a href="download_subject_template.php" class="btn btn-warning btn-icon btn-round ps-1 "><span class="btn-label">
+                            <i class="fa fa-cloud-download-alt"></i></a>
                       </div>
                     </form>
                     </p>
@@ -257,8 +259,8 @@ $conn->close();
                           <?php endforeach; ?>
                         </select>
                       </div>
-                      <button type="submit" name="individual_submit" class="btn btn-success"> <span class="btn-label">
-                          <i class="fa fa-save"></i> Add Subject</button>
+                      <button type="submit" name="individual_submit" class="btn btn-success btn-icon btn-round ps-1"> <span class="btn-label">
+                          <i class="fa fa-save"></i> </button>
                     </form>
 
                     </p>
@@ -299,8 +301,8 @@ $conn->close();
                           <?php endforeach; ?>
                         </select>
                       </div>
-                      <button type="submit" class="btn btn-success"><span class="btn-label">
-                          <i class="fa fa-filter"></i> Filter</button>
+                      <button type="submit" class="btn btn-success btn-icon btn-round ps-1"><span class="btn-label">
+                          <i class="fa fa-filter"></i></button>
                     </form>
 
                   </div>
@@ -345,11 +347,11 @@ $conn->close();
                                 <td><?php echo $subject['class']; ?></td>
                                 <td><?php echo $subject['arm']; ?></td>
                                 <td>
-                                  <button type="button" class="btn btn-primary btn-sm edit-subject-btn mb-3" data-id="<?php echo $subject['id']; ?>" data-subject="<?php echo $subject['subject']; ?>" data-class="<?php echo $subject['class']; ?>" data-arm="<?php echo $subject['arm']; ?>" data-bs-toggle="modal" data-bs-target="#editSubjectModal"><span class="btn-label">
+                                  <button type="button" class="btn btn-primary btn-icon btn-round ps-1 edit-subject-btn mb-3" data-id="<?php echo $subject['id']; ?>" data-subject="<?php echo $subject['subject']; ?>" data-class="<?php echo $subject['class']; ?>" data-arm="<?php echo $subject['arm']; ?>" data-bs-toggle="modal" data-bs-target="#editSubjectModal"><span class="btn-label">
                                       <i class="fa fa-edit"></i></button>
                                   <form action="" method="post" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo $subject['id']; ?>">
-                                    <button type="submit" name="delete_subject" class="btn btn-danger btn-sm mb-3"><span
+                                    <button type="submit" name="delete_subject" class="btn btn-danger btn-icon btn-round ps-1 mb-3 btn-"><span
                                         class="btn-label">
                                         <i class="fa fa-trash"></i></button>
                                   </form>

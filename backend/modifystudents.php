@@ -712,9 +712,9 @@ $conn->close();
                                                                 <td><?php echo htmlspecialchars($student['dob']); ?></td>
                                                                 <td><?php echo htmlspecialchars($student['class']); ?></td>
                                                                 <td><?php echo htmlspecialchars($student['arm']); ?></td>
-                                                                <td>
-                                                                    <a href="?edit=<?php echo $student['id']; ?>" class="btn btn-warning btn-sm mb-3"> <i class="fas fa-edit"></i></a>
-                                                                    <a href="?delete=<?php echo $student['id']; ?>" class="btn btn-danger btn-sm mb-3" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fas fa-trash"></i></a>
+                                                                <td class="d-flex">
+                                                                    <a href="?edit=<?php echo $student['id']; ?>" class="btn btn-warning me-3 btn-icon btn-round ps-1"> <i class="fas fa-edit"></i></a>
+                                                                    <a href="?delete=<?php echo $student['id']; ?>" class="btn btn-danger btn-icon btn-round" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fas fa-trash"></i></a>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>

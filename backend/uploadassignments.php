@@ -89,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload'])) {
             // Insert assignment details into the database
             $insert_sql = "INSERT INTO assignments (subject_name, class_name, file_name) VALUES (?, ?, ?)";
             $insert_stmt = $conn->prepare($insert_sql);
-	    if ($insert_stmt === false) {
-		customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
-	    }
+            if ($insert_stmt === false) {
+                customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
+            }
             $insert_stmt->bind_param("sss", $subject_name, $class_name, $file_name);
             if ($insert_stmt->execute()) {
                 // Display success popup
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload'])) {
             } else {
                 echo "<script>alert('Assignment not Uploaded: " . $conn->error . "');</script>";
             }
-	    $insert_stmt->close();
+            $insert_stmt->close();
         } else {
             echo "<script>alert('Error uploading Assignment. Check file permissions and directory path.');</script>";
         }
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     $delete_sql = "DELETE FROM assignments WHERE id = ?";
     $delete_stmt = $conn->prepare($delete_sql);
     if ($delete_stmt === false) {
-	customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
+        customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
     }
     $delete_stmt->bind_param("i", $assignment_id);
     if ($delete_stmt->execute()) {
@@ -165,110 +165,110 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include('head.php');?>
-  <body>
+<?php include('head.php'); ?>
+
+<body>
     <div class="wrapper">
-      <!-- Sidebar -->
-     <?php include('adminnav.php');?>
-      <!-- End Sidebar -->
+        <!-- Sidebar -->
+        <?php include('adminnav.php'); ?>
+        <!-- End Sidebar -->
 
-      <div class="main-panel">
-        <div class="main-header">
-          <div class="main-header-logo">
-            <!-- Logo Header -->
-            <?php include('logo_header.php');?>
-            <!-- End Logo Header -->
-          </div>
-          <!-- Navbar Header -->
-         <?php include('navbar.php');?>
-          <!-- End Navbar -->
-        </div>
-
-        <div class="container">
-          <div class="page-inner">
-            <div
-              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-            >
-              <div>
-                <h3 class="fw-bold mb-3">Assignments</h3>
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-                  <li class="breadcrumb-item active">E-Learning Resources</li>
-                  <li class="breadcrumb-item active">Assignments</li>
-                  <li class="breadcrumb-item active">Upload</li>
-              </ol>
-              </div>
-           
+        <div class="main-panel">
+            <div class="main-header">
+                <div class="main-header-logo">
+                    <!-- Logo Header -->
+                    <?php include('logo_header.php'); ?>
+                    <!-- End Logo Header -->
+                </div>
+                <!-- Navbar Header -->
+                <?php include('navbar.php'); ?>
+                <!-- End Navbar -->
             </div>
 
-            <!-- BULK UPLOAD ============================ -->
-            <div class="row">
-             
-             <div class="col-md-12">
-               <div class="card card-round">
-                 <div class="card-header">
-                   <div class="card-head-row">
-                     <div class="card-title">Upload</div>
-                   </div>
-                 </div>
-                 <div class="card-body pb-0">
-                   <div class="mb-4 mt-2">
-                    
-                   <p>
-                          
-                          <form method="post" enctype="multipart/form-data">
-                              <select class="form-control form-select" id="class" name="class" onchange="fetchSubjects()" required>
-                                  <option value="">Select Class</option>
-                                  <?php foreach ($classes as $class): ?>
-                                      <option value="<?php echo htmlspecialchars($class); ?>">
-                                          <?php echo htmlspecialchars($class); ?>
-                                      </option>
-                                  <?php endforeach; ?>
-                              </select>
-          <br>
-                              <div id="subject-container">
-                                  <select class="form-control form-select" id="subject" name="subject" required>
-                                      <option value="">Select Subject</option>
-                                      <?php foreach ($subjects as $subject): ?>
-                                          <option value="<?php echo htmlspecialchars($subject); ?>">
-                                              <?php echo htmlspecialchars($subject); ?>
-                                          </option>
-                                      <?php endforeach; ?>
-                              </select>
-                              </div>
-          <br>
-                              <input class="form-control" type="file" id="document" name="document" accept=".doc,.docx" required><br>
-                              <button type="submit" name="upload" class="btn btn-success"><span class="btn-label">
-                              <i class="fa fa-check-circle"></i>Submit</button>
-                          </form>
-                          </p>
-                          <?php if ($message): ?>
-                              <p class="message"><?php echo htmlspecialchars($message); ?>
-                          <?php endif; ?>
+            <div class="container">
+                <div class="page-inner">
+                    <div
+                        class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                        <div>
+                            <h3 class="fw-bold mb-3">Assignments</h3>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                                <li class="breadcrumb-item active">E-Learning Resources</li>
+                                <li class="breadcrumb-item active">Assignments</li>
+                                <li class="breadcrumb-item active">Upload</li>
+                            </ol>
+                        </div>
 
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
+                    </div>
 
-          
+                    <!-- BULK UPLOAD ============================ -->
+                    <div class="row">
 
-          </div>
+                        <div class="col-md-12">
+                            <div class="card card-round">
+                                <div class="card-header">
+                                    <div class="card-head-row">
+                                        <div class="card-title">Upload</div>
+                                    </div>
+                                </div>
+                                <div class="card-body pb-0">
+                                    <div class="mb-4 mt-2">
+
+                                        <p>
+
+                                        <form method="post" enctype="multipart/form-data">
+                                            <select class="form-control form-select" id="class" name="class" onchange="fetchSubjects()" required>
+                                                <option value="" selected disabled>Select Class</option>
+                                                <?php foreach ($classes as $class): ?>
+                                                    <option value="<?php echo htmlspecialchars($class); ?>">
+                                                        <?php echo htmlspecialchars($class); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <br>
+                                            <div id="subject-container">
+                                                <select class="form-control form-select" id="subject" name="subject" required>
+                                                    <option value="" selected disabled>Select Subject</option>
+                                                    <?php foreach ($subjects as $subject): ?>
+                                                        <option value="<?php echo htmlspecialchars($subject); ?>">
+                                                            <?php echo htmlspecialchars($subject); ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <br>
+                                            <input class="form-control" type="file" id="document" name="document" accept=".doc,.docx" required><br>
+                                            <button type="submit" name="upload" class="btn btn-success btn-icon btn-round ps-1"><span class="btn-label">
+                                                    <i class="fa fa-cloud-upload-alt"></i></button>
+                                        </form>
+                                        </p>
+                                        <?php if ($message): ?>
+                                            <p class="message"><?php echo htmlspecialchars($message); ?>
+                                            <?php endif; ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            </script>
+            <?php include('footer.php'); ?>
         </div>
 
-  </script>
-        <?php include('footer.php');?>
-      </div>
-
-      <!-- Custom template | don't include it in your project! -->
-      <?php include('cust-color.php');?>
-      <!-- End Custom template -->
+        <!-- Custom template | don't include it in your project! -->
+        <?php include('cust-color.php'); ?>
+        <!-- End Custom template -->
     </div>
-   <?php include('scripts.php');?>
-  
-  
-   <script>
+    <?php include('scripts.php'); ?>
+
+
+    <script>
         function fetchSubjects() {
             var classSelect = document.getElementById("class");
             var selectedClass = classSelect.value;
@@ -276,7 +276,7 @@ $conn->close();
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "fetch_subjects.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     document.getElementById("subject-container").innerHTML = xhr.responseText;
                 }
@@ -284,5 +284,6 @@ $conn->close();
             xhr.send("class=" + selectedClass);
         }
     </script>
-  </body>
+</body>
+
 </html>

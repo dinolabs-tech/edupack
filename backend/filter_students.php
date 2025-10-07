@@ -150,11 +150,11 @@ $conn->close();
 
 
                                             <div class="text-start mt-3">
-                                                <button type="submit" class="btn btn-success">
+                                                <button type="submit" class="btn btn-success btn-icon btn-round ps-1">
                                                     <span class="btn-label">
                                                         <i class="fa fa-filter"></i>
                                                     </span>
-                                                    Filter
+
                                                 </button>
                                             </div>
                                         </form>
@@ -188,101 +188,101 @@ $conn->close();
                                             <?php else: ?>
                                                 <p>No records found.</p>
                                             <?php endif; ?>
-                                        </div>
+                                            </div>
 
-                                        <!-- Student Profile Modal -->
-                                        <div class="modal fade" id="studentModal" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Student Profile Card</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="text-center">
-                                                            <img id="studentImage" src="" alt="Student Image"
-                                                                class="profile-img">
-                                                            <h4 id="studentName"></h4>
+                                            <!-- Student Profile Modal -->
+                                            <div class="modal fade" id="studentModal" tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Student Profile Card</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal"></button>
                                                         </div>
-                                                        <table class="table table-bordered">
-                                                            <tr>
-                                                                <td><strong>ID:</strong></td>
-                                                                <td id="studentId"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Gender:</strong></td>
-                                                                <td id="studentGender"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Date of Birth:</strong></td>
-                                                                <td id="studentDob"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Place of Birth:</strong></td>
-                                                                <td id="studentPlaceOb"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Religion:</strong></td>
-                                                                <td id="studentReligion"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>State:</strong></td>
-                                                                <td id="studentState"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>LGA:</strong></td>
-                                                                <td id="studentLga"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Class:</strong></td>
-                                                                <td id="studentClass"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Arm:</strong></td>
-                                                                <td id="studentArm"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Hostel:</strong></td>
-                                                                <td id="studentHostel"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Blood Type:</strong></td>
-                                                                <td id="studentBloodType"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Blood Group:</strong></td>
-                                                                <td id="studentBloodGroup"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Height:</strong></td>
-                                                                <td id="studentHeight"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Weight:</strong></td>
-                                                                <td id="studentWeight"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Guardian Name:</strong></td>
-                                                                <td id="studentGname"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>Guardian Occupation:</strong></td>
-                                                                <td id="studentGoccupation"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="200px"><strong>Guardian Mobile:</strong></td>
-                                                                <td id="studentMobile"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2"><strong>Address:</strong> <span
-                                                                        id="studentAddress"></span></td>
-                                                            </tr>
-                                                        </table>
+                                                        <div class="modal-body">
+                                                            <div class="text-center">
+                                                                <img id="studentImage" src="" alt="Student Image"
+                                                                    class="profile-img">
+                                                                <h4 id="studentName"></h4>
+                                                            </div>
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <td><strong>ID:</strong></td>
+                                                                    <td id="studentId"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Gender:</strong></td>
+                                                                    <td id="studentGender"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Date of Birth:</strong></td>
+                                                                    <td id="studentDob"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Place of Birth:</strong></td>
+                                                                    <td id="studentPlaceOb"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Religion:</strong></td>
+                                                                    <td id="studentReligion"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>State:</strong></td>
+                                                                    <td id="studentState"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>LGA:</strong></td>
+                                                                    <td id="studentLga"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Class:</strong></td>
+                                                                    <td id="studentClass"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Arm:</strong></td>
+                                                                    <td id="studentArm"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Hostel:</strong></td>
+                                                                    <td id="studentHostel"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Blood Type:</strong></td>
+                                                                    <td id="studentBloodType"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Blood Group:</strong></td>
+                                                                    <td id="studentBloodGroup"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Height:</strong></td>
+                                                                    <td id="studentHeight"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Weight:</strong></td>
+                                                                    <td id="studentWeight"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Guardian Name:</strong></td>
+                                                                    <td id="studentGname"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Guardian Occupation:</strong></td>
+                                                                    <td id="studentGoccupation"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="200px"><strong>Guardian Mobile:</strong></td>
+                                                                    <td id="studentMobile"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2"><strong>Address:</strong> <span
+                                                                            id="studentAddress"></span></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -165,7 +165,9 @@ if (isset($_POST['filter'])) {
                         </div>
 
                         <div class="col-md-2">
-                          <button class="btn btn-success" name="filter">Filter</button>
+                          <button class="btn btn-success btn-icon btn-round pt-1" name="filter">
+                            <span class="fas fa-filter"></span>
+                          </button>
                         </div>
 
                       </div>
@@ -202,31 +204,33 @@ if (isset($_POST['filter'])) {
                         $current_class = '';
                         foreach ($filtered_results as $row) {
                           if ($current_class != $row['class']) {
-                            if ($current_class != '') echo '</div>';
-                            $current_class = $row['class'];
-                            echo '<div class="mb-3 rounded-3" style="border: 1px solid blue; padding: 10px;">';
-                            echo '<h6 class="border-bottom pb-1">' . htmlspecialchars($row['class']) . ' - ' . htmlspecialchars($row['arm']) . '</h6>';
-                          }
+                            if ($current_class != '') ?>
+                              </div>
+                           <?php $current_class = $row['class']; ?>
+                    <div class="mb-3 rounded-3" style="border: 1px solid blue; padding: 10px;">
+                      <h6 class="border-bottom pb-1"> <?= htmlspecialchars($row['class']) . ' - ' . htmlspecialchars($row['arm']) ?> </h6>
+                    <?php  } ?>
 
-                          echo '<p class="ml-3" style="display: flex; justify-content: space-between; align-items: center;">';
-                          echo '<span>' . htmlspecialchars($row['subject']) . '</span>';
-                          echo '<form method="post" action="" style="margin: 0;">';
-                          echo '<input type="hidden" name="class" value="' . htmlspecialchars($row['class']) . '">';
-                          echo '<input type="hidden" name="arm" value="' . htmlspecialchars($row['arm']) . '">';
-                          echo '<input type="hidden" name="subject" value="' . htmlspecialchars($row['subject']) . '">';
-                          echo '<input type="hidden" name="term" value="' . htmlspecialchars($row['term']) . '">';
-                          echo '<input type="hidden" name="session" value="' . htmlspecialchars($row['csession']) . '">';
-                          echo '<button type="submit" name="delete_subject" class="btn btn-danger"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
-                          echo '</form>';
-                          echo '</p>';
-                        }
-                        if ($current_class != '') echo '</div>';
-                      } else {
-                        echo "<p>No results found. Please filter to display subjects.</p>";
-                      }
-                      ?>
-
+                    <p class="ml-3" style="display: flex; justify-content: space-between; align-items: center;">
+                      <span> <?=htmlspecialchars($row['subject']) ?> </span>
+                    <form method="post" action="" style="margin: 0;">
+                      <input type="hidden" name="class" value=" <?= htmlspecialchars($row['class']) ?> "> 
+                      <input type="hidden" name="arm" value=" <?= htmlspecialchars($row['arm']) ?>">
+                      <input type="hidden" name="subject" value=" <?=htmlspecialchars($row['subject']) ?>">
+                      <input type="hidden" name="term" value=" <?= htmlspecialchars($row['term']) ?>">
+                      <input type="hidden" name="session" value="<?= htmlspecialchars($row['csession']) ?>">
+                      <button type="submit" name="delete_subject" class="btn btn-danger btn-icon btn-round ps-1"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
+                    </form>
                     </p>
+                  <?php  }
+                        if ($current_class != '') ?>
+                    </div>
+                  <? } else { ?>
+                    <p>No results found. Please filter to display subjects.</p>
+                  <?php } ?>
+
+
+                  </p>
 
                   </div>
                 </div>

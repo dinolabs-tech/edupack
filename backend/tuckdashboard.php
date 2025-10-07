@@ -155,7 +155,7 @@ $stmt->close();
                  <div class="card-body pb-0">
                    <div class="mb-4 mt-2">
 
-                   <p class="card-title">&#8358;  <?php echo $total_students_balance; ?> </p>
+                   <p class="card-title">&#8358;  <?php echo number_format($total_students_balance, 2); ?> </p>
                  
                    </div>
                  </div>

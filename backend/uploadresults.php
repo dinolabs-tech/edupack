@@ -373,11 +373,11 @@ $conn->close();
 
                       <!-- DOWNLOAD Button -->
                       <div class="text-end mt-3">
-                        <button type="submit" name="bulk_upload" class="btn btn-primary">
+                        <button type="submit" name="bulk_upload" class="btn btn-primary btn-icon btn-round ps-1">
                           <span class="btn-label">
                             <i class="fa fa-cloud-download-alt"></i>
                           </span>
-                          Download Score Template
+                        
                         </button>
                       </div>
 
@@ -432,10 +432,10 @@ $conn->close();
                       <br>
                       <input type="file" name="csv_file" id="csv_file" accept=".csv" class="form-control" required>
                       <br>
-                      <button type="submit" name="bulk_submit" class="btn btn-success">
+                      <button type="submit" name="bulk_submit" class="btn btn-success btn-icon btn-round ps-1">
                         <span class="btn-label">
                           <i class="fa fa-cloud-upload-alt"></i>
-                          Upload CSV</button>
+                          </button>
                       <br>
                     </form>
 
@@ -471,10 +471,10 @@ $conn->close();
                         <?php endforeach; ?>
                       </select>
                       <br>
-                      <button type="submit" class="btn btn-secondary">
+                      <button type="submit" class="btn btn-secondary btn-icon btn-round ps-1">
                         <span class="btn-label">
                           <i class="fa fa-filter"></i>
-                          Filter</button>
+                          </button>
                     </form>
 
                   </div>
@@ -524,7 +524,7 @@ $conn->close();
                                     <input type="hidden" name="class" value="<?= htmlspecialchars($record['class']) ?>">
                                     <input type="hidden" name="arm" value="<?= htmlspecialchars($record['arm']) ?>">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($record['id']) ?>">
-                                    <button type="submit" name="delete" class="btn btn-danger">
+                                    <button type="submit" name="delete" class="btn btn-danger btn-icon btn-round ps-1">
                                       <span class="btn-label">
                                         <i class="fa fa-trash"></i>
                                     </button>

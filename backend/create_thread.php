@@ -256,7 +256,9 @@ $conn->close();
                     <textarea name="content" id="content" rows="5" class="form-control" required></textarea>
                   </div>
                   <!-- Submit button to post the thread -->
-                  <button type="submit" class="btn btn-primary" onclick="tinyMCE.triggerSave();">Post</button>
+                  <button type="submit" class="btn btn-primary btn-icon btn-round" onclick="tinyMCE.triggerSave();">
+                    <i class="fab fa-telegram-plane"></i>
+                  </button>
                 </form>
 
               </div>

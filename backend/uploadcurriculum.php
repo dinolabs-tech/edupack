@@ -220,7 +220,7 @@ $conn->close();
                           <form method="post" enctype="multipart/form-data">
                               <!-- Class Selection Dropdown -->
                               <select class="form-control form-select" id="class" name="class" onchange="fetchSubjects()" required>
-                                  <option value="">Select Class</option>
+                                  <option value="" selected disabled>Select Class</option>
                                   <?php foreach ($classes as $class): ?>
                                       <option value="<?php echo htmlspecialchars($class); ?>">
                                           <?php echo htmlspecialchars($class); ?>
@@ -231,7 +231,7 @@ $conn->close();
                               <!-- Subject Selection Dropdown (dynamically loaded) -->
                               <div id="subject-container">
                                   <select class="form-control form-select" id="subject" name="subject" required>
-                                      <option value="">Select Subject</option>
+                                      <option value="" selected disabled>Select Subject</option>
                                       <?php foreach ($subjects as $subject): ?>
                                           <option value="<?php echo htmlspecialchars($subject); ?>">
                                               <?php echo htmlspecialchars($subject); ?>
@@ -243,8 +243,8 @@ $conn->close();
                               <!-- File Input for Document Upload -->
                               <input class="form-control" type="file" id="document" name="document" accept=".doc,.docx" required><br>
                               <!-- Submit Button -->
-                              <button type="submit" name="upload" class="btn btn-success"><span class="btn-label">
-                              <i class="fa fa-check-circle"></i>Submit</button>
+                              <button type="submit" name="upload" class="ps-1 btn btn-success btn-icon btn-round"><span class="btn-label">
+                              <i class="fas fa-cloud-upload-alt"></i></button>
                           </form>
                           </p>
                           <?php if ($message): ?>

@@ -117,12 +117,13 @@ $conn->close();
                                                     </select>
                                                 </div>
 
-                                                <br>
-                                                <button type="submit" name="update" class="btn btn-success btn-block">
+                                                <div class="col-md-2">
+                                                <button type="submit" name="update" class="btn btn-danger btn-icon btn-round ps-1">
                                                     <span class="btn-label">
-                                                        <i class="fa fa-check"></i>
-                                                    </span> Revoke Access to Results
+                                                        <i class="fa fa-times"></i>
+                                                    </span>
                                                 </button>
+                                                </div>
                                             </form>
                                         <?php endif; ?>
                                     </div>
@@ -164,7 +165,8 @@ $conn->close();
                                                                 <td><?php echo htmlspecialchars($student['arm']); ?></td>
                                                                 <td>
                                                                     <a href="?edit=<?php echo $student['id']; ?>"
-                                                                        class="btn btn-warning btn-sm">Edit</a>
+                                                                        class="btn btn-warning btn-icon btn-round ps-1">
+                                                                    <span class="fas fa-edit"></span></a>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
