@@ -135,7 +135,7 @@ function generatePDF($class, $arm, $term, $session, $students, $subjects, $score
         $pdf->Cell($cellWidthName, $rowHeight, $student, 1, 0, 'L');
         foreach ($subjects as $subject) {
             $score = isset($scores[$student][$subject]) ? $scores[$student][$subject] : '-';
-            $pdf->Cell($cellWidthSubject, $rowHeight, $score, 1, 0, 'C');
+            $pdf->Cell($cellWidthSubject, $rowHeight, round($score), 1, 0, 'C');
         }
         $pdf->Ln();
     }

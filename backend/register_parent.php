@@ -176,30 +176,30 @@ $stmt->close();
                                             <div class="card-title">Register Parent</div>
                                         </div>
 
-                                        <form method="POST">
+                                        <form method="POST" class="row g-2">
                                             <input type="hidden" name="student_id"
                                                 value="<?= htmlspecialchars($student_id) ?>">
-                                            <div class="mb-3">
+                                            <div class="col-md-6">
                                                 <label for="gname" class="form-label">Name:</label>
                                                 <input type="text" id="gname" name="gname" class="form-control"
                                                     value="<?= htmlspecialchars($gname) ?>" readonly>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-6">
                                                 <label for="mobile" class="form-label">Mobile:</label>
                                                 <input type="text" id="mobile" name="mobile" class="form-control"
                                                     value="<?= htmlspecialchars($mobile) ?>" readonly>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-6">
                                                 <label for="username" class="form-label">Username:</label>
                                                 <input type="text" id="username" name="username" class="form-control"
                                                     required>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-md-6">
                                                 <label for="password" class="form-label">Password:</label>
                                                 <input type="password" id="password" name="password" class="form-control"
                                                     required>
                                             </div>
-                                            <button type="submit" class="btn btn-primary">Register</button>
+                                            <button type="submit" class="btn btn-primary btn-icon btn-round"><i class="fas fa-save"></i></button>
                                         </form>
 
 

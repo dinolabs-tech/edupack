@@ -193,7 +193,7 @@ Circles.create({
 $.notify({
 	icon: 'icon-bell',
 	title: 'Dinolabs Tech Services',
-	message: 'Premium Dinolabs Generation 2 Admin Dashboard',
+	message: 'Premium Dinolabs Generation 3 EduPack Dashboard',
 },{
 	type: 'secondary',
 	placement: {
