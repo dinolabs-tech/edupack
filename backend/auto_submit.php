@@ -15,6 +15,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+ $student_class = $_SESSION['user_class'];
+ $student_arm = $_SESSION['user_arm'];
+ $student_term = $_SESSION['term'];
+ $student_session = $_SESSION['student_session'];
+
+
 $loginid = $_SESSION['user_id'];
 $subject = $_SESSION['subject'];
 $tdate = date("h:i:s") . '  ' . date("l, F j, Y");
@@ -43,8 +49,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 $total_questions = mysqli_num_rows($result);
 
 // Store results in the database.
-mysqli_query($conn, "INSERT INTO mst_result(login, subject, test_date, score) 
-    VALUES('$loginid', '$subjectEsc', '$tdate', '$trueans')");
+mysqli_query($conn, "INSERT INTO mst_result(login, subject, test_date, score, class, arm, term, session) 
+    VALUES('$loginid', '$subjectEsc', '$tdate', '$trueans', '$student_class', '$student_arm', '$student_term', '$student_session')");
 
 // Clear session variables after submission.
 unset($_SESSION['qn']);

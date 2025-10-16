@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
 
     // Prepare SQL for student login (selecting status)
-    $stmt1 = $conn->prepare("SELECT id, password, class, arm, session, status, result FROM students WHERE id=? AND password=?");
+    $stmt1 = $conn->prepare("SELECT id, name, password, class, arm, term, session, status, result FROM students WHERE id=? AND password=?");
     $stmt1->bind_param("ss", $user, $pass);
     $stmt1->execute();
     $stmt1->store_result();
@@ -57,13 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt1->num_rows > 0) {
         // Student login
-        $stmt1->bind_result($id, $password, $class, $arm, $enrolled_session, $status, $result);
+        $stmt1->bind_result($id, $name, $password, $class, $arm, $term, $enrolled_session, $status, $result);
         $stmt1->fetch();
 
         // Store the retrieved data in session variables
         $_SESSION['user_id'] = $id;
+        $_SESSION['name'] = $name;
         $_SESSION['user_class'] = $class;
         $_SESSION['user_arm'] = $arm;
+        $_SESSION['term'] = $term;
         $_SESSION['student_session'] = $enrolled_session;
         $_SESSION['role'] = 'Student';
         $_SESSION['access'] = $result;
@@ -76,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: alumni.php");
         }
         exit();
-
     } elseif ($stmt2->num_rows > 0) {
         // Other users login
         $stmt2->bind_result($id, $staffname, $username, $password, $role);
@@ -129,7 +130,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
         }
         exit();
-
     } elseif ($stmt3->num_rows > 0) {
         // Parent login
         $stmt3->bind_result($id, $parentname, $mobile, $email, $username, $password);
@@ -145,7 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Redirect to parent page
         header("Location: parent_dashboard.php");
         exit();
-
     } else {
         $login_error = "Invalid username or password.";
     }
@@ -161,6 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -170,7 +170,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
-            google: { families: ["Public Sans:300,400,500,600,700"] },
+            google: {
+                families: ["Public Sans:300,400,500,600,700"]
+            },
             custom: {
                 families: [
                     "Font Awesome 5 Solid",
@@ -180,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ],
                 urls: ["assets/css/fonts.min.css"],
             },
-            active: function () {
+            active: function() {
                 sessionStorage.fonts = true;
             },
         });
@@ -201,6 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: 100vh;
             margin: 0;
         }
+
         .card {
             background-color: rgba(0, 0, 0, 0.7);
             border: none;
@@ -210,34 +213,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 400px;
             width: 100%;
         }
+
         .card-body {
             padding: 2.5rem;
         }
+
         .error {
             color: #dc3545;
             margin-bottom: 1.5rem;
             font-weight: 500;
             text-align: center;
         }
+
         .input-group-text {
             background-color: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
         }
+
         .form-control {
             background-color: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             border-radius: 5px;
         }
+
         .form-control::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
+
         .form-control:focus {
             background-color: rgba(255, 255, 255, 0.2);
             box-shadow: none;
             color: white;
         }
+
         .btn-primary {
             background-color: #007bff;
             border: none;
@@ -246,31 +256,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
             transform: translateY(-2px);
         }
+
         .login-title {
             color: white;
             font-family: 'Public Sans', sans-serif;
             font-weight: 600;
             font-size: 2rem;
         }
+
         .back-link {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             transition: color 0.3s ease;
         }
+
         .back-link:hover {
             color: white;
             text-decoration: underline;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
     <main>
         <div class="container">
@@ -324,4 +347,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
 </body>
+
 </html>

@@ -5,14 +5,14 @@ include('db_connection.php');
 // Function to check if a table exists
 function tableExists($conn, $table)
 {
-  $result = $conn->query("SHOW TABLES LIKE '$table'");
-  return $result->num_rows > 0;
+    $result = $conn->query("SHOW TABLES LIKE '$table'");
+    return $result->num_rows > 0;
 }
 
 // Array of table creation queries
 $tables = [
-  // Table: admin
-  "admin" => "
+    // Table: admin
+    "admin" => "
         CREATE TABLE IF NOT EXISTS `admin` (
             `id` varchar(111) NOT NULL,
             `fullname` varchar(111) NOT NULL,
@@ -23,8 +23,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: arm
-  "arm" => "
+    // Table: arm
+    "arm" => "
         CREATE TABLE IF NOT EXISTS `arm` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `arm` varchar(222) NOT NULL,
@@ -32,8 +32,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: assignments
-  "assignments" => "
+    // Table: assignments
+    "assignments" => "
         CREATE TABLE IF NOT EXISTS `assignments` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `subject_name` varchar(111) NOT NULL,
@@ -43,8 +43,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: bills
-  "bills" => "
+    // Table: bills
+    "bills" => "
         CREATE TABLE IF NOT EXISTS `bills` (
             `productID` varchar(222) NOT NULL,
             `productname` varchar(222) NOT NULL,
@@ -57,8 +57,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: bills1
-  "bills1" => "
+    // Table: bills1
+    "bills1" => "
         CREATE TABLE IF NOT EXISTS `bills1` (
             `productID` varchar(222) NOT NULL,
             `productname` varchar(222) NOT NULL,
@@ -71,8 +71,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: bills2
-  "bills2" => "
+    // Table: bills2
+    "bills2" => "
         CREATE TABLE IF NOT EXISTS `bills2` (
             `productID` varchar(222) NOT NULL,
             `productname` varchar(222) NOT NULL,
@@ -85,8 +85,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: bills3
-  "bills3" => "
+    // Table: bills3
+    "bills3" => "
         CREATE TABLE IF NOT EXISTS `bills3` (
             `productID` varchar(222) NOT NULL,
             `productname` varchar(222) NOT NULL,
@@ -99,27 +99,25 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: bursary
-  "bursary" => "
-            CREATE TABLE IF NOT EXISTS `bursary` (
-            `id` VARCHAR(111) NOT NULL,
-            `name` VARCHAR(111) NOT NULL,
-            `gender` VARCHAR(111) NOT NULL,
-            `class` VARCHAR(111) NOT NULL,
-            `arm` VARCHAR(111) NOT NULL,
-            `session` VARCHAR(111) NOT NULL,
-            `term` VARCHAR(111) NOT NULL,
-            `hostel` VARCHAR(111) NOT NULL,
-            `fee` DECIMAL(10, 2) NOT NULL,
-            `paid` DECIMAL(10, 2) NOT NULL,
-            `outstanding` DECIMAL(10, 2) NOT NULL,
-            PRIMARY KEY (`id`, `session`, `term`),
-            CONSTRAINT `fk_bursary_student_id` FOREIGN KEY (`id`) REFERENCES `students` (`id`)
+    // Table: bursary
+    "bursary" => "
+        CREATE TABLE IF NOT EXISTS `bursary` (
+            `id` varchar(111) NOT NULL,
+            `name` varchar(111) NOT NULL,
+            `gender` varchar(111) NOT NULL,
+            `class` varchar(111) NOT NULL,
+            `arm` varchar(111) NOT NULL,
+            `session` varchar(111) NOT NULL,
+            `term` varchar(111) NOT NULL,
+            `hostel` varchar(111) NOT NULL,
+            `fee` varchar(111) NOT NULL,
+            `paid` varchar(111) NOT NULL,
+            `outstanding` varchar(111) NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: calendar
-  "calendar" => "
+    // Table: calendar
+    "calendar" => "
         CREATE TABLE IF NOT EXISTS `calendar` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `date` varchar(222) NOT NULL,
@@ -129,8 +127,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: capacity
-  "capacity" => "
+    // Table: capacity
+    "capacity" => "
         CREATE TABLE IF NOT EXISTS `capacity` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `volume` varchar(111) NOT NULL,
@@ -138,8 +136,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: cbtadmin
-  "cbtadmin" => "
+    // Table: cbtadmin
+    "cbtadmin" => "
         CREATE TABLE IF NOT EXISTS `cbtadmin` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `class` varchar(111) NOT NULL,
@@ -152,8 +150,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: class
-  "class" => "
+    // Table: class
+    "class" => "
         CREATE TABLE IF NOT EXISTS `class` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `class` varchar(222) NOT NULL,
@@ -161,8 +159,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: classcomments
-  "classcomments" => "
+    // Table: classcomments
+    "classcomments" => "
       CREATE TABLE IF NOT EXISTS `classcomments` (
     `id` varchar(111) NOT NULL,
     `name` varchar(111) NOT NULL,
@@ -187,8 +185,8 @@ $tables = [
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ",
 
-  // Table: classteacher
-  "classteacher" => "
+    // Table: classteacher
+    "classteacher" => "
         CREATE TABLE IF NOT EXISTS `classteacher` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `class` varchar(222) NOT NULL,
@@ -197,8 +195,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: courses
-  "courses" => "
+    // Table: courses
+    "courses" => "
         CREATE TABLE IF NOT EXISTS `courses` (
             `id` int(30) NOT NULL AUTO_INCREMENT,
             `course` varchar(100) NOT NULL,
@@ -212,8 +210,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: currency
-  "currency" => "
+    // Table: currency
+    "currency" => "
         CREATE TABLE IF NOT EXISTS `currency` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `rate` varchar(10) NOT NULL,
@@ -221,8 +219,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: currentsession
-  "currentsession" => "
+    // Table: currentsession
+    "currentsession" => "
         CREATE TABLE IF NOT EXISTS `currentsession` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `csession` varchar(222) NOT NULL,
@@ -231,8 +229,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: currentterm
-  "currentterm" => "
+    // Table: currentterm
+    "currentterm" => "
         CREATE TABLE IF NOT EXISTS `currentterm` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `cterm` varchar(11) NOT NULL,
@@ -240,8 +238,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: curriculum
-  "curriculum" => "
+    // Table: curriculum
+    "curriculum" => "
         CREATE TABLE IF NOT EXISTS `curriculum` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `subject_name` varchar(111) NOT NULL,
@@ -252,7 +250,7 @@ $tables = [
     ",
 
     // Attendance
-"attendance" => "
+    "attendance" => "
     CREATE TABLE IF NOT EXISTS attendance (
         id INT AUTO_INCREMENT PRIMARY KEY,
         student_id VARCHAR(50) NOT NULL,
@@ -269,40 +267,21 @@ $tables = [
 ",
 
 
-  // Table: fee
-  "fee" => "
+    // Table: fee
+    "fee" => "
         CREATE TABLE IF NOT EXISTS `fee` (
-            `id` VARCHAR(111) NOT NULL,
-            `class` VARCHAR(111) NOT NULL,
-            `arm` VARCHAR(111) NOT NULL,
-            `term` VARCHAR(111) NOT NULL,
-            `service` VARCHAR(111) NOT NULL,
-            `price` DECIMAL(10, 2) NOT NULL,
-            `hostel` VARCHAR(111) NOT NULL,
-            `session` VARCHAR(111) NOT NULL,
+            `id` varchar(111) NOT NULL,
+            `class` varchar(111) NOT NULL,
+            `service` varchar(111) NOT NULL,
+            `price` int(11) NOT NULL,
+            `hostel` varchar(111) NOT NULL,
+            `session` varchar(111) NOT NULL,
             PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: fee_transactions
-  "fee_transactions" => "
-        CREATE TABLE IF NOT EXISTS `fee_transactions` (
-            `transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
-            `student_id` VARCHAR(222) NOT NULL,
-            `fee_definition_id` VARCHAR(111) NOT NULL,
-            `amount_paid` DECIMAL(10, 2) NOT NULL,
-            `payment_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `payment_method` VARCHAR(50) NOT NULL,
-            `transaction_ref` VARCHAR(255) NULL,
-            `recorded_by` VARCHAR(111) NOT NULL,
-            `session` VARCHAR(111) NOT NULL,
-            `term` VARCHAR(111) NOT NULL,
-            PRIMARY KEY (`transaction_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-  // Table: fees
-  "fees" => "
+    // Table: fees
+    "fees" => "
         CREATE TABLE IF NOT EXISTS `fees` (
             `id` int(30) NOT NULL AUTO_INCREMENT,
             `course_id` int(30) NOT NULL,
@@ -312,8 +291,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: firstcum
-  "firstcum" => "
+    // Table: firstcum
+    "firstcum" => "
         CREATE TABLE IF NOT EXISTS `firstcum` (
             `id` varchar(111) NOT NULL,
             `name` varchar(111) NOT NULL,
@@ -330,8 +309,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: license
-  "license" => "
+    // Table: license
+    "license" => "
         CREATE TABLE IF NOT EXISTS `license` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `license` varchar(111) NOT NULL,
@@ -339,8 +318,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: login
-  "login" => "
+    // Table: login
+    "login" => "
         CREATE TABLE IF NOT EXISTS `login` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `staffname` varchar(222) NOT NULL,
@@ -351,8 +330,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: mail
-  "mail" => "
+    // Table: mail
+    "mail" => "
         CREATE TABLE IF NOT EXISTS `mail` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `subject` varchar(255) NOT NULL,
@@ -365,8 +344,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: mastersheet
-  "mastersheet" => "
+    // Table: mastersheet
+    "mastersheet" => "
         CREATE TABLE IF NOT EXISTS `mastersheet` (
             `id` varchar(111) NOT NULL,
             `name` varchar(222) NOT NULL,
@@ -387,8 +366,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     ",
 
-  // Table: messages
-  "messages" => "
+    // Table: messages
+    "messages" => "
         CREATE TABLE IF NOT EXISTS `messages` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `class` varchar(111) NOT NULL,
@@ -399,8 +378,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: message_list
-  "message_list" => "
+    // Table: message_list
+    "message_list" => "
         CREATE TABLE IF NOT EXISTS `message_list` (
             `id` int(30) NOT NULL AUTO_INCREMENT,
             `conversation_id` int(30) NOT NULL,
@@ -417,8 +396,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: monitoring
-  "monitoring" => "
+    // Table: monitoring
+    "monitoring" => "
         CREATE TABLE IF NOT EXISTS `monitoring` (
             `id` varchar(111) NOT NULL,
             `name` varchar(111) NOT NULL,
@@ -436,8 +415,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: mst_question
-  "mst_question" => "
+    // Table: mst_question
+    "mst_question" => "
         CREATE TABLE IF NOT EXISTS `mst_question` (
             `que_id` int(11) NOT NULL,
             `test_id` int(11) DEFAULT NULL,
@@ -450,18 +429,22 @@ $tables = [
         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: mst_result
-  "mst_result" => "
+    // Table: mst_result
+    "mst_result" => "
         CREATE TABLE IF NOT EXISTS `mst_result` (
             `login` varchar(20) DEFAULT NULL,
             `subject` varchar(111) DEFAULT NULL,
             `test_date` varchar(111) DEFAULT NULL,
-            `score` int(11) DEFAULT NULL
+            `score` int(11) DEFAULT NULL,
+            `class` varchar(111) DEFAULT NULL,
+            `arm` varchar(111) DEFAULT NULL,
+            `term` varchar(111) DEFAULT NULL,
+            `session` varchar(111) DEFAULT NULL,
         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: mst_useranswer
-  "mst_useranswer" => "
+    // Table: mst_useranswer
+    "mst_useranswer" => "
         CREATE TABLE IF NOT EXISTS `mst_useranswer` (
             `sess_id` varchar(80) DEFAULT NULL,
             `subject` varchar(111) DEFAULT NULL,
@@ -475,8 +458,8 @@ $tables = [
         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: nextterm
-  "nextterm" => "
+    // Table: nextterm
+    "nextterm" => "
         CREATE TABLE IF NOT EXISTS `nextterm` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `term` varchar(255) NOT NULL,
@@ -485,8 +468,8 @@ $tables = [
             PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
-      // Table: notices
-  "notices" => "
+    // Table: notices
+    "notices" => "
         CREATE TABLE IF NOT EXISTS `notices` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `title` VARCHAR(255) NOT NULL,
@@ -495,8 +478,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: notes
-  "notes" => "
+    // Table: notes
+    "notes" => "
         CREATE TABLE IF NOT EXISTS `notes` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `subject_name` varchar(111) NOT NULL,
@@ -506,8 +489,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: parent
-  "parent" => "
+    // Table: parent
+    "parent" => "
         CREATE TABLE IF NOT EXISTS `parent` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `name` varchar(222) NOT NULL,
@@ -520,8 +503,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: payments
-  "payments" => "
+    // Table: payments
+    "payments" => "
         CREATE TABLE IF NOT EXISTS `payments` (
             `id` int(30) NOT NULL AUTO_INCREMENT,
             `ef_id` varchar(30) NOT NULL,
@@ -532,8 +515,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: prebursary
-  "prebursary" => "
+    // Table: prebursary
+    "prebursary" => "
         CREATE TABLE IF NOT EXISTS `prebursary` (
             `id` varchar(111) NOT NULL,
             `name` varchar(111) NOT NULL,
@@ -551,8 +534,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: principalcomments
-  "principalcomments" => "
+    // Table: principalcomments
+    "principalcomments" => "
         CREATE TABLE IF NOT EXISTS `principalcomments` (
             `id` varchar(111) NOT NULL,
             `name` varchar(222) NOT NULL,
@@ -564,8 +547,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: Promote
-  "promote" => "
+    // Table: Promote
+    "promote" => "
        CREATE TABLE IF NOT EXISTS `promote` (
             `id` varchar(111) NOT NULL,
             `name` varchar(222) NOT NULL,
@@ -578,7 +561,7 @@ $tables = [
     ",
 
     // Table: product
-  "product" => "
+    "product" => "
         CREATE TABLE IF NOT EXISTS `product` (
             `productid` int(11) NOT NULL AUTO_INCREMENT,
             `productname` varchar(222) NOT NULL,
@@ -595,8 +578,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: ques
-  "ques" => "
+    // Table: ques
+    "ques" => "
         CREATE TABLE IF NOT EXISTS `ques` (
             `id` int(11) NOT NULL,
             `question` varchar(1111) NOT NULL,
@@ -614,8 +597,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: question
-  "question" => "
+    // Table: question
+    "question" => "
         CREATE TABLE IF NOT EXISTS `question` (
             `que_id` int(11) NOT NULL AUTO_INCREMENT,
             `subject` varchar(111) NOT NULL,
@@ -633,8 +616,8 @@ $tables = [
         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: receipt
-  "receipt" => "
+    // Table: receipt
+    "receipt" => "
         CREATE TABLE IF NOT EXISTS `receipt` (
             `rproduct` varchar(111) NOT NULL,
             `rqty` varchar(111) NOT NULL,
@@ -644,8 +627,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: regno
-  "regno" => "
+    // Table: regno
+    "regno" => "
         CREATE TABLE IF NOT EXISTS `regno` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `sindex` varchar(222) NOT NULL,
@@ -655,8 +638,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: result
-  "result" => "
+    // Table: result
+    "result" => "
         CREATE TABLE IF NOT EXISTS `result` (
             `id` varchar(111) NOT NULL,
             `name` varchar(111) NOT NULL,
@@ -672,8 +655,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: secondcum
-  "secondcum" => "
+    // Table: secondcum
+    "secondcum" => "
         CREATE TABLE IF NOT EXISTS `secondcum` (
             `id` varchar(111) NOT NULL,
             `name` varchar(111) NOT NULL,
@@ -690,8 +673,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: student
-  "student" => "
+    // Table: student
+    "student" => "
         CREATE TABLE IF NOT EXISTS `student` (
             `id` int(30) NOT NULL AUTO_INCREMENT,
             `id_no` varchar(100) NOT NULL,
@@ -704,8 +687,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: students
-  "students" => "
+    // Table: students
+    "students" => "
         CREATE TABLE IF NOT EXISTS `students` (
             `id` varchar(222) NOT NULL,
             `name` varchar(222) NOT NULL,
@@ -755,8 +738,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: student_ef_list
-  "student_ef_list" => "
+    // Table: student_ef_list
+    "student_ef_list" => "
         CREATE TABLE IF NOT EXISTS `student_ef_list` (
             `id` int(30) NOT NULL AUTO_INCREMENT,
             `student_id` varchar(30) NOT NULL,
@@ -768,8 +751,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: sub
-  "sub" => "
+    // Table: sub
+    "sub" => "
         CREATE TABLE IF NOT EXISTS `sub` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `expdate` varchar(111) NOT NULL,
@@ -777,8 +760,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: subject
-  "subject" => "
+    // Table: subject
+    "subject" => "
         CREATE TABLE IF NOT EXISTS `subject` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `subject` varchar(222) NOT NULL,
@@ -788,8 +771,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: suppliers
-  "suppliers" => "
+    // Table: suppliers
+    "suppliers" => "
         CREATE TABLE IF NOT EXISTS `suppliers` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `product` varchar(222) NOT NULL,
@@ -800,8 +783,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: tblbooknumber
-  "tblbooknumber" => "
+    // Table: tblbooknumber
+    "tblbooknumber" => "
         CREATE TABLE IF NOT EXISTS `tblbooknumber` (
             `ID` int(11) NOT NULL AUTO_INCREMENT,
             `BOOKTITLE` varchar(255) NOT NULL,
@@ -814,8 +797,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tblbooks
-  "tblbooks" => "
+    // Table: tblbooks
+    "tblbooks" => "
         CREATE TABLE IF NOT EXISTS `tblbooks` (
             `BookID` int(11) NOT NULL AUTO_INCREMENT,
             `AccessionNo` varchar(90) NOT NULL,
@@ -837,8 +820,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tblborrow
-  "tblborrow" => "
+    // Table: tblborrow
+    "tblborrow" => "
         CREATE TABLE IF NOT EXISTS `tblborrow` (
             `BorrowId` int(11) NOT NULL AUTO_INCREMENT,
             `AccessionNo` varchar(90) NOT NULL,
@@ -854,8 +837,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tblborrower
-  "tblborrower" => "
+    // Table: tblborrower
+    "tblborrower" => "
         CREATE TABLE IF NOT EXISTS `tblborrower` (
             `IDNO` int(11) NOT NULL AUTO_INCREMENT,
             `BorrowerId` varchar(90) NOT NULL,
@@ -875,8 +858,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tblcategory
-  "tblcategory" => "
+    // Table: tblcategory
+    "tblcategory" => "
         CREATE TABLE IF NOT EXISTS `tblcategory` (
             `CategoryId` int(11) NOT NULL AUTO_INCREMENT,
             `Category` varchar(125) NOT NULL,
@@ -885,8 +868,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tbllogs
-  "tbllogs" => "
+    // Table: tbllogs
+    "tbllogs" => "
         CREATE TABLE IF NOT EXISTS `tbllogs` (
             `LogId` int(11) NOT NULL AUTO_INCREMENT,
             `UserId` int(11) NOT NULL,
@@ -896,8 +879,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tblpayment
-  "tblpayment" => "
+    // Table: tblpayment
+    "tblpayment" => "
         CREATE TABLE IF NOT EXISTS `tblpayment` (
             `PaymentId` int(11) NOT NULL AUTO_INCREMENT,
             `BorrowId` int(11) NOT NULL,
@@ -910,8 +893,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tblreturn
-  "tblreturn" => "
+    // Table: tblreturn
+    "tblreturn" => "
         CREATE TABLE IF NOT EXISTS `tblreturn` (
             `ReturnId` int(11) NOT NULL AUTO_INCREMENT,
             `BorrowId` int(11) NOT NULL,
@@ -922,8 +905,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tbluser
-  "tbluser" => "
+    // Table: tbluser
+    "tbluser" => "
         CREATE TABLE IF NOT EXISTS `tbluser` (
             `UserId` int(11) NOT NULL AUTO_INCREMENT,
             `Fullname` varchar(124) NOT NULL,
@@ -935,8 +918,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tb_chat
-  "tb_chat" => "
+    // Table: tb_chat
+    "tb_chat" => "
         CREATE TABLE IF NOT EXISTS `tb_chat` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `chat` longtext NOT NULL,
@@ -944,8 +927,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tb_pm
-  "tb_pm" => "
+    // Table: tb_pm
+    "tb_pm" => "
         CREATE TABLE IF NOT EXISTS `tb_pm` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `username` varchar(200) NOT NULL,
@@ -957,8 +940,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: tb_users
-  "tb_users" => "
+    // Table: tb_users
+    "tb_users" => "
         CREATE TABLE IF NOT EXISTS `tb_users` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `staffname` varchar(200) NOT NULL,
@@ -971,8 +954,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: teachers
-"teachers" => "
+    // Table: teachers
+    "teachers" => "
     CREATE TABLE IF NOT EXISTS `teachers` (
         `staffid` INT NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(222) NOT NULL,
@@ -983,8 +966,8 @@ $tables = [
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ",
 
-  // Table: testimonial
-  "testimonial" => "
+    // Table: testimonial
+    "testimonial" => "
         CREATE TABLE IF NOT EXISTS `testimonial` (
             `id` varchar(222) NOT NULL,
             `name` varchar(222) NOT NULL,
@@ -996,8 +979,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: threads
-  "threads" => "
+    // Table: threads
+    "threads" => "
         CREATE TABLE IF NOT EXISTS `threads` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `title` varchar(255) NOT NULL,
@@ -1008,8 +991,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: timer
-  "timer" => "
+    // Table: timer
+    "timer" => "
         CREATE TABLE IF NOT EXISTS `timer` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `studentid` varchar(50) NOT NULL,
@@ -1018,8 +1001,8 @@ $tables = [
         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-  // Table: timetable
-  "timetable" => "
+    // Table: timetable
+    "timetable" => "
         CREATE TABLE IF NOT EXISTS `timetable` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `day` varchar(111) NOT NULL,
@@ -1032,8 +1015,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: transactiondetails
-  "transactiondetails" => "
+    // Table: transactiondetails
+    "transactiondetails" => "
         CREATE TABLE IF NOT EXISTS `transactiondetails` (
             `transactionID` varchar(222) NOT NULL,
             `studentname` varchar(200) NOT NULL,
@@ -1049,8 +1032,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: tuck
-  "tuck" => "
+    // Table: tuck
+    "tuck" => "
         CREATE TABLE IF NOT EXISTS `tuck` (
             `regno` varchar(222) NOT NULL,
             `studentname` varchar(222) NOT NULL,
@@ -1064,8 +1047,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: users
-  "users" => "
+    // Table: users
+    "users" => "
         CREATE TABLE IF NOT EXISTS `users` (
             `id` varchar(30) NOT NULL,
             `name` text NOT NULL,
@@ -1076,8 +1059,25 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-  // Table: posts (must be after threads due to foreign key)
-  "posts" => "
+    // Table: cbt_score
+    "cbt_score" => "
+        CREATE TABLE IF NOT EXISTS `cbt_score` (
+            `id` VARCHAR(30) NOT NULL PRIMARY KEY,
+            `login` VARCHAR(255) NOT NULL,
+            `subject` VARCHAR(255) NOT NULL,
+            `class` VARCHAR(255) NOT NULL,
+            `arm` VARCHAR(255) NOT NULL,
+            `term` VARCHAR(255) NOT NULL,
+            `session` VARCHAR(255) NOT NULL,
+            `test_date` VARCHAR(255) NOT NULL,
+            `score` VARCHAR(255) NOT NULL,
+             PRIMARY KEY (`id`),
+            UNIQUE KEY `unique_exam` (`login`, `subject`, `class`, `arm`, `term`, `session`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+
+    // Table: posts (must be after threads due to foreign key)
+    "posts" => "
         CREATE TABLE IF NOT EXISTS `posts` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `thread_id` int(11) NOT NULL,
@@ -1090,52 +1090,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-    // this is the blog post table for the frontend
-     "blog_posts" => "
-        CREATE TABLE `blog_posts` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `title` varchar(255) NOT NULL,
-            `content` text NOT NULL,
-            `author_id` int(11) NOT NULL,
-            `category_id` int(11) NOT NULL,
-            `image_path` varchar(255) DEFAULT NULL,
-            `views` INT DEFAULT 0,
-            `likes` INT DEFAULT 0,
-            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-            PRIMARY KEY (`id`),
-            KEY `author_id` (`author_id`),
-            KEY `category_id` (`category_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-    // this is the comments table for the blog_posts
-     'comments' => "
-        CREATE TABLE `comments` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `post_id` int(11) NOT NULL,
-            `name` varchar(255) NOT NULL,
-            `email` varchar(255) NOT NULL,
-            `content` text NOT NULL,
-            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-            PRIMARY KEY (`id`),
-            KEY `post_id` (`post_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-    // this is the categories table for the blog posts
-      'categories' => "
-        CREATE TABLE `categories` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `name` varchar(50) NOT NULL,
-            `description` text DEFAULT NULL,
-            PRIMARY KEY (`id`),
-            UNIQUE KEY `name` (`name`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-
-  // Table: parent_student
-  "parent_student" => "
+    // Table: parent_student
+    "parent_student" => "
         CREATE TABLE IF NOT EXISTS `parent_student` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `parent_id` int(11) NOT NULL,
@@ -1151,54 +1107,52 @@ $tables = [
 
 // Create tables
 foreach ($tables as $tableName => $query) {
-  if (!tableExists($conn, $tableName)) {
-    if ($conn->query($query) === TRUE) {
-      // Table created successfully
-    } else {
-      error_log("Error creating table $tableName: " . $conn->error);
+    if (!tableExists($conn, $tableName)) {
+        if ($conn->query($query) === TRUE) {
+            // Table created successfully
+        } else {
+            error_log("Error creating table $tableName: " . $conn->error);
+        }
     }
-  }
 }
 
 // Insert initial data
 if (tableExists($conn, 'capacity')) {
-  $result = $conn->query("SELECT COUNT(*) as count FROM `capacity`");
-  $row = $result->fetch_assoc();
-  if ($row['count'] == 0) {
-    $conn->query("INSERT INTO `capacity` (`id`, `volume`) VALUES (1, '50')");
-  }
+    $result = $conn->query("SELECT COUNT(*) as count FROM `capacity`");
+    $row = $result->fetch_assoc();
+    if ($row['count'] == 0) {
+        $conn->query("INSERT INTO `capacity` (`id`, `volume`) VALUES (1, '50')");
+    }
 }
 
 if (tableExists($conn, 'currentsession')) {
-  $result = $conn->query("SELECT COUNT(*) as count FROM `currentsession`");
-  $row = $result->fetch_assoc();
-  if ($row['count'] == 0) {
-    $conn->query("INSERT INTO `currentsession` (`id`, `csession`, `regyr`) VALUES (1, '2024/2025', '25')");
-  }
+    $result = $conn->query("SELECT COUNT(*) as count FROM `currentsession`");
+    $row = $result->fetch_assoc();
+    if ($row['count'] == 0) {
+        $conn->query("INSERT INTO `currentsession` (`id`, `csession`, `regyr`) VALUES (1, '2024/2025', '25')");
+    }
 }
 
 if (tableExists($conn, 'currentterm')) {
-  $result = $conn->query("SELECT COUNT(*) as count FROM `currentterm`");
-  $row = $result->fetch_assoc();
-  if ($row['count'] == 0) {
-    $conn->query("INSERT INTO `currentterm` (`id`, `cterm`) VALUES (1, '1st Term')");
-  }
+    $result = $conn->query("SELECT COUNT(*) as count FROM `currentterm`");
+    $row = $result->fetch_assoc();
+    if ($row['count'] == 0) {
+        $conn->query("INSERT INTO `currentterm` (`id`, `cterm`) VALUES (1, '1st Term')");
+    }
 }
 
 if (tableExists($conn, 'nextterm')) {
-  $result = $conn->query("SELECT COUNT(*) as count FROM `nextterm`");
-  $row = $result->fetch_assoc();
-  if ($row['count'] == 0) {
-    $conn->query("INSERT INTO `nextterm` (`id`, `term`, `session`, `Next`) VALUES (1, '1st Term', '2024/2025', '10-04-2025')");
-  }
+    $result = $conn->query("SELECT COUNT(*) as count FROM `nextterm`");
+    $row = $result->fetch_assoc();
+    if ($row['count'] == 0) {
+        $conn->query("INSERT INTO `nextterm` (`id`, `term`, `session`, `Next`) VALUES (1, '1st Term', '2024/2025', '10-04-2025')");
+    }
 }
 
 if (tableExists($conn, 'sub')) {
-  $result = $conn->query("SELECT COUNT(*) as count FROM `sub`");
-  $row = $result->fetch_assoc();
-  if ($row['count'] == 0) {
-    $conn->query("INSERT INTO `sub` (`id`, `expdate`) VALUES (1, '12/19/2024')");
-  }
+    $result = $conn->query("SELECT COUNT(*) as count FROM `sub`");
+    $row = $result->fetch_assoc();
+    if ($row['count'] == 0) {
+        $conn->query("INSERT INTO `sub` (`id`, `expdate`) VALUES (1, '12/19/2024')");
+    }
 }
-
-?>

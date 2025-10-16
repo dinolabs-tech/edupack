@@ -1,29 +1,45 @@
 <?php include('components/admin_logic.php');
 
-// ADD QUESTION ==============================
+
 if (isset($_POST['delete'])) {
-  // SQL to delete all records from mst_result
-  $sql = "DELETE FROM mst_result";
+  // Step 1: Make sure there's a unique key in cbt_score to identify duplicates
+  // You should ensure in your database that:
+  // UNIQUE KEY unique_exam (login, subject, class, arm, term, session)
+  // exists in cbt_score table.
 
-  // SQL to delete all records from mst_useranswer
-  $sql0 = "DELETE FROM mst_useranswer";
+  // Step 2: Insert or update from mst_result into cbt_score
+  $insert_sql = "
+    INSERT INTO cbt_score (login, subject, class, arm, term, session, test_date, score)
+    SELECT login, subject, class, arm, term, session, test_date, score
+    FROM mst_result
+    ON DUPLICATE KEY UPDATE
+      test_date = VALUES(test_date),
+      score = VALUES(score)
+  ";
 
-  // SQL to delete all records from timer
-  $sql1 = "DELETE FROM timer";
+  if ($conn->query($insert_sql) === TRUE) {
+    // Step 3: If insert/update successful, delete records from related tables
+    $sql = "DELETE FROM mst_result";
+    $sql0 = "DELETE FROM mst_useranswer";
+    $sql1 = "DELETE FROM timer";
 
-  // Execute the queries and check if all are successful
-  if (
-    $conn->query($sql) === TRUE &&
-    $conn->query($sql0) === TRUE &&
-    $conn->query($sql1) === TRUE
-  ) {
-    echo '<script type="text/javascript">
-      alert("Exam Initiated successfully!\nStudents can take their exams");
+    if (
+      $conn->query($sql) === TRUE &&
+      $conn->query($sql0) === TRUE &&
+      $conn->query($sql1) === TRUE
+    ) {
+      echo '<script type="text/javascript">
+        alert("Exam Initiated successfully!\nStudents can take their exams");
       </script>';
+    } else {
+      echo "Error Initiating Exams: " . $conn->error;
+    }
   } else {
-    echo "Error Initiating Exams: " . $conn->error;
+    echo "Error inserting/updating cbt_score: " . $conn->error;
   }
 }
+
+
 
 
 
@@ -180,7 +196,6 @@ if ($session_result) {
                       <!-- Dropdowns & Subject Input -->
                       <div class="row align-items-end g-2 mt-3">
                         <div class="col-md-2">
-                          <label for="class" class="form-label">Class</label>
                           <select class="form-control form-select" id="class" name="class">
                             <option value="" selected disabled>Select Class</option>
                             <?= $class_options ?>
@@ -188,7 +203,6 @@ if ($session_result) {
                         </div>
 
                         <div class="col-md-2">
-                          <label for="arm" class="form-label">Arm</label>
                           <select class="form-control form-select" id="arm" name="arm">
                             <option value="" selected disabled>Select Arm</option>
                             <?= $arm_options ?>
@@ -196,40 +210,42 @@ if ($session_result) {
                         </div>
 
                         <div class="col-md-2">
-                          <label for="term" class="form-label">Term</label>
                           <select class="form-control form-select" id="term" name="term">
+                            <option value="" selected disabled>Select Term</option>
                             <?= $term_options ?>
                           </select>
                         </div>
 
                         <div class="col-md-2">
-                          <label for="session" class="form-label">Session</label>
                           <select class="form-control form-select" id="session" name="session">
+                            <option value="" selected disabled>Select Session</option>
                             <?= $session_options ?>
                           </select>
                         </div>
 
                         <div class="col-md-4">
-                          <label for="subject" class="form-label">Subject</label>
                           <select class="form-control form-select" id="subject" name="subject">
+                            <option value="" selected disabled>Select Subject</option>
                             <?= $subject_options ?>
                           </select>
                         </div>
                       </div>
 
-                      <!-- Submit Button -->
+
+
                       <div class="row mt-3">
-                        <div class="col-md-8">
-                          <button type="submit" class="btn btn-success btn-icon btn-round ps-1"><span class="btn-label">
+                        <div class="col-md-12 text-center">
+                          <!-- Submit Button -->
+                          <button type="submit" class="btn btn-success btn-icon btn-round ps-1 mx-3"><span class="btn-label">
                               <i class="fa fa-cloud-upload-alt"></i></button>
+
+                          <!-- Download Template Link -->
+                          <a href="download_template.php" class="btn btn-warning btn-icon btn-round ps-1"><span class="btn-label">
+                              <i class="fa fa-cloud-download-alt"></i></a>
                         </div>
                       </div>
 
-                      <!-- Download Template Link -->
-                      <div class="mt-2">
-                        <a href="download_template.php" class="btn btn-warning btn-icon btn-round ps-1"><span class="btn-label">
-                            <i class="fa fa-cloud-download-alt"></i></a>
-                      </div>
+
                     </form>
 
                     <div id="errorMsg" class="alert alert-danger d-none"></div>
@@ -251,70 +267,84 @@ if ($session_result) {
                     <div class="card-title">Uploaded Questions</div>
                   </div>
                 </div>
+
                 <div class="card-body pb-0">
                   <div class="mb-4 mt-2">
+                    <?php
+                    // Query to get distinct class, arm, and subject values
+                    $query  = "SELECT DISTINCT class, arm, subject FROM question ORDER BY class, arm, subject";
+                    $result = mysqli_query($conn, $query);
 
-                    <p>
-                      <?php
-                      // Query to get distinct class, arm, and subject values
-                      $query  = "SELECT DISTINCT class, arm, subject FROM question ORDER BY class, arm, subject";
-                      $result = mysqli_query($conn, $query);
+                    $current_class = '';
+                    $section_open = false;
 
-                      $current_class = '';
-                      while ($row = mysqli_fetch_assoc($result)) {
-                        // Start a new section when class changes
-                        if ($current_class != $row['class']) {
-                          if ($current_class != '') { ?>
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      // Start a new section when class changes
+                      if ($current_class != $row['class']) {
+                        // Close previous section if open
+                        if ($section_open) {
+                          echo '</div></div>';
+                        }
+
+                        $current_class = $row['class'];
+                        $section_open = true; ?>
+
+                         <!-- Start new class section -->
+                        <div class="mb-4">
+                          <h5 class="border-bottom pb-2 text-primary">
+                            <?= htmlspecialchars($current_class) . ' - ' . htmlspecialchars($row['arm']) ?>
+                          </h5>
+                          <div class="row g-3">
+                    <?php
+                      }
+                    ?>
+                      <!-- Each subject card -->
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card shadow-sm border-0 h-100">
+                          <div class="card-body d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold text-secondary"><?= htmlspecialchars($row['subject']) ?></span>
+                            <form method="post" action="" class="m-0">
+                              <input type="hidden" name="class" value="<?= htmlspecialchars($row['class']) ?>">
+                              <input type="hidden" name="arm" value="<?= htmlspecialchars($row['arm']) ?>">
+                              <input type="hidden" name="subject" value="<?= htmlspecialchars($row['subject']) ?>">
+                              <button type="submit" name="delete_subject" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                    <?php
+                    }
+
+                    // Close the last section
+                    if ($section_open) {
+                      echo '</div></div>';
+                    }
+
+                    $conn->close();
+                    ?>
                   </div>
-                <?php }
-                          $current_class = $row['class']; ?>
-                <div class="mb-3">
-                  <h6 class="border-bottom pb-1"><?= htmlspecialchars($current_class) . ' - ' . htmlspecialchars($row['arm']) ?></h6>
-                <?php } ?>
 
-                <!-- // Display the arm and subject with a delete button on the far right. -->
-                <!-- // The form sends the class and arm values (used for deletion) when the button is clicked. -->
-                <p class="ml-3" style="display: flex; justify-content: space-between; align-items: center;">
-                  <span><?= htmlspecialchars($row['subject']) ?></span>
-                <form method="post" action="" style="margin: 0;">
-                  <input type="hidden" name="class" value="<?= htmlspecialchars($row['class']) ?>">
-                  <input type="hidden" name="arm" value="<?= htmlspecialchars($row['arm']) ?>">
-                  <input type="hidden" name="subject" value="<?= htmlspecialchars($row['subject']) ?>">
-                  <button type="submit" name="delete_subject" class="btn btn-danger"><span class="btn-label">
-                      <i class="fa fa-trash"></i></button>
-                </form>
-
-                </p>
-              <?php }
-
-                      // Close the last class section div if needed
-                      if ($current_class != '') { ?>
-                </div>
-              <?php }
-
-                      // Close the database connection
-                      $conn->close();
-              ?>
-              </p>
 
                 </div>
               </div>
             </div>
+
+
           </div>
 
-
         </div>
-
       </div>
+
+      </script>
+      <?php include('footer.php'); ?>
     </div>
 
-    </script>
-    <?php include('footer.php'); ?>
-  </div>
-
-  <!-- Custom template | don't include it in your project! -->
-  <?php include('cust-color.php'); ?>
-  <!-- End Custom template -->
+    <!-- Custom template | don't include it in your project! -->
+    <?php include('cust-color.php'); ?>
+    <!-- End Custom template -->
   </div>
   <?php include('scripts.php'); ?>
 
