@@ -20,6 +20,7 @@ if (isset($_POST["message"])) {
     // Retrieve user input from the POST request.
     $user_email = $_POST["email"];   // User's email address.
     $user_name = $_POST["name"];     // User's name.
+    $user_subject = $_POST["subject"]; // User's message subject.
     $user_message = $_POST["message"]; // User's message content.
 
     try {
@@ -43,7 +44,7 @@ if (isset($_POST["message"])) {
         $mailToAdmin->Port       = 587;
 
         // Set the sender's email address and name for the email sent to the admin.
-        $mailToAdmin->setFrom('enquiries@dinolabstech.com', 'Website Contact Form');
+        $mailToAdmin->setFrom('enquiries@dinolabstech.com', 'Edupack Contact Form');
         // Add the recipient (your company's email address).
         $mailToAdmin->addAddress('dinolabs.tech@gmail.com'); // Company email address, either Gmail or webmail.
         // Set the reply-to address to the user's email, so you can reply directly to them.
@@ -52,11 +53,12 @@ if (isset($_POST["message"])) {
         // Set email format to HTML.
         $mailToAdmin->isHTML(true);
         // Set the subject line for the admin's email.
-        $mailToAdmin->Subject = "New Contact Form Submission from $user_name";
-        // Set the body of the email to the admin, including user's name, email, and message.
+        $mailToAdmin->Subject = "New Contact Form Submission: {$user_subject} from $user_name";
+        // Set the body of the email to the admin, including user's name, email, subject, and message.
         $mailToAdmin->Body = "
             <p><strong>Name:</strong> {$user_name}</p>
             <p><strong>Email:</strong> {$user_email}</p>
+            <p><strong>Subject:</strong> {$user_subject}</p>
             <p><strong>Message:</strong><br>{$user_message}</p>
         ";
         // Send the email to the admin.

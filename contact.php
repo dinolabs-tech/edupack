@@ -88,7 +88,18 @@ session_start();
             <div class="contact-form-wrapper">
               <h2 class="text-center mb-4">Get in Touch</h2>
 
-              <form action="forms/contact.php" method="post" class="php-email-form">
+              <?php
+              if (isset($_SESSION['success_message'])) {
+                  echo '<div class="alert alert-success text-center">' . $_SESSION['success_message'] . '</div>';
+                  unset($_SESSION['success_message']);
+              }
+              if (isset($_SESSION['error_message'])) {
+                  echo '<div class="alert alert-danger text-center">' . $_SESSION['error_message'] . '</div>';
+                  unset($_SESSION['error_message']);
+              }
+              ?>
+
+              <form action="send-message.php" method="post" class="php-email-form">
                 <div class="row g-3">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -112,7 +123,7 @@ session_start();
                     <div class="form-group">
                       <div class="input-with-icon">
                         <i class="bi bi-text-left"></i>
-                        <input type="text" class="form-control" name="sbject" placeholder="Subject" required="">
+                        <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
                       </div>
                     </div>
                   </div>
@@ -124,12 +135,6 @@ session_start();
                         <textarea class="form-control" name="message" placeholder="Write Message..." style="height: 180px" required=""></textarea>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="col-12">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your message has been sent. Thank you!</div>
                   </div>
 
                   <div class="col-12 text-center">
