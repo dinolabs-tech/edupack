@@ -21,6 +21,14 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+  // --- Current Session and Term ---
+  $getSession = $conn->query("SELECT csession FROM currentsession WHERE id = 1");
+  $csession = $getSession->fetch_assoc()['csession'] ?? '';
+
+  $getTerm = $conn->query("SELECT cterm FROM currentterm WHERE id = 1");
+  $term = $getTerm->fetch_assoc()['cterm'] ?? '';
+
+  
 // --- Handle Form Submission ---
 if (isset($_POST['checksubmit'])) {
   $check = trim($_POST['check']); // student ID
@@ -40,7 +48,7 @@ if (isset($_POST['checksubmit'])) {
             c.score
         FROM students s
         INNER JOIN cbt_score c ON s.id = c.login
-        WHERE s.id = ?
+        WHERE s.id = ? AND c.term='$term' AND c.session = '$csession'
     ");
   $stmt->bind_param("s", $check);
   $stmt->execute();
@@ -69,22 +77,35 @@ if (isset($_POST['checksubmit'])) {
   // Move pointer back to start (since we already fetched one row)
   $result->data_seek(0);
 
-  // --- Current Session and Term ---
-  $getSession = $conn->query("SELECT csession FROM currentsession WHERE id = 1");
-  $csession = $getSession->fetch_assoc()['csession'] ?? '';
 
-  $getTerm = $conn->query("SELECT cterm FROM currentterm WHERE id = 1");
-  $term = $getTerm->fetch_assoc()['cterm'] ?? '';
-
-  // --- Total Scores ---
-  $sk = $conn->query("SELECT SUM(score) AS total_score FROM cbt_score WHERE login='$id'");
+  // --- Total Scores and Percentage Calculation ---
+  $sk = $conn->query("SELECT SUM(score) AS total_score FROM cbt_score WHERE login='$id' AND term='$cbt_term' AND session = '$cbt_session'");
   $appostk = $sk->fetch_assoc();
-  $score = $appostk['total_score'] ?? 0;
-  $score1 = $score * 4;
+  $total_correct_answers = $appostk['total_score'] ?? 0; // Assuming 'score' in cbt_score is correct answers
 
-  // Calculate percentage
-   $maxScreeningScore = 100;
-  $percentage = $maxScreeningScore > 0 ? round(($score1 / $maxScreeningScore) * 100, 2) : 0;
+  // Get the subjects the student was tested on for the specific session and term
+  $subjects_query = mysqli_query($conn, "SELECT DISTINCT subject FROM cbt_score WHERE login='$id' AND term='$cbt_term' AND session = '$cbt_session'");
+  $subjects_taken = [];
+  while ($row = mysqli_fetch_assoc($subjects_query)) {
+      $subjects_taken[] = "'" . mysqli_real_escape_string($conn, $row['subject']) . "'";
+  }
+
+  $total_questions = 0;
+  if (!empty($subjects_taken)) {
+      $subject_list = implode(',', $subjects_taken);
+      // Get the total number of questions for those subjects for the student's class, arm, session, and term
+      $total_questions_query = mysqli_query($conn, "SELECT COUNT(*) as total_questions FROM question WHERE subject IN ($subject_list) AND class='$class' AND arm='$arm' AND session='$cbt_session' AND term='$cbt_term'");
+      $total_questions_row = mysqli_fetch_assoc($total_questions_query);
+      $total_questions = $total_questions_row['total_questions'];
+  }
+
+  $percentage = 0;
+  if ($total_questions > 0) {
+      $percentage = ($total_correct_answers / $total_questions) * 100;
+  }
+  $percentage = round($percentage, 2);
+
+  $score = $total_correct_answers; // Use total_correct_answers for display as 'TOTAL'
 }
 ?>
 

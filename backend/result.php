@@ -14,100 +14,118 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$loginid = $_SESSION['user_id'];		
+// Check if session and term are set
+if (isset($_GET['session'], $_GET['term'])) {
+    $selected_session = $_GET['session'];
+    $selected_term    = $_GET['term'];
+} else {
+    header('Location: login.php');
+    exit();
+}
 
+$loginid = $_SESSION['user_id'];
 $check = $loginid;
 
-// Prepare SQL for students with additional columns: class and arm
-$stmt1 = $conn->prepare("SELECT id, password, class, arm FROM students WHERE id=? AND password=?");
-$stmt1->bind_param("ss", $user, $pass);
-$stmt1->execute();
-$stmt1->store_result();
-// Fetch current term and session
-$current_term_result = $conn->query("SELECT cterm FROM currentterm WHERE id=1");
-if (!$current_term_result) {
-    die("Error fetching current term: " . $conn->error);
-}
-$current_term = $current_term_result->fetch_assoc()['cterm'];
-
-$current_session_result = $conn->query("SELECT csession FROM currentsession WHERE id=1");
-if (!$current_session_result) {
-    die("Error fetching current session: " . $conn->error);
-}
-$current_session = $current_session_result->fetch_assoc()['csession'];
-
-// First, check if the student has taken the exam
-$timi = mysqli_query($conn, "SELECT * FROM mst_result WHERE login = '$loginid'");
-$rowtimer = mysqli_fetch_assoc($timi);
-
-// Check if no record was found or if the login value is not what we expect
-if (!$rowtimer || $rowtimer['login'] == null || $rowtimer['login'] != $check) {
+// Retrieve student registration details
+$sql_student = mysqli_query($conn, "SELECT id, name, gender, class, arm FROM students WHERE id='$loginid'");
+if (!$sql_student || mysqli_num_rows($sql_student) == 0) {
     echo '<script type="text/javascript">
-            alert("You have not taken any Exam. No result for you Yet");
+            alert("Student details not found.");
+            window.location = "students.php";
           </script>';
-    // Optionally, you can uncomment the redirection if needed
-    echo '<script type="text/javascript">window.location = "sublist.php";</script>';
     exit();
+}
+$student_details = mysqli_fetch_assoc($sql_student);
+$id          = $student_details['id'];
+$name        = $student_details['name'];
+$gender      = $student_details['gender'];
+$class       = $student_details['class'];
+$arm         = $student_details['arm'];
 
-} else {	
-    // Retrieve student registration details
-    $sql = mysqli_query($conn, "SELECT * FROM students WHERE id='$loginid'");
-    while ($appost = mysqli_fetch_assoc($sql)) {
-        $id          = $appost['id'];  
-        $name     = $appost['name'];
-        $gender  = $appost['gender'];
-        $class       = $appost['class'];
-        $arm = $appost['arm'];
-        
-        //$pic         = "<img border='0' src='" . $appost['photo'] . "' width='85px' height='100px' alt='Your Name'>";
-    }
+// Determine if it's a CBT result request
+$is_cbt_result = isset($_GET['cbt']) && $_GET['cbt'] == 'true';
 
-    // Retrieve the sum of scores for the given loginid
-    $sk = mysqli_query($conn, "SELECT SUM(score) AS total_score FROM mst_result WHERE login='$loginid'");
-    $appostk = mysqli_fetch_assoc($sk);
+$scores_data = [];
+$total_score = 0;
+$percentage = 0;
+$result_type_display = "";
 
-// Assuming this code block is executed after your score calculation:
-if ($appostk && $appostk['total_score'] !== null) {
-    $score = $appostk['total_score']; // Sum of all scores from mst_result
+if ($is_cbt_result) {
+    $result_type_display = "(Computer Based Test)";
+    // Fetch individual CBT scores
+    $cbt_scores_query = mysqli_query($conn, "SELECT subject, class, arm, score FROM cbt_score WHERE login='$loginid' AND session='$selected_session' AND term='$selected_term'");
+    if ($cbt_scores_query && mysqli_num_rows($cbt_scores_query) > 0) {
+        while ($row = mysqli_fetch_assoc($cbt_scores_query)) {
+            $scores_data[] = ['subject' => $row['subject'], 'class' => $row['class'], 'arm' => $row['arm'], 'score' => $row['score']];
+            $total_score += $row['score'];
+        }
 
-    // Get the subjects the user was tested on
-    $subjects_query = mysqli_query($conn, "SELECT DISTINCT subject FROM mst_result WHERE login='$loginid'");
-    $subjects = [];
-    while ($row = mysqli_fetch_assoc($subjects_query)) {
-        $subjects[] = "'" . mysqli_real_escape_string($conn, $row['subject']) . "'";
-    }
+        // Calculate percentage for CBT
+        $subjects_taken = [];
+        foreach ($scores_data as $data) {
+            $subjects_taken[] = "'" . mysqli_real_escape_string($conn, $data['subject']) . "'";
+        }
 
-    $total_questions = 0;
-    if (!empty($subjects)) {
-        $subject_list = implode(',', $subjects);
+        $total_questions = 0;
+        if (!empty($subjects_taken)) {
+            $subject_list = implode(',', $subjects_taken);
+            $total_questions_query = mysqli_query($conn, "SELECT COUNT(*) as total_questions FROM question WHERE subject IN ($subject_list) AND class='$class' AND arm='$arm' AND session='$selected_session' AND term='$selected_term'");
+            $total_questions_row = mysqli_fetch_assoc($total_questions_query);
+            $total_questions = $total_questions_row['total_questions'];
+        }
 
-        // Get the total number of questions for those subjects for the student's class, arm, session, and term
-        $total_questions_query = mysqli_query($conn, "SELECT COUNT(*) as total_questions FROM question WHERE subject IN ($subject_list) AND class='$class' AND arm='$arm' AND session='$current_session' AND term='$current_term'");
-        $total_questions_row = mysqli_fetch_assoc($total_questions_query);
-        $total_questions = $total_questions_row['total_questions'];
-    }
-
-    if ($total_questions > 0) {
-        // Assuming each correct answer is worth 4 points.
-        $max_possible_score = $total_questions * 4;
-        if ($max_possible_score > 0) {
-            $percentage = ($score / $max_possible_score) * 100;
+        if ($total_questions > 0) {
+            // If cbt_score.score represents the number of correct answers,
+            // then total_score is the sum of correct answers.
+            // Percentage is (total correct answers / total questions) * 100.
+            $percentage = ($total_score / $total_questions) * 100;
         } else {
             $percentage = 0;
         }
     } else {
-        $percentage = 0;
+        echo '<script type="text/javascript">
+                alert("No CBT result found for the selected session and term.");
+                window.location = "students.php";
+              </script>';
+        exit();
     }
 } else {
-    $score = 0;
-    $percentage = 0;
+    // Logic for regular results
+    $result_type_display = "(Regular Exam)";
+    $mst_result_query = mysqli_query($conn, "SELECT subject, score FROM mst_result WHERE login='$loginid' AND session='$selected_session' AND term='$selected_term'");
+
+    if ($mst_result_query && mysqli_num_rows($mst_result_query) > 0) {
+        $num_subjects = 0;
+        while ($row = mysqli_fetch_assoc($mst_result_query)) {
+            $scores_data[] = ['subject' => $row['subject'], 'score' => $row['score']];
+            $total_score += $row['score'];
+            $num_subjects++;
+        }
+
+        // Calculate percentage for regular exams
+        // Assuming each subject has a max score of 100.
+        if ($num_subjects > 0) {
+            $max_possible_score_regular = $num_subjects * 100;
+            if ($max_possible_score_regular > 0) {
+                $percentage = ($total_score / $max_possible_score_regular) * 100;
+            } else {
+                $percentage = 0;
+            }
+        } else {
+            $percentage = 0;
+        }
+    } else {
+        echo '<script type="text/javascript">
+                alert("No regular exam result found for the selected session and term.");
+                window.location = "students.php";
+              </script>';
+        exit();
+    }
 }
 
-// Optionally, round the result to a desired number of decimals.
+// Optionally, round the percentage to a desired number of decimals.
 $percentage = round($percentage, 2);
 
-
-}
 ?>
 
 <!DOCTYPE html>
@@ -115,7 +133,7 @@ $percentage = round($percentage, 2);
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><?php echo $name; ?></title>
+  <title><?php echo $name; ?> - Result</title>
   <!-- Latest Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
@@ -137,7 +155,7 @@ $percentage = round($percentage, 2);
         <td valign="top" style="padding:10px; font-size:14px; text-align:center">
           <b style="font-size:17px">DINOLABS TECH SERVICES</b><br>
           <address>School address goes here</address>
-          <span style="font-size:15px;">(Computer Based Test)</span><br />
+          <span style="font-size:15px;"><?php echo $result_type_display; ?></span><br />
           <b style="font-family:'Times New Roman', Times, serif;">Result Slip</b><br />
           Class: <b><?php echo $class; ?></b> | Arm: <b><?php echo $arm; ?></b>
         </td>
@@ -161,16 +179,19 @@ $percentage = round($percentage, 2);
         <div><strong>REG. NO.:</strong> <?php echo $id; ?></div>
       </div>
       <div class="col-md-4">
-        <div><strong>CLASS:</strong> <?php echo $class; ?></div>
+        <div><strong>CLASS:</strong> <?= htmlspecialchars($data['class']); ?></div>
       </div>
       <div class="col-md-4">
-        <div><strong>ARM:</strong> <?php echo $arm; ?></div>
+        <div><strong>ARM:</strong> <?= htmlspecialchars($data['arm']); ?></div>
       </div>
       <div class="col-md-4">
-        <div><strong>SESSION:</strong> <?php echo $current_session; ?></div>
+        <div><strong>SESSION:</strong> <?php echo $selected_session; ?></div>
       </div>
       <div class="col-md-4">
-        <div><strong>TERM:</strong> <?php echo $current_term; ?></div>
+        <div><strong>TERM:</strong> <?php echo $selected_term; ?></div>
+      </div>
+      <div class="col-md-4">
+        <div><strong>GENDER:</strong> <?php echo $gender; ?></div>
       </div>
     </div>
 
@@ -188,20 +209,20 @@ $percentage = round($percentage, 2);
           </thead>
           <tbody>
             <?php
-            // Retrieve and loop through all subject scores from mst_result
-            $sql = mysqli_query($conn, "SELECT * FROM mst_result WHERE login='$id'");
-            while ($appost = mysqli_fetch_assoc($sql)) {
-                $subject = $appost['subject'];
-                $individual_score = $appost['score'];
-                echo "<tr>";
-                echo "<td>$subject</td>";
-                echo "<td>$individual_score</td>";
-                echo "</tr>";
+            if (!empty($scores_data)) {
+                foreach ($scores_data as $data) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($data['subject']) . "</td>";
+                    echo "<td>" . htmlspecialchars($data['score']) . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='2'>No results found for this session and term.</td></tr>";
             }
             ?>
             <tr class="table-secondary">
               <td><strong>TOTAL</strong></td>
-              <td><strong><?php echo $score; ?></strong></td>
+              <td><strong><?php echo $total_score; ?></strong></td>
             </tr>
             <tr class="table-success">
               <td><strong>PERCENTAGE</strong></td>
