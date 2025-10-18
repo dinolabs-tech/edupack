@@ -5,8 +5,8 @@ include('db_connection.php');
 // Function to check if a table exists
 function tableExists($conn, $table)
 {
-  $result = $conn->query("SHOW TABLES LIKE '$table'");
-  return $result->num_rows > 0;
+    $result = $conn->query("SHOW TABLES LIKE '$table'");
+    return $result->num_rows > 0;
 }
 
 // Array of table creation queries
@@ -1061,21 +1061,21 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-    // Table: cbt_score
-    "cbt_score" => "
-        CREATE TABLE IF NOT EXISTS `cbt_score` (
-            `id` VARCHAR(30) NOT NULL PRIMARY KEY,
-            `login` VARCHAR(255) NOT NULL,
-            `subject` VARCHAR(255) NOT NULL,
-            `class` VARCHAR(255) NOT NULL,
-            `arm` VARCHAR(255) NOT NULL,
-            `term` VARCHAR(255) NOT NULL,
-            `session` VARCHAR(255) NOT NULL,
-            `test_date` VARCHAR(255) NOT NULL,
-            `score` VARCHAR(255) NOT NULL,
-            UNIQUE KEY `unique_exam` (`login`(128), `subject`(128), `class`(50), `arm`(10), `term`(20), `session`(20))
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
+    // // Table: cbt_score
+    // "cbt_score" => "
+    //     CREATE TABLE IF NOT EXISTS `cbt_score` (
+    //         `id` VARCHAR(30) NOT NULL PRIMARY KEY,
+    //         `login` VARCHAR(255) NOT NULL,
+    //         `subject` VARCHAR(255) NOT NULL,
+    //         `class` VARCHAR(255) NOT NULL,
+    //         `arm` VARCHAR(255) NOT NULL,
+    //         `term` VARCHAR(255) NOT NULL,
+    //         `session` VARCHAR(255) NOT NULL,
+    //         `test_date` VARCHAR(255) NOT NULL,
+    //         `score` VARCHAR(255) NOT NULL,
+    //         UNIQUE KEY `unique_exam` (`login`, `subject`, `class`, `arm`, `term`, `session`)
+    //     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    // ",
 
     // Table: posts (must be after threads due to foreign key)
     "posts" => "
