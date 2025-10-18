@@ -2,21 +2,11 @@
 // Database connection settings
 include('db_connection.php');
 
-// Drop the problematic table if it exists to ensure schema update
-$conn->query("DROP TABLE IF EXISTS `cbt_score`");
-
 // Function to check if a table exists
 function tableExists($conn, $table)
 {
-    $result = $conn->query("SHOW TABLES LIKE '$table'");
-    return $result->num_rows > 0;
-}
-
-// Function to check if an index exists
-function indexExists($conn, $table, $indexName)
-{
-    $result = $conn->query("SHOW INDEX FROM `$table` WHERE Key_name = '$indexName'");
-    return $result && $result->num_rows > 0;
+  $result = $conn->query("SHOW TABLES LIKE '$table'");
+  return $result->num_rows > 0;
 }
 
 // Array of table creation queries
