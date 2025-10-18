@@ -1065,14 +1065,14 @@ $tables = [
     "cbt_score" => "
         CREATE TABLE IF NOT EXISTS `cbt_score` (
             `id` VARCHAR(30) NOT NULL PRIMARY KEY,
-            `login` VARCHAR(20) NOT NULL,
+            `login` VARCHAR(100) NOT NULL,
             `subject` VARCHAR(100) NOT NULL,
-            `class` VARCHAR(10) NOT NULL,
-            `arm` VARCHAR(10) NOT NULL,
+            `class` VARCHAR(50) NOT NULL,
+            `arm` VARCHAR(20) NOT NULL,
             `term` VARCHAR(20) NOT NULL,
             `session` VARCHAR(20) NOT NULL,
-            `test_date` VARCHAR(100) NOT NULL,
-            `score` VARCHAR(20) NOT NULL,
+            `test_date` VARCHAR(255) NOT NULL,
+            `score` VARCHAR(255) NOT NULL,
             UNIQUE KEY `unique_exam` (`login`, `subject`, `class`, `arm`, `term`, `session`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
@@ -1107,16 +1107,24 @@ $tables = [
 ];
 
 // Create tables
-foreach ($tables as $tableName => $query) {
-    if (!tableExists($conn, $tableName)) {
-        if ($conn->query($query) === TRUE) {
-            // Table created successfully
-        } else {
-            error_log("Error creating table $tableName: " . $conn->error);
-            error_log("Failing query: " . $query); // Added this line to log the failing query
+    foreach ($tables as $tableName => $query) {
+        if (!tableExists($conn, $tableName)) {
+            try {
+                error_log("Attempting to create table $tableName with query: " . $query);
+                if ($conn->query($query) === TRUE) {
+                    // Table created successfully
+                } else {
+                    // This else block might not be reached if an exception is thrown
+                    error_log("Error creating table $tableName: " . $conn->error);
+                }
+            } catch (mysqli_sql_exception $e) {
+                error_log("Caught SQL Exception for table $tableName: " . $e->getMessage());
+                error_log("Failing query for $tableName: " . $query);
+                // Re-throw the exception if you want the script to still terminate
+                throw $e;
+            }
         }
     }
-}
 
 // Insert initial data
 if (tableExists($conn, 'capacity')) {
