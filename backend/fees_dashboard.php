@@ -255,7 +255,7 @@ $conn->close();
                                                                     <td><?php echo htmlspecialchars($fee['hostel']); ?></td>
                                                                     <td><?php echo htmlspecialchars($fee['session']); ?></td>
                                                                     <td class="d-flex">
-                                                                        <button type="button" class="btn btn-sm btn-warning edit-fee-btn mt-5 me-3"
+                                                                        <button type="button" class="btn btn-icon btn-round btn-warning edit-fee-btn mt-5 me-3"
                                                                             data-bs-toggle="modal" data-bs-target="#editFeeModal"
                                                                             data-id="<?php echo htmlspecialchars($fee['id']); ?>"
                                                                             data-class="<?php echo htmlspecialchars($fee['class']); ?>"
@@ -271,7 +271,7 @@ $conn->close();
                                                                         <form method="POST" style="display:inline-block;">
                                                                             <input type="hidden" name="action" value="delete_fee_definition">
                                                                             <input type="hidden" name="delete_fee_id" value="<?php echo htmlspecialchars($fee['id']); ?>">
-                                                                            <button type="submit" class="btn btn-sm btn-danger mt-5" onclick="return confirm('Are you sure you want to delete this fee definition?');">
+                                                                            <button type="submit" class="btn btn-icon btn-round btn-danger mt-5" onclick="return confirm('Are you sure you want to delete this fee definition?');">
                                                                                 <i class="fas fa-trash"></i></button>
                                                                         </form>
                                                                     </td>

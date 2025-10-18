@@ -545,6 +545,16 @@
         <?php
         }
         ?>
+        <?php
+        // Check if the logged-in user has 'Administrator' or 'Superuser' roles.
+        if ($_SESSION['role'] == 'Administrator' || $_SESSION['role'] == 'Superuser') { ?>
+          <li class="nav-item">
+            <a href="expiry.php">
+              <i class="fas fa-money-bill-alt"></i>
+              <p>Extend License</p>
+            </a>
+          </li>
+        <?php  } ?>
       </ul>
     </div>
   </div>

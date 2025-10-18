@@ -1,7 +1,23 @@
 <?php
 // expiry.php
 session_start();
+include 'db_connection.php';
+
+// Fetch the subscription expiry date
+$stmtExp = $conn->prepare("SELECT expdate FROM sub WHERE id = 1 LIMIT 1");
+$stmtExp->execute();
+$stmtExp->bind_result($expdate);
+$stmtExp->fetch();
+$stmtExp->close();
+
+// Parse d/m/y format into a DateTime object
+$dateObj = DateTime::createFromFormat('d/m/Y', $expdate);
+
+$expiryTimestamp = $dateObj->getTimestamp();
+$currentTimestamp = time();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,7 +90,7 @@ session_start();
         // Ensure the key and iv lengths are correct
         $key = substr($key, 0, 24); // 24 bytes = 192 bits
         $iv = substr($iv, 0, 16);   // 16 bytes = 128 bits
-    
+
         // Decode from Base64 then decrypt using AES-192-CBC
         $decoded = base64_decode($encrypted);
         $decrypted = openssl_decrypt($decoded, 'aes-192-cbc', $key, OPENSSL_RAW_DATA, $iv);
@@ -118,30 +134,45 @@ session_start();
                     name="encrypted_license" rows="2" cols="50"></textarea>
             </div>
 
-<div class="col-12">
-    <div class="form-group">
-        <input placeholder="Expiry Date" class="form-control" type="text" id="expiry_date" name="expiry_date"
-            readonly value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>">
-    </div>
-</div>
+            <div class="col-12">
+                <div class="form-group">
+                    <input placeholder="Expiry Date" class="form-control" type="text" id="expiry_date" name="expiry_date"
+                        readonly value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>">
+                </div>
+            </div>
 
-<div class="col-12">
-    <div class="form-group">
-        <input placeholder="Total Students" class="form-control" type="text" id="capacity" name="capacity"
-            readonly value="<?php echo isset($capacity) ? htmlspecialchars($capacity) : ''; ?>">
-    </div>
-</div>
+            <div class="col-12">
+                <div class="form-group">
+                    <input placeholder="Total Students" class="form-control" type="text" id="capacity" name="capacity"
+                        readonly value="<?php echo isset($capacity) ? htmlspecialchars($capacity) : ''; ?>">
+                </div>
+            </div>
 
             <input type="hidden" id="package" name="package" readonly
                 value="<?php echo isset($package) ? htmlspecialchars($package) : ''; ?>">
 
 
-<div class="col-12">
-    <button class="btn btn-renew" type="submit" name="activate">Renew Now!</button>
-</div>
-<div class="col-12">
-    <a href="https://www.dinolabstech.com/contact.php" class="btn btn-renew">Contact Support</a>
-</div>
+            <div class="col-md-12 d-flex">
+                <button class="btn btn-renew" type="submit" name="activate">Renew Now!</button>
+                <a href="https://www.dinolabstech.com/contact.php" class="btn btn-renew ms-auto">Contact Support</a>
+            </div>
+
+
+            <?php
+            // If today is not past the expiry date, redirect to display the button
+            if ($currentTimestamp < $expiryTimestamp) {
+
+                // Check if the logged-in user has 'Administrator' or 'Superuser' roles.
+                if ($_SESSION['role'] == 'Superuser') { ?>
+                    <div class="col-12">
+                        <a href="superdashboard.php" class="btn btn-renew">Continue to Application</a>
+                    </div>
+                <?php } else if ($_SESSION['role'] == 'Administrator') { ?>
+                    <div class="col-12">
+                        <a href="dashboard.php" class="btn btn-renew">Continue to Application</a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
 
 
         </form>

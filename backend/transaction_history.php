@@ -106,8 +106,8 @@ $conn->close();
                     <input type="date" name="end_date" id="end_date" class="form-control" required>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-info me-2" id="view_date_range_report_btn"> <i class="fas fa-eye"></i></button>
-                    <button type="button" class="btn btn-secondary" id="print_date_range_report_btn"><i class="fas fa-print"></i></button>
+                    <button type="button" class="btn btn-icon btn-round btn-info me-2" id="view_date_range_report_btn"> <i class="fas fa-eye"></i></button>
+                    <button type="button" class="btn btn-secondary btn-icon btn-round" id="print_date_range_report_btn"><i class="fas fa-print"></i></button>
                 </div>
             </form>
 
@@ -287,7 +287,7 @@ $conn->close();
                                     '<td>' + payment.recorded_by + '</td>' +
                                     '<td>' + payment.session + '</td>' +
                                     '<td>' + payment.term + '</td>' +
-                                    '<td><a href="print_receipt.php?transaction_id=' + payment.transaction_id + '" target="_blank" class="btn btn-sm btn-secondary">Print Receipt</a></td>' +
+                                    '<td><a href="print_receipt.php?transaction_id=' + payment.transaction_id + '" target="_blank" class="btn btn-icon btn-round btn-secondary">Print Receipt</a></td>' +
                                     '</tr>'
                                 );
                             });

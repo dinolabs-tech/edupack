@@ -281,34 +281,35 @@ $conn->close();
                                         </form>
 
                                         <?php if (!empty($searchResults)): ?>
-
-                                            <table id="basic-datatables">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Student ID</th>
-                                                        <th>Student Name</th>
-                                                        <th>Class</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php foreach ($searchResults as $student): ?>
+                                            <div class="table-responsive">
+                                                <table id="basic-datatables">
+                                                    <thead>
                                                         <tr>
-                                                            <td><?= htmlspecialchars($student['regno']) ?></td>
-                                                            <td><?= htmlspecialchars($student['studentname']) ?></td>
-                                                            <td><?= htmlspecialchars($student['studentclass']) ?></td>
-                                                            <td>
-                                                                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                                                    <input type="hidden" name="regno" value="<?= htmlspecialchars($student['regno']) ?>">
-                                                                    <input type="hidden" name="select_student" value="1">
-                                                                    <button type="submit" class="btn btn-info btn-icon btn-round ps-1"><span class="btn-label">
-                                                                            <i class="fa fa-check-circle"></i></button>
-                                                                </form>
-                                                            </td>
+                                                            <th>Student ID</th>
+                                                            <th>Student Name</th>
+                                                            <th>Class</th>
+                                                            <th>Action</th>
                                                         </tr>
-                                                    <?php endforeach; ?>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($searchResults as $student): ?>
+                                                            <tr>
+                                                                <td><?= htmlspecialchars($student['regno']) ?></td>
+                                                                <td><?= htmlspecialchars($student['studentname']) ?></td>
+                                                                <td><?= htmlspecialchars($student['studentclass']) ?></td>
+                                                                <td>
+                                                                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                                                        <input type="hidden" name="regno" value="<?= htmlspecialchars($student['regno']) ?>">
+                                                                        <input type="hidden" name="select_student" value="1">
+                                                                        <button type="submit" class="btn btn-info btn-icon btn-round ps-1"><span class="btn-label">
+                                                                                <i class="fa fa-check-circle"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         <?php elseif (isset($_POST['search_student'])): ?>
                                             <p class="text-danger">No results found for your search.</p>
                                         <?php endif; ?>
@@ -368,8 +369,6 @@ $conn->close();
                                     <h3 class="mb-3">Cart</h3>
                                     <?php if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
                                         <div class="table-responsive">
-
-
                                             <table class="table table-bordered cart-table">
                                                 <thead>
                                                     <tr>

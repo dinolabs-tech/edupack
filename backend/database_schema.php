@@ -272,6 +272,8 @@ $tables = [
         CREATE TABLE IF NOT EXISTS `fee` (
             `id` varchar(111) NOT NULL,
             `class` varchar(111) NOT NULL,
+            `term` VARCHAR(111) NOT NULL,
+            `arm` VARCHAR(111) NOT NULL,
             `service` varchar(111) NOT NULL,
             `price` int(11) NOT NULL,
             `hostel` varchar(111) NOT NULL,
@@ -439,7 +441,7 @@ $tables = [
             `class` varchar(111) DEFAULT NULL,
             `arm` varchar(111) DEFAULT NULL,
             `term` varchar(111) DEFAULT NULL,
-            `session` varchar(111) DEFAULT NULL,
+            `session` varchar(111) DEFAULT NULL
         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
@@ -1071,7 +1073,6 @@ $tables = [
             `session` VARCHAR(255) NOT NULL,
             `test_date` VARCHAR(255) NOT NULL,
             `score` VARCHAR(255) NOT NULL,
-             PRIMARY KEY (`id`),
             UNIQUE KEY `unique_exam` (`login`, `subject`, `class`, `arm`, `term`, `session`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",

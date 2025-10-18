@@ -1,5 +1,25 @@
 <?php include('components/admin_logic.php');
 include('components/birthday_logic.php');
+
+// 5. Get current expiry date from Sub table where id = 1
+$sql_expiry = "SELECT expdate FROM sub WHERE id = 1";
+$result = $conn->query($sql_expiry);
+$expirydate = ($result && $result->num_rows > 0) ? $result->fetch_assoc()['expdate'] : 'N/A';
+
+// convert expiry date to YYYY-MM-DD
+list($day, $month, $year) = explode('/', $expirydate);
+$expirydatefofrmatted = "$year-$month-$day";
+
+$today = date("Y-m-d");
+
+// convert both to datetime objects
+$date1 = new datetime($today);
+$date2 = new datetime($expirydatefofrmatted);
+
+// calculate the diffrence
+$diff = $date1->diff($date2);
+$difference = $diff->days;
+
 ?>
 
 <!DOCTYPE html>
@@ -26,15 +46,28 @@ include('components/birthday_logic.php');
 
       <div class="container">
         <div class="page-inner">
-          <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-            <div>
+             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div class="col-md-4">
               <h3 class="fw-bold mb-3">Dashboard</h3>
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                 <li class="breadcrumb-item active">Dashboard</li>
               </ol>
-            </div>
 
+            </div>
+            <?php if ($_SESSION['role'] == 'Administrator') {
+              if ($difference <= '30') {
+            ?>
+
+                <div class="col-md-8 d-flex">
+                  <marquee behavior="" direction="" class="text-danger fw-bold mt-2" style="border-left: solid red 5px; height:40px; border-bottom:solid 1px red; border-radius:10px;"><a href="expiry.php">
+                      <h5 class="mt-1">Your license will expire in <?= $difference; ?> day(s) time, click on me to make payment</h5>
+                    </a></marquee>
+                  <span class="ms-auto card bg-danger p-3 text-white fw-bold col-4 col-md-2 text-center"><a href="expiry.php" class="text-white"><?= $expirydate ?></a></span>
+                </div>
+            <?php
+              }
+            } ?>
           </div>
 
           <!-- PERSONAL AI ============================ -->

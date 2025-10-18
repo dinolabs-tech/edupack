@@ -199,7 +199,7 @@ $conn->close();
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> </button>
+                                                <button type="submit" class="btn btn-icon btn-round btn-success"><i class="fas fa-save"></i> </button>
 
                                             </form>
                                         </div>
@@ -253,7 +253,7 @@ $conn->close();
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <button type="submit" class="btn btn-info"> <i class="fas fa-eye"></i></button>
+                                                        <button type="submit" class="btn btn-icon btn-round btn-info"> <i class="fas fa-eye"></i></button>
                                                     </div>
                                                 </form>
                                                 <!-- View Payments Modal -->
@@ -325,13 +325,13 @@ $conn->close();
                                                                         <td><?php echo htmlspecialchars(number_format((float)$student_status['outstanding_balance'], 2)); ?></td>
 
                                                                         <td class=" d-flex">
-                                                                            <button type="button" class="btn btn-sm btn-info view-payments-btn me-3"
+                                                                            <button type="button" class="btn btn-icon btn-round btn-info view-payments-btn me-3"
                                                                                 data-bs-toggle="modal" data-bs-target="#viewPaymentsModal"
                                                                                 data-student-id="<?php echo htmlspecialchars($student_status['id']); ?>"
                                                                                 data-student-name="<?php echo htmlspecialchars($student_status['name']); ?>">
                                                                                 <i class="fas fa-eye"></i>
                                                                             </button>
-                                                                            <a href="print_student_transactions.php?student_id=<?php echo htmlspecialchars($student_status['id']); ?>&session=<?php echo htmlspecialchars($display_session); ?>&term=<?php echo htmlspecialchars($display_term); ?>" target="_blank" class="btn btn-sm btn-secondary"> <i class="fas fa-print"></i></a>
+                                                                            <a href="print_student_transactions.php?student_id=<?php echo htmlspecialchars($student_status['id']); ?>&session=<?php echo htmlspecialchars($display_session); ?>&term=<?php echo htmlspecialchars($display_term); ?>" target="_blank" class="btn btn-icon btn-round btn-secondary"> <i class="fas fa-print"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                 <?php endforeach; ?>
@@ -462,7 +462,7 @@ $conn->close();
                                     '<td>' + payment.recorded_by + '</td>' +
                                     '<td>' + payment.session + '</td>' +
                                     '<td>' + payment.term + '</td>' +
-                                    '<td><a href="print_receipt.php?transaction_id=' + payment.transaction_id + '" target="_blank" class="btn btn-sm btn-secondary">Print Receipt</a></td>' +
+                                    '<td><a href="print_receipt.php?transaction_id=' + payment.transaction_id + '" target="_blank" class="btn btn-icon btn-round btn-secondary">Print Receipt</a></td>' +
                                     '</tr>'
                                 );
                             });

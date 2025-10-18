@@ -163,6 +163,7 @@ session_start();
                 <li class="open"><a href="#create_message"><i class="zmdi zmdi-email"></i><span>Create Email</span></a></li>
                 <li class="open"><a href="#inbox"><i class="zmdi zmdi-inbox"></i><span>Inbox</span></a></li>
                 <li class="open"><a href="#sent_messages"><i class="zmdi zmdi-mail-send"></i><span>Sent Messages</span></a></li>
+                <li class="open"><a href="#license"><i class="zmdi zmdi-money-box"></i><span>Extend License</span></a></li>
             </ul>
         </div>
     </aside>
@@ -198,9 +199,6 @@ session_start();
                                 <div class="row">
                                     <!-- ENROLLMENT -->
                                     <div class="col-lg-12" id="enroll">
-
-
-
                                         <div class="accordion" id="studentManagementAccordion">
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingEnroll">
@@ -359,6 +357,7 @@ session_start();
 
                                 <div class="body">
                                     <div class="row">
+                                        <!-- Attendace management -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>Attendance</strong> Management</h2>
@@ -506,6 +505,7 @@ session_start();
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Result management -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>Results</strong> Management</h2>
@@ -622,7 +622,7 @@ session_start();
                                                                                 <li><strong>Navigate to the Delete Results Page:</strong>
                                                                                     <ul>
                                                                                         <li>From the sidebar menu, go to <strong>Teacher > Results > Delete</strong>.</li>
-                                                                                        <li>This will take you to the Delete Result  page, which is where you can initiate the deletion process.</li>
+                                                                                        <li>This will take you to the Delete Result page, which is where you can initiate the deletion process.</li>
                                                                                     </ul>
                                                                                 </li>
                                                                                 <li><strong>Identify Results for Deletion:</strong>
@@ -938,6 +938,7 @@ session_start();
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- E-Learning Resources -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>E-Learning</strong> Resources</h2>
@@ -1192,7 +1193,7 @@ session_start();
                                                                                 </li>
                                                                                 <li><strong>Review the Curriculum List:</strong>
                                                                                     <ul>
-                                    
+
                                                                                         <li>On the View Upload Curriculum page, you will see a list of uploaded curriculum documents. Each entry typically displays:
                                                                                             <ul>
                                                                                                 <li><strong>Subject:</strong> The subject for which the curriculum was uploaded (e.g., "Mathematics").</li>
@@ -1236,6 +1237,7 @@ session_start();
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- CBT Management -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>CBT (Computer Based Test)</strong> Management</h2>
@@ -1340,7 +1342,7 @@ session_start();
                                                                                             <ul>
                                                                                                 <li>This action finalizes the exam setup and makes the exam available for scheduling.</li>
                                                                                                 <li>Once initiated, proceed to "Set Exam Time/Date" to schedule when students can take the exam.</li>
-                                                                                                <li><strong>Note:</strong> Failing to initiate the exam will prevent students from accessing the uploaded questions during the scheduled exam period.</li>
+                                                                                                <li><strong>Note:</strong> Failing to initiate the exam will prevent students from accessing the uploaded questions during the scheduled exam period. In addition, the "Initiate Exam" feature would store the students exam result in the database, for future reference (students can check their CBT scores for previous terms and sessions)</li>
                                                                                             </ul>
                                                                                         </li>
                                                                                     </ul>
@@ -1506,6 +1508,7 @@ session_start();
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Tuckshop Management -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>Tuckshop</strong> Management</h2>
@@ -1856,6 +1859,7 @@ session_start();
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Bursary Management -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>Bursary</strong> Management</h2>
@@ -2376,6 +2380,7 @@ session_start();
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- General Administration -->
                                         <div class="card">
                                             <div class="header ms-4">
                                                 <h2><strong>General</strong> Administration</h2>
@@ -2682,7 +2687,7 @@ session_start();
                                                                                             <li>On the Send Notice page, you will find fields to compose your notice:
                                                                                                 <ul>
                                                                                                     <li><strong>Title:</strong> Enter a clear and concise title for the notice (e.g., "Parent-Teacher Conference," "School Holiday").</li>
-                                                                                                <li><strong>Message:</strong> Type the full content of your notice. Make sure it is clear and provides all necessary information.</li>
+                                                                                                    <li><strong>Message:</strong> Type the full content of your notice. Make sure it is clear and provides all necessary information.</li>
                                                                                                 </ul>
                                                                                             </li>
                                                                                             <li><strong>Important for Users:</strong> Always proofread your message for clarity, grammar, and accuracy before sending. Misinformation can cause confusion.</li>
@@ -3333,6 +3338,82 @@ session_start();
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- License Management -->
+                                        <div class="card">
+                                            <div class="header ms-4">
+                                                <h2><strong>License</strong> Management</h2>
+                                            </div>
+                                            <div class="body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="accordion" id="licenseAccordion">
+
+                                                            <div class="accordion-item">
+                                                                <h2 class="accordion-header" id="headinglicense">
+                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapselicense" aria-expanded="false" aria-controls="collapselicense">
+                                                                        How to Extend License
+                                                                    </button>
+                                                                </h2>
+                                                                <div id="collapselicense" class="accordion-collapse collapse" aria-labelledby="headinglicense" data-bs-parent="#licenseAccordion">
+                                                                    <div class="accordion-body">
+                                                                        <div id="license">
+                                                                            <p>The "Extend License" feature is a comprehensive tool that offers several advantages designed to enhance user experience and system reliability. It is designed to provide users with a smooth, secure and efficient way to manage their subscription renewals. By integrating automation, flexibility, and transparency, it ensures that users can continue accessing all features without interuption or administrative delays.</p>
+                                                                            <ol>
+                                                                                <li><strong>Navigate to the Extend License Page:</strong>
+                                                                                    <ul>
+                                                                                        <li>From the sidebar menu, go to <strong>Extend License</strong>.</li>
+                                                                                        <li>This will take you to the Extend License page.</li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li><strong>Purchase a New License:</strong>
+                                                                                    <ul>
+                                                                                        <li>On the Licesne Extension page, click the Purchase License Link, you will be rediredcted to the Dinolabs Portal:</li>
+                                                                                        <li>
+                                                                                            <ul>
+                                                                                                <li><strong>Login to the Dinolabs Portal:</strong> If not already logged in, you will be prompted to sign in with your registered account credentials.</li>
+                                                                                                <li><strong>Select License Details:</strong> After logging in, click "Purchase License" on the sidebar menu. Choose your prefered expiry date for the new license</li>
+                                                                                                <li><strong>Make Payment:</strong> Once the expiry date is selected, click "Pay". You will be redirected to a secure third-party payment gateway, where you can complete your payment using any of the available methods.</li>
+                                                                                                <li><strong>Retrieve License Key:</strong> upon successful payment: your new license key will automatically download to your device. The same license key will also be displayed on the payment confirmation page, just below the button.</li>
+
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+
+                                                                                <li><strong>Activate Extended License:</strong>
+                                                                                    <ul>
+                                                                                        <li>Return to the License Extension page in your EDUHIVE application.</li>
+                                                                                        <li>Paste the copied license into the provided field.</li>
+                                                                                        <li>Click "Renew Now" to apply the new licenese.</li>
+                                                                                    </ul>
+                                                                                </li>
+
+                                                                                <li><strong>Confirmation:</strong>
+                                                                                    <ul>
+                                                                                        <li>Once verified the application will automatically extend your license expiry date, and you can continue using EDUHIVE without interruption.</li>
+                                                                                    </ul>
+                                                                                </li>
+
+                                                                                <li><strong>Benefits of this Feature:</strong>
+                                                                                    <ul>
+                                                                                        <li><strong>Seamless renewal Experience:</strong> Admin can conveniently renew their licenses dirently within the application without needing manual support or lengthy verification steps.</li>
+                                                                                        <li><strong>Secure and Flexible Payment Options:</strong> The integration with a trusted third-party payment gateway ensures that all transactions are encrypted, reliable and support multiple payment methods.</li>
+                                                                                        <li><strong>Instant License Activation:</strong> The system automatically validates and applies the new license key, extending the expiry date immediately - eliminating downtime or service disruption.</li>
+                                                                                        <li><strong>User Empowerment and Transparency:</strong> By displying and downloading the License Key instantly after payment, users maintain full control and visibility over their subscrption.</li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ol>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
                                                         </div>
                                                     </div>
                                                 </div>
