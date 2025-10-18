@@ -843,7 +843,7 @@ $tables = [
     "tblborrower" => "
         CREATE TABLE IF NOT EXISTS `tblborrower` (
             `IDNO` int(11) NOT NULL AUTO_INCREMENT,
-            `BorrowerId` varchar(90) NOT NULL,
+            `BorrowerId` varchar(10) NOT NULL,
             `Firstname` varchar(125) NOT NULL,
             `Lastname` varchar(125) NOT NULL,
             `MiddleName` varchar(125) NOT NULL,
@@ -1065,7 +1065,7 @@ $tables = [
     "cbt_score" => "
         CREATE TABLE IF NOT EXISTS `cbt_score` (
             `id` VARCHAR(30) NOT NULL PRIMARY KEY,
-            `login` VARCHAR(100) NOT NULL,
+            `login` VARCHAR(20) NOT NULL,
             `subject` VARCHAR(100) NOT NULL,
             `class` VARCHAR(10) NOT NULL,
             `arm` VARCHAR(10) NOT NULL,
