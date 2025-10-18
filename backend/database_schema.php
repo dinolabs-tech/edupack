@@ -1073,7 +1073,7 @@ $tables = [
             `session` VARCHAR(255) NOT NULL,
             `test_date` VARCHAR(255) NOT NULL,
             `score` VARCHAR(255) NOT NULL,
-            UNIQUE KEY `unique_exam` (`login`, `subject`, `class`, `arm`, `term`, `session`)
+            UNIQUE KEY `unique_exam` (`login`(128), `subject`(128), `class`(128), `arm`(128), `term`(128), `session`(128))
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
