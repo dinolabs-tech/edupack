@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "dinolabs_root";
 $password = "foxtrot2november";
-$dbname = "dinolabs_portal";
+$dbname = "dinolabs_edupack";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
