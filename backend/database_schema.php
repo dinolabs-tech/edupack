@@ -1113,6 +1113,7 @@ foreach ($tables as $tableName => $query) {
             // Table created successfully
         } else {
             error_log("Error creating table $tableName: " . $conn->error);
+            error_log("Failing query: " . $query); // Added this line to log the failing query
         }
     }
 }
