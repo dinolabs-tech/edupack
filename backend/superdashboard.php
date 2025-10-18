@@ -71,7 +71,7 @@ if (isset($_POST['expirydate_submit'])) {
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                 <li class="breadcrumb-item active">Superuser Dashboard  </li>
-                <li class="breadcrumb-item active"><a href="deploy.php">Deploy Now</a></li>
+                <li class="breadcrumb-item active"><a href="deploy.php">Deploy</a></li>
               </ol>
             </div>
 
