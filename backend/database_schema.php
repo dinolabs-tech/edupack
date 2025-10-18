@@ -2,11 +2,21 @@
 // Database connection settings
 include('db_connection.php');
 
+// Drop the problematic table if it exists to ensure schema update
+$conn->query("DROP TABLE IF EXISTS `cbt_score`");
+
 // Function to check if a table exists
 function tableExists($conn, $table)
 {
     $result = $conn->query("SHOW TABLES LIKE '$table'");
     return $result->num_rows > 0;
+}
+
+// Function to check if an index exists
+function indexExists($conn, $table, $indexName)
+{
+    $result = $conn->query("SHOW INDEX FROM `$table` WHERE Key_name = '$indexName'");
+    return $result && $result->num_rows > 0;
 }
 
 // Array of table creation queries
@@ -1073,7 +1083,7 @@ $tables = [
             `session` VARCHAR(255) NOT NULL,
             `test_date` VARCHAR(255) NOT NULL,
             `score` VARCHAR(255) NOT NULL,
-            UNIQUE KEY `unique_exam` (`login`(128), `subject`(128), `class`(128), `arm`(128), `term`(128), `session`(128))
+            UNIQUE KEY `unique_exam` (`login`(128), `subject`(128), `class`(50), `arm`(10), `term`(20), `session`(20))
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
