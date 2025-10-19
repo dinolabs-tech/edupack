@@ -196,7 +196,7 @@ $conn->close();
                                                     </select>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i></button>
+                                            <button type="submit" class="btn btn-primary btn-icon btn-round"><i class="fas fa-save"></i></button>
                                         </form>
 
                                         </p>
