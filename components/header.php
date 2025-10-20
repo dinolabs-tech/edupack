@@ -11,9 +11,6 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li><a href="about.php">About</a></li>
-
-
           <li><a href="students-life.php">Students Life</a></li>
           <li><a href="events.php">Events</a></li>
           <li><a href="alumni.php">Alumni</a></li>
@@ -71,6 +68,7 @@
           <?php }
           ?>
 
+          <li><a href="about.php">About</a></li>
           <li><a href="contact.php">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
