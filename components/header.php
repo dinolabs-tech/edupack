@@ -25,16 +25,15 @@
           <li><a href="events.php">Events</a></li>
           <li><a href="alumni.php">Alumni</a></li>
           <li><a href="gallery.php">Gallery</a></li>
-          <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <!-- <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="news-details.php">News Details</a></li>
               <li><a href="event-details.php">Event Details</a></li>
               <li><a href="privacy.php">Privacy</a></li>
               <li><a href="terms-of-service.php">Terms of Service</a></li>
               <li><a href="404.php">Error 404</a></li>
               <li><a href="starter-page.php">Starter Page</a></li>
             </ul>
-          </li>
+          </li> -->
 
           <?php if (isset($_SESSION["staffname"])) { ?>
             <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'Superuser' || $_SESSION['role'] == 'Administrator' || $_SESSION['role'] == 'Teacher') { ?>
