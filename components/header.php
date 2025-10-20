@@ -11,20 +11,22 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li class="dropdown"><a href="about.php"><span>About</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="about.php">About</a></li>
+
+
+          <li><a href="students-life.php">Students Life</a></li>
+          <li><a href="events.php">Events</a></li>
+          <li><a href="alumni.php">Alumni</a></li>
+          <li><a href="gallery.php">Gallery</a></li>
+
+           <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="about.php">About Us</a></li>
               <li><a href="admissions.php">Admissions</a></li>
               <li><a href="academics.php">Academics</a></li>
               <li><a href="faculty-staff.php">Faculty &amp; Staff</a></li>
               <li><a href="campus-facilities.php">Campus &amp; Facilities</a></li>
             </ul>
           </li>
-
-          <li><a href="students-life.php">Students Life</a></li>
-          <li><a href="events.php">Events</a></li>
-          <li><a href="alumni.php">Alumni</a></li>
-          <li><a href="gallery.php">Gallery</a></li>
           <!-- <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="event-details.php">Event Details</a></li>
