@@ -26,7 +26,7 @@ session_start();
             <div class="col-lg-7" data-aos="zoom-out" data-aos-delay="100">
               <div class="hero-content">
                 <h1>Empowering Minds, Shaping the Future</h1>
-                <p>At <strong>EduHive</strong>, we believe education goes beyond the classroom. Our mission is to inspire curiosity, nurture talent, and equip students with the skills and confidence to thrive in a fast-changing world. Join a community driven by innovation, creativity, and lifelong learning.</p>
+                <p>At <strong>Dinolabs</strong>, we believe education goes beyond the classroom. Our mission is to inspire curiosity, nurture talent, and equip students with the skills and confidence to thrive in a fast-changing world. Join a community driven by innovation, creativity, and lifelong learning.</p>
                 <div class="cta-buttons">
                   <a href="#admissions" class="btn-primary">Start Your Journey</a>
                   <a href="#programs" class="btn-secondary">Explore Our Programs</a>
@@ -36,7 +36,7 @@ session_start();
             <div class="col-lg-5" data-aos="zoom-out" data-aos-delay="200">
               <div class="stats-card">
                 <div class="stats-header">
-                  <h3>Why Choose EduHive</h3>
+                  <h3>Why Choose Dinolabs</h3>
                   <div class="decoration-line"></div>
                 </div>
                 <div class="stats-grid">
@@ -116,7 +116,7 @@ session_start();
         <div class="row mb-5">
           <div class="col-lg-6 pe-lg-5" data-aos="fade-right" data-aos-delay="200">
             <h2 class="display-6 fw-bold mb-4">Empowering Minds, <span>Shaping Futures</span></h2>
-            <p class="lead mb-4">For over two decades, <strong>EduHive</strong> has been at the forefront of transformative education — guiding learners toward academic excellence, personal growth, and lifelong success. We combine technology, innovation, and mentorship to help every student reach their full potential.</p>
+            <p class="lead mb-4">For over two decades, <strong>Dinolabs</strong> has been at the forefront of transformative education — guiding learners toward academic excellence, personal growth, and lifelong success. We combine technology, innovation, and mentorship to help every student reach their full potential.</p>
             <div class="d-flex flex-wrap gap-4 mb-4">
               <div class="stat-box">
                 <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>+</span>
@@ -176,7 +176,7 @@ session_start();
                 <i class="bi bi-star"></i>
               </div>
               <h3>Our Values</h3>
-              <p>We uphold integrity, curiosity, collaboration, and excellence. At EduHive, we believe that knowledge should empower individuals to make meaningful contributions to the world.</p>
+              <p>We uphold integrity, curiosity, collaboration, and excellence. At Dinolabs, we believe that knowledge should empower individuals to make meaningful contributions to the world.</p>
             </div>
           </div>
         </div>
