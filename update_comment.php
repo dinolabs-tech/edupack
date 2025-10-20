@@ -3,20 +3,20 @@
 session_start();
 
 // Check if the user is logged in. If not, redirect to the login page.
-if (!isset($_SESSION["username"])) {
-    header("Location: login.php");
-    exit(); // Stop script execution after redirection.
-}
+// if (!isset($_SESSION["username"])) {
+//     header("Location: login.php");
+//     exit(); // Stop script execution after redirection.
+// }
 
 // Include the database connection file. This file is responsible for establishing a connection to the database.
-include("db_connect.php");
+include("backend/db_connection.php");
 
 // Check if the request method is POST. This script should only process form submissions.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the comment ID, post ID, and the updated comment content from the POST data.
     $comment_id = $_POST["id"];      // The ID of the comment to be updated.
     $post_id = $_POST["post_id"];    // The ID of the post to which the comment belongs.
-    $comment = $_POST["comment"];    // The new content for the comment.
+    $comment = $_POST["content"];    // The new content for the comment.
 
     // Construct the SQL UPDATE query.
     // It updates the 'content' field for the comment with the specified 'id'.

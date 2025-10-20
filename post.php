@@ -17,20 +17,13 @@ include("backend/db_connection.php");
 
 $post_id = $_GET["id"];
 
-$sql = "SELECT p.*, u.username FROM blog_posts p INNER JOIN users u ON p.author_id = u.id WHERE p.id = $post_id";
+$sql = "SELECT p.*, u.username FROM blog_posts p INNER JOIN login u ON p.author_id = u.id WHERE p.id = $post_id";
 $result = $conn->query($sql);
 
 if ($result->num_rows == 0) {
   echo "Post not found";
   exit();
 }
-
-$post = $result->fetch_assoc();
-
-$update_views_sql = "UPDATE blog_posts SET views = views + 1 WHERE id = $post_id";
-$conn->query($update_views_sql);
-
-
 
 
 
@@ -109,7 +102,7 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
 
             <div class="article-meta" data-aos="fade-up" data-aos-delay="200">
               <div class="author">
-                <img src="assets/img/person/person-m-6.webp" alt="Author" class="author-img">
+                <img src="assets/img/default.png" alt="Author" class="author-img">
                 <div class="author-info">
                   <h4><?php echo $post["username"]; ?></h4>
                   <!-- <span>UI/UX Design Lead</span> -->
@@ -119,6 +112,7 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                 <span><i class="bi bi-calendar4-week"></i> <?= date('jS F Y, h:i a', strtotime($post["created_at"])); ?></span>
                 <span><i class="bi bi-eye"></i> <?= number_format($post["views"]); ?></span>
                 <span><i class="bi bi-chat-square-text"></i> <?= number_format($post["comments_count"]); ?> Comments</span>
+                <span><i class="bi bi-hand-thumbs-up"></i> <?= number_format($post["likes"]); ?> Likes</span>
               </div>
             </div>
           </div>
@@ -132,8 +126,8 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
             <!-- <img src="assets/img/blog/blog-hero-1.webp" alt="UI Design Evolution" class="img-fluid"> -->
           </div>
 
-          <div class="article-wrapper">
-            <aside class="table-of-contents" data-aos="fade-left">
+          <!-- <div class="article-wrapper"> -->
+          <!-- <aside class="table-of-contents" data-aos="fade-left">
               <h3>Table of Contents</h3>
               <nav>
                 <ul>
@@ -145,36 +139,36 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                   <li><a href="#future">Future Trends</a></li>
                 </ul>
               </nav>
-            </aside>
+            </aside> -->
 
-            <div class="article-content">
-              <div class="content-section" id="introduction" data-aos="fade-up">
-                <div class="card rounded-3 p-3">
-                  <p>
-                    <?php echo $post["content"]; ?>
-                  </p>
-                </div>
-              </div>
-
-
-            </div>
+          <!-- <div class="article-content">
+              <div class="content-section" id="introduction" data-aos="fade-up"> -->
+          <div class="card rounded-3 p-3 shadow">
+            <p>
+              <?php echo $post["content"]; ?>
+            </p>
           </div>
+          <!-- </div>
+            </div> -->
+          <!-- </div> -->
 
 
 
           <div class="article-footer" data-aos="fade-up">
             <div class="share-article">
-              <h4>Share this article</h4>
+              <!-- <h4>Share this article</h4> -->
               <div class="share-buttons">
-                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" class="share-button twitter">
+                <a href="like_post.php?id=<?= $post['id'] ?>" class="share-button shadow"><i class="bi bi-hand-thumbs-up me-1"></i></a>
+
+                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" class="share-button twitter shadow">
                   <i class="bi bi-twitter-x"></i>
                   <span>Share on X</span>
                 </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" class="share-button facebook">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" class="share-button facebook shadow">
                   <i class="bi bi-facebook"></i>
                   <span>Share on Facebook</span>
                 </a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" class="share-button linkedin">
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" class="share-button linkedin shadow">
                   <i class="bi bi-linkedin"></i>
                   <span>Share on LinkedIn</span>
                 </a>
@@ -182,10 +176,10 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                 // Admin/Moderator Actions: Edit and Delete Post buttons.
                 if (isset($_SESSION["user_id"])) { ?>
                   <?php if ($_SESSION['role'] == 'Superuser' || $_SESSION['role'] == 'Administrator' || $_SESSION['role'] == 'Teacher') { ?>
-                    <a class="btn btn-primary share-button" href="edit_post.php?id=<?= htmlspecialchars($post["id"]); ?>">
+                    <a class="share-button shadow" href="edit_post.php?id=<?= htmlspecialchars($post["id"]); ?>">
                       <i class="bi bi-pencil"></i>
                     </a>
-                    <a class="btn btn-danger share-button" href="delete_post.php?id=<?= htmlspecialchars($post["id"]); ?>" onclick="return confirm('Are you sure you want to delete this post?')">
+                    <a class="share-button shadow" href="delete_post.php?id=<?= htmlspecialchars($post["id"]); ?>" onclick="return confirm('Are you sure you want to delete this post?')">
                       <i class="bi bi-trash"></i>
                     </a>
                   <?php } ?>
@@ -199,7 +193,7 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
             <div class="container">
               <div class="row g-3">
                 <div class="col-md-6">
-                  <div class="card rounded p-3">
+                  <div class="card rounded p-3 shadow">
                     <div class="card-title">Comments</div>
                     <?php
                     // SQL query to fetch all comments for the current post, ordered by creation date (newest first).
@@ -213,7 +207,9 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                       while ($comment = $comments_result->fetch_assoc()) { ?>
                         <div class="d-flex">
                           <a href="#"><?php echo htmlspecialchars($comment["name"]); ?></a> &nbsp;
-                          <i><small><p class="date"><?php echo date('jS F Y, h:i a', strtotime($comment["created_at"])); ?></p></small></i>
+                          <i><small>
+                              <p class="date"><?php echo date('jS F Y, h:i a', strtotime($comment["created_at"])); ?></p>
+                            </small></i>
                         </div>
 
                         <p class="comment">
@@ -229,12 +225,12 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                         <!-- Admin/Moderator actions for comments: Edit and Delete. -->
                         <?php if (isset($_SESSION["user_id"])) {
                           if ($_SESSION['role'] == 'Superuser' || $_SESSION['role'] == 'Administrator') { ?>
-                            
-                              <strong class="d-flex">
-                                <a class="m-3 btn btn-primary" title="Edit" href="edit_comment.php?id=<?php echo htmlspecialchars($comment["id"]); ?>"><span class="bi bi-pencil"></span></a>
-                                <a class="m-3 btn btn-danger btn-circle" title="Delete" href="delete_comment.php?id=<?php echo htmlspecialchars($comment["id"]); ?>"><span class="bi bi-trash"></span></a>
-                              </strong>
-                            
+
+                            <strong class="d-flex">
+                              <a class="m-3 btn btn-primary" title="Edit" href="edit_comment.php?id=<?php echo htmlspecialchars($comment["id"]); ?>"><span class="bi bi-pencil"></span></a>
+                              <a class="m-3 btn btn-danger btn-circle" title="Delete" href="delete_comment.php?id=<?php echo htmlspecialchars($comment["id"]); ?>"><span class="bi bi-trash"></span></a>
+                            </strong>
+
 
                           <?php }
                           ?>
@@ -248,7 +244,7 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                 </div>
 
                 <div class="col-md-6">
-                  <div class="card rounded-3 p-3">
+                  <div class="card rounded-3 p-3 shadow">
                     <div class="card-title">Leave a Comment</div>
                     <form action="add_comment.php" method="post">
                       <!-- Hidden input field to pass the post ID to the comment submission script. -->
@@ -267,7 +263,9 @@ $search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
                       <div class="form-group col-md-12 mb-3">
                         <textarea class="form-control rounded" rows="5" id="comment" name="comment" placeholder="Comment" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Comment'" required></textarea>
                       </div>
-                      <button type="submit" class="btn btn-success text-uppercase">Post Comment</button>
+                      <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-success text-uppercase">Post Comment</button>
+                      </div>
                     </form>
                   </div>
                 </div>

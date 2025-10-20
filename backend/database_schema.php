@@ -43,59 +43,18 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-    // Table: bills
-    "bills" => "
-        CREATE TABLE IF NOT EXISTS `bills` (
-            `productID` varchar(222) NOT NULL,
-            `productname` varchar(222) NOT NULL,
-            `qty` varchar(222) NOT NULL,
-            `unitprice` varchar(222) NOT NULL,
-            `totalamt` varchar(222) NOT NULL,
-            `invoiceno` varchar(222) NOT NULL,
-            `billdate` varchar(222) NOT NULL,
-            `profit` varchar(222) NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-    // Table: bills1
-    "bills1" => "
-        CREATE TABLE IF NOT EXISTS `bills1` (
-            `productID` varchar(222) NOT NULL,
-            `productname` varchar(222) NOT NULL,
-            `qty` varchar(222) NOT NULL,
-            `unitprice` varchar(222) NOT NULL,
-            `totalamt` varchar(222) NOT NULL,
-            `invoiceno` varchar(222) NOT NULL,
-            `billdate` varchar(222) NOT NULL,
-            `profit` varchar(222) NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-    // Table: bills2
-    "bills2" => "
-        CREATE TABLE IF NOT EXISTS `bills2` (
-            `productID` varchar(222) NOT NULL,
-            `productname` varchar(222) NOT NULL,
-            `qty` varchar(222) NOT NULL,
-            `unitprice` varchar(222) NOT NULL,
-            `totalamt` varchar(222) NOT NULL,
-            `invoiceno` varchar(222) NOT NULL,
-            `billdate` varchar(222) NOT NULL,
-            `profit` varchar(222) NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    ",
-
-    // Table: bills3
-    "bills3" => "
-        CREATE TABLE IF NOT EXISTS `bills3` (
-            `productID` varchar(222) NOT NULL,
-            `productname` varchar(222) NOT NULL,
-            `qty` varchar(222) NOT NULL,
-            `unitprice` varchar(222) NOT NULL,
-            `totalamt` varchar(222) NOT NULL,
-            `invoiceno` varchar(222) NOT NULL,
-            `billdate` varchar(222) NOT NULL,
-            `profit` varchar(222) NOT NULL
+    // Table: blog_posts
+    "blog_posts" => "
+        CREATE TABLE `blog_posts` (
+          `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `title` varchar(255) NOT NULL,
+            `content` text NOT NULL,
+            `author_id` int(11) NOT NULL,
+            `category_id` int(11) NOT NULL,
+            `image_path` varchar(255) DEFAULT NULL,
+            `views` INT DEFAULT 0,
+            `likes` INT DEFAULT 0,
+            `created_at` timestamp NOT NULL DEFAULT current_timestamp()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
@@ -133,6 +92,15 @@ $tables = [
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `volume` varchar(111) NOT NULL,
             PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+
+       // Table: Blog categories
+    "categories" => "
+        CREATE TABLE `categories` (
+            `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            `name` varchar(50) NOT NULL,
+            `description` text DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
@@ -207,6 +175,18 @@ $tables = [
             `total_amount` float NOT NULL,
             `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+
+    // Table: comments
+    "comments" => "
+        CREATE TABLE `comments` (
+            `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            `post_id` int(11) NOT NULL,
+            `name` varchar(255) NOT NULL,
+            `email` varchar(255) NOT NULL,
+            `content` text NOT NULL,
+            `created_at` timestamp NOT NULL DEFAULT current_timestamp()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
@@ -1107,24 +1087,24 @@ $tables = [
 ];
 
 // Create tables
-    foreach ($tables as $tableName => $query) {
-        if (!tableExists($conn, $tableName)) {
-            try {
-                error_log("Attempting to create table $tableName with query: " . $query);
-                if ($conn->query($query) === TRUE) {
-                    // Table created successfully
-                } else {
-                    // This else block might not be reached if an exception is thrown
-                    error_log("Error creating table $tableName: " . $conn->error);
-                }
-            } catch (mysqli_sql_exception $e) {
-                error_log("Caught SQL Exception for table $tableName: " . $e->getMessage());
-                error_log("Failing query for $tableName: " . $query);
-                // Re-throw the exception if you want the script to still terminate
-                throw $e;
+foreach ($tables as $tableName => $query) {
+    if (!tableExists($conn, $tableName)) {
+        try {
+            error_log("Attempting to create table $tableName with query: " . $query);
+            if ($conn->query($query) === TRUE) {
+                // Table created successfully
+            } else {
+                // This else block might not be reached if an exception is thrown
+                error_log("Error creating table $tableName: " . $conn->error);
             }
+        } catch (mysqli_sql_exception $e) {
+            error_log("Caught SQL Exception for table $tableName: " . $e->getMessage());
+            error_log("Failing query for $tableName: " . $query);
+            // Re-throw the exception if you want the script to still terminate
+            throw $e;
         }
     }
+}
 
 // Insert initial data
 if (tableExists($conn, 'capacity')) {
