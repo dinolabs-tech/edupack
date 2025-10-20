@@ -25,7 +25,7 @@ session_start();
           <div class="row align-items-center">
             <div class="col-lg-7" data-aos="zoom-out" data-aos-delay="100">
               <div class="hero-content">
-                <h1>Empowering Minds as Always, Shaping the Future</h1>
+                <h1>Empowering Minds, Shaping the Future</h1>
                 <p>At <strong>Dinolabs</strong>, we believe education goes beyond the classroom. Our mission is to inspire curiosity, nurture talent, and equip students with the skills and confidence to thrive in a fast-changing world. Join a community driven by innovation, creativity, and lifelong learning.</p>
                 <div class="cta-buttons">
                   <a href="#admissions" class="btn-primary">Start Your Journey</a>
