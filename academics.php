@@ -17,10 +17,9 @@ session_start();
     <div class="page-title dark-background" style="background-image: url(assets/img/education/showcase-1.webp);">
       <div class="container position-relative">
         <h1>Academics</h1>
-        <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li class="current">Academics</li>
           </ol>
         </nav>
@@ -539,12 +538,12 @@ session_start();
 
   </main>
 
-<?php include 'components/footer.php'; ?>
+  <?php include 'components/footer.php'; ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
- <?php include 'components/scripts.php'; ?>
+  <?php include 'components/scripts.php'; ?>
 
 </body>
 
