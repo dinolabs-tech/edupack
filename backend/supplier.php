@@ -123,22 +123,27 @@ $stmt->close();
                     <p>
                             
 
-                      <form action="" method="POST">
+                      <form action="" method="POST" class="row g-2">
                         <input class="form-control" type="hidden" name="id" id="id">
-                        <br>
+                       
+                        <div class="col-md-3">
                         <input class="form-control" type="text" name="product" id="product" required placeholder="Product">
-                        <br>
+                        </div>
+                        <div class="col-md-3">
                         <input class="form-control" type="text" name="companyname" id="companyname" required placeholder="Business Name">
-                        <br>
+                        </div>
+                        <div class="col-md-3">
                         <input class="form-control" type="text" name="phone" id="phone" required placeholder="Mobile">
-                        <br>
+                        </div>
+                        <div class="col-md-3">
                         <input class="form-control" type="text" name="address" id="address" required placeholder="Address">
-                        <br>
-                        <button type="submit" name="save" class="btn btn-success"><span class="btn-label">
-                        <i class="fa fa-save"></i> Save</button>
+                        </div>
+
+                        <button type="submit" name="save" class="btn btn-success btn-icon btn-round ps-1 me-1 ms-3"><span class="btn-label">
+                        <i class="fa fa-save"></i> </button>
                         
-                        <button type="reset" class="btn btn-dark"><span class="btn-label">
-                        <i class="fa fa-undo"></i>Clear</button>
+                        <button type="reset" class="btn btn-dark btn-icon btn-round ps-1"><span class="btn-label">
+                        <i class="fa fa-times"></i></button>
                       </form>
 
                      </p>
@@ -183,22 +188,24 @@ $stmt->close();
                               // Fetch records
                               $result = $conn->query("SELECT * FROM suppliers");
 
-                              while ($row = $result->fetch_assoc()) {
-                                  echo "<tr>";
-                                  // echo "<td>" . $row['id'] . "</td>";
-                                  echo "<td>" . $row['product'] . "</td>";
-                                  echo "<td>" . $row['companyname'] . "</td>";
-                                  echo "<td>" . $row['phone'] . "</td>";
-                                  echo "<td>" . $row['address'] . "</td>";
-                                  echo "<td>
-                                          <button class='btn btn-warning' onclick=\"editRecord(" . $row['id'] . ", '" . $row['product'] . "', '" . $row['companyname'] . "', '" . $row['phone'] . "', '" . $row['address'] . "')\" >Edit</button>
+                              while ($row = $result->fetch_assoc()) { ?>
+                                  <tr>
+                                   <!-- <td><?= $row['id']  ?></td> -->
+                                  <td><?= $row['product']  ?></td>
+                                  <td><?= $row['companyname']  ?></td>
+                                  <td><?= $row['phone']  ?></td>
+                                  <td><?= $row['address']  ?></td>
+                               <?php   echo "<td class'd-flex'>
+                                          <button class='btn btn-warning btn-icon btn-round me-2 ps-1' onclick=\"editRecord(" . $row['id'] . ", '" . $row['product'] . "', '" . $row['companyname'] . "', '" . $row['phone'] . "', '" . $row['address'] . "')\" ><i class='fas fa-edit'></i></button>" ?>
                                           <form action='' method='POST' style='display:inline;'>
-                                              <input type='hidden' name='id' value='" . $row['id'] . "'>
-                                              <button class='btn btn-danger' type='submit' name='delete' >Delete</button>
+                                              <input type='hidden' name='id' value='<?=$row['id'] ?>'>
+                                              <button class='btn btn-danger btn-icon btn-round' type='submit' name='delete' >
+                                                <i class="fas fa-trash"></i>
+                                              </button>
                                           </form>
-                                        </td>";
-                                  echo "</tr>";
-                              }
+                                        </td>
+                                  </tr>
+                            <?php  } 
 
                               $conn->close();
                               ?>
