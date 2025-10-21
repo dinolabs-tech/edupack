@@ -1070,7 +1070,27 @@ $tables = [
             CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
+// Table: events
+    "events" => "
+        CREATE TABLE IF NOT EXISTS events (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            event_date DATE NOT NULL,
+            category VARCHAR(255) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            details TEXT NOT NULL,
+            start_time TIME NOT NULL,
+            end_time TIME NOT NULL,
+            location VARCHAR(255) NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+    ",
 
+        // Table: events_categories
+    "events_categories" => "
+            CREATE TABLE IF NOT EXISTS event_categories (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL UNIQUE
+        )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+    ",
     // Table: parent_student
     "parent_student" => "
         CREATE TABLE IF NOT EXISTS `parent_student` (

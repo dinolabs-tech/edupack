@@ -1,4 +1,5 @@
 <?php
+// onlice connection
 $servername = "localhost";
 $username = "dinolabs_root";
 $password = "foxtrot2november";
@@ -9,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
+// offline connection
 // $servername = "localhost";
 // $username = "root";
 // $password = "";

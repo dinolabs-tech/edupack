@@ -33,49 +33,47 @@
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
+  <h4>Our Services</h4>
+  <ul>
+    <li><a href="#">Student Enrollment</a></li>
+    <li><a href="#">Result Management</a></li>
+    <li><a href="#">E-Learning Portal</a></li>
+    <li><a href="#">Parent Communication</a></li>
+    <li><a href="#">School Management</a></li>
+  </ul>
+</div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Hic solutasetp</h4>
-          <ul>
-            <li><a href="#">Molestiae accusamus iure</a></li>
-            <li><a href="#">Excepturi dignissimos</a></li>
-            <li><a href="#">Suscipit distinctio</a></li>
-            <li><a href="#">Dilecta</a></li>
-            <li><a href="#">Sit quas consectetur</a></li>
-          </ul>
-        </div>
+<div class="col-lg-2 col-md-3 footer-links">
+  <h4>Quick Links</h4>
+  <ul>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Our History</a></li>
+    <li><a href="#">Our Teachers</a></li>
+    <li><a href="#">Admissions</a></li>
+    <li><a href="#">Contact Us</a></li>
+  </ul>
+</div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Nobis illum</h4>
-          <ul>
-            <li><a href="#">Ipsam</a></li>
-            <li><a href="#">Laudantium dolorum</a></li>
-            <li><a href="#">Dinera</a></li>
-            <li><a href="#">Trodelas</a></li>
-            <li><a href="#">Flexo</a></li>
-          </ul>
-        </div>
+<div class="col-lg-2 col-md-3 footer-links">
+  <h4>Student Resources</h4>
+  <ul>
+    <li><a href="#">Check Results</a></li>
+    <li><a href="#">School Calendar</a></li>
+    <li><a href="#">Library Access</a></li>
+    <li><a href="#">Clubs & Societies</a></li>
+    <li><a href="#">Alumni Network</a></li>
+  </ul>
+</div>
+
 
       </div>
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">MyWebsite</strong> <span>All Rights Reserved</span></p>
+      <p>&copy; <span><?php echo date("Y"); ?></span> <strong class="px-1 sitename">EduPack</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      
+        Designed by <a href="https://dinolabstech.com/">Dinolabs Tech Services</a>
       </div>
     </div>
 

@@ -11,30 +11,28 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li class="dropdown"><a href="about.php"><span>About</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="students-life.php">Students Life</a></li>
+          <li><a href="events.php">Events</a></li>
+          <li><a href="alumni.php">Alumni</a></li>
+          <li><a href="gallery.php">Gallery</a></li>
+
+           <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="about.php">About Us</a></li>
               <li><a href="admissions.php">Admissions</a></li>
               <li><a href="academics.php">Academics</a></li>
               <li><a href="faculty-staff.php">Faculty &amp; Staff</a></li>
               <li><a href="campus-facilities.php">Campus &amp; Facilities</a></li>
             </ul>
           </li>
-
-          <li><a href="students-life.php">Students Life</a></li>
-          <li><a href="events.php">Events</a></li>
-          <li><a href="alumni.php">Alumni</a></li>
-          <li><a href="gallery.php">Gallery</a></li>
-          <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <!-- <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="news-details.php">News Details</a></li>
               <li><a href="event-details.php">Event Details</a></li>
               <li><a href="privacy.php">Privacy</a></li>
               <li><a href="terms-of-service.php">Terms of Service</a></li>
               <li><a href="404.php">Error 404</a></li>
               <li><a href="starter-page.php">Starter Page</a></li>
             </ul>
-          </li>
+          </li> -->
 
           <?php if (isset($_SESSION["staffname"])) { ?>
             <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'Superuser' || $_SESSION['role'] == 'Administrator' || $_SESSION['role'] == 'Teacher') { ?>
@@ -70,6 +68,7 @@
           <?php }
           ?>
 
+          <li><a href="about.php">About</a></li>
           <li><a href="contact.php">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
