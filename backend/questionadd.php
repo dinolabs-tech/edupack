@@ -28,9 +28,7 @@ if (isset($_POST['delete'])) {
       $conn->query($sql0) === TRUE &&
       $conn->query($sql1) === TRUE
     ) {
-      echo '<script type="text/javascript">
-        alert("Exam Initiated successfully!\nStudents can take their exams");
-      </script>';
+      $delete_message = "Exam Initiated successfully!\nStudents can take their exams";
     } else {
       echo "Error Initiating Exams: " . $conn->error;
     }
@@ -59,9 +57,9 @@ if (isset($_POST['delete_subject'])) {
     // Bind the parameters as strings ("sss")
     $stmt->bind_param("sss", $class, $arm, $subject);
     if ($stmt->execute()) {
-      echo "<p style='color: green;'>Subjects deleted for Class: " . htmlspecialchars($class) . ", Arm: " . htmlspecialchars($arm) . ", Subject: " . htmlspecialchars($subject) . ".</p>";
+      $del_message = "Subjects deleted for Class: " . htmlspecialchars($class) . ", Arm: " . htmlspecialchars($arm) . ", Subject: " . htmlspecialchars($subject) . "";
     } else {
-      echo "<p style='color: red;'>Error deleting subjects: " . htmlspecialchars($stmt->error) . "</p>";
+      $del_message = "Error deleting subjects: " . htmlspecialchars($stmt->error) . "";
     }
     $stmt->close();
   }
@@ -166,6 +164,11 @@ if ($session_result) {
           <div class="row">
 
             <div class="col-md-12">
+
+              <?php if (!empty($delete_message)): ?>
+                <div class="alert alert-danger"><?php echo htmlspecialchars($delete_message); ?></div>
+              <?php endif; ?>
+
               <div class="card card-round">
                 <div class="card-header">
                   <div class="card-head-row">
@@ -231,8 +234,6 @@ if ($session_result) {
                         </div>
                       </div>
 
-
-
                       <div class="row mt-3">
                         <div class="col-md-12 text-center">
                           <!-- Submit Button -->
@@ -245,11 +246,8 @@ if ($session_result) {
                         </div>
                       </div>
 
-
                     </form>
-
                     <div id="errorMsg" class="alert alert-danger d-none"></div>
-
                   </div>
                 </div>
               </div>
@@ -261,6 +259,11 @@ if ($session_result) {
           <div class="row">
 
             <div class="col-md-12">
+
+              <?php if (!empty($del_message)): ?>
+                <div class="alert alert-danger"><?php echo htmlspecialchars($del_message); ?></div>
+              <?php endif; ?>
+
               <div class="card card-round">
                 <div class="card-header">
                   <div class="card-head-row">
@@ -289,64 +292,64 @@ if ($session_result) {
                         $current_class = $row['class'];
                         $section_open = true; ?>
 
-                         <!-- Start new class section -->
+                        <!-- Start new class section -->
                         <div class="mb-4">
                           <h5 class="border-bottom pb-2 text-primary">
                             <?= htmlspecialchars($current_class) . ' - ' . htmlspecialchars($row['arm']) ?>
                           </h5>
                           <div class="row g-3">
-                    <?php
-                      }
-                    ?>
-                      <!-- Each subject card -->
-                      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <div class="card shadow-sm border-0 h-100">
-                          <div class="card-body d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold text-secondary"><?= htmlspecialchars($row['subject']) ?></span>
-                            <form method="post" action="" class="m-0">
-                              <input type="hidden" name="class" value="<?= htmlspecialchars($row['class']) ?>">
-                              <input type="hidden" name="arm" value="<?= htmlspecialchars($row['arm']) ?>">
-                              <input type="hidden" name="subject" value="<?= htmlspecialchars($row['subject']) ?>">
-                              <button type="submit" name="delete_subject" class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                              </button>
-                            </form>
+                          <?php
+                        }
+                          ?>
+                          <!-- Each subject card -->
+                          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card shadow-sm border-0 h-100">
+                              <div class="card-body d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold text-secondary"><?= htmlspecialchars($row['subject']) ?></span>
+                                <form method="post" action="" class="m-0">
+                                  <input type="hidden" name="class" value="<?= htmlspecialchars($row['class']) ?>">
+                                  <input type="hidden" name="arm" value="<?= htmlspecialchars($row['arm']) ?>">
+                                  <input type="hidden" name="subject" value="<?= htmlspecialchars($row['subject']) ?>">
+                                  <button type="submit" name="delete_subject" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                  </button>
+                                </form>
+                              </div>
+                            </div>
                           </div>
+
+                        <?php
+                      }
+
+                      // Close the last section
+                      if ($section_open) {
+                        echo '</div></div>';
+                      }
+
+                      $conn->close();
+                        ?>
+                          </div>
+
+
                         </div>
-                      </div>
-
-                    <?php
-                    }
-
-                    // Close the last section
-                    if ($section_open) {
-                      echo '</div></div>';
-                    }
-
-                    $conn->close();
-                    ?>
                   </div>
-
-
                 </div>
+
+
               </div>
+
             </div>
-
-
           </div>
 
+          </script>
+          <?php include('footer.php'); ?>
         </div>
+
+        <!-- Custom template | don't include it in your project! -->
+        <?php include('cust-color.php'); ?>
+        <!-- End Custom template -->
       </div>
-
-      </script>
-      <?php include('footer.php'); ?>
-    </div>
-
-    <!-- Custom template | don't include it in your project! -->
-    <?php include('cust-color.php'); ?>
-    <!-- End Custom template -->
-  </div>
-  <?php include('scripts.php'); ?>
+      <?php include('scripts.php'); ?>
 
 
 

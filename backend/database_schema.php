@@ -95,7 +95,7 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-       // Table: Blog categories
+    // Table: Blog categories
     "categories" => "
         CREATE TABLE `categories` (
             `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -262,8 +262,8 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
-      // Table: fee_transactions
-  "fee_transactions" => "
+    // Table: fee_transactions
+    "fee_transactions" => "
         CREATE TABLE IF NOT EXISTS `fee_transactions` (
             `transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
             `student_id` VARCHAR(222) NOT NULL,
@@ -1087,7 +1087,7 @@ $tables = [
             CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
-// Table: events
+    // Table: events
     "events" => "
         CREATE TABLE IF NOT EXISTS events (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -1101,7 +1101,7 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
 
-        // Table: events_categories
+    // Table: events_categories
     "events_categories" => "
             CREATE TABLE IF NOT EXISTS event_categories (
             id INT AUTO_INCREMENT PRIMARY KEY,
