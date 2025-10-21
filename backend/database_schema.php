@@ -262,6 +262,23 @@ $tables = [
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
 
+      // Table: fee_transactions
+  "fee_transactions" => "
+        CREATE TABLE IF NOT EXISTS `fee_transactions` (
+            `transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `student_id` VARCHAR(222) NOT NULL,
+            `fee_definition_id` VARCHAR(111) NOT NULL,
+            `amount_paid` DECIMAL(10, 2) NOT NULL,
+            `payment_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `payment_method` VARCHAR(50) NOT NULL,
+            `transaction_ref` VARCHAR(255) NULL,
+            `recorded_by` VARCHAR(111) NOT NULL,
+            `session` VARCHAR(111) NOT NULL,
+            `term` VARCHAR(111) NOT NULL,
+            PRIMARY KEY (`transaction_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+
     // Table: fees
     "fees" => "
         CREATE TABLE IF NOT EXISTS `fees` (
