@@ -236,7 +236,7 @@ $conn->close();
               </div>
             </div>
 
-            <div class="card mt-5" data-aos="fade-left" data-aos-delay="200">
+            <div class="card mt-5 shadow" data-aos="fade-left" data-aos-delay="200">
               <div class="card-body">
                 <h3>Manage Categories</h3>
                 <?php if (isset($_GET['category_message'])): ?>
