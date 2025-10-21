@@ -1,6 +1,6 @@
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="width=device-width, initial-scale=0.8" name="viewport">
   <title>Edupack - Educational Management Solution</title>
   <meta name="description" content="Edupack is an all-in-one educational management solution designed to streamline administrative tasks, enhance communication, and improve the overall learning experience for students, teachers, and administrators.">
   <meta name="keywords" content="Edupack, educational management, student information system, learning management system, school administration">
