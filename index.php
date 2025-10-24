@@ -64,7 +64,7 @@ session_start();
                     </div>
                     <div class="stat-content">
                       <h4>15:1</h4>
-                      <p>Student–Faculty Ratio</p>
+                      <p>Student–Class Ratio</p>
                     </div>
                   </div>
                   <div class="stat-item">
