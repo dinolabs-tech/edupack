@@ -13,11 +13,11 @@ $applications = $appPortal->getAllApplications(); // Fetch all applications
 $admissionSettings = new AdmissionSettings($conn);
 $registration_cost = $admissionSettings->getSetting('registration_cost');
 if ($registration_cost === null) {
-    $registration_cost = 0.00; // Default to 0 if not set in settings
+  $registration_cost = 0.00; // Default to 0 if not set in settings
 }
 $flutterwave_public_key = $admissionSettings->getSetting('flutterwave_public_key');
 if ($flutterwave_public_key === null) {
-    $flutterwave_public_key = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Default test key
+  $flutterwave_public_key = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Default test key
 }
 ?>
 
@@ -216,48 +216,40 @@ if ($flutterwave_public_key === null) {
                     <div class="p-3 row">
                       <h6>Step 1: Personal Information</h6>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="name">Full Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" placeholder="Full Name" id="name" name="name" required>
+                      </div>
+                      <input type="date" class="form-control" id="dob" name="dob" required
+                        onfocus="this.type='date'"
+                        onblur="if(!this.value)this.type='text'"
+                        placeholder="Date of Birth">
+
+                      <div class="form-group mb-3 col-md-3">
+                        <input type="text" class="form-control" placeholder="Place of Birth" id="placeob" name="placeob" required>
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="dob">Date of Birth:</label>
-                        <input type="date" class="form-control" id="dob" name="dob" required>
-                      </div>
-                      <div class="form-group mb-3 col-md-3">
-                        <label for="placeob">Place of Birth:</label>
-                        <input type="text" class="form-control" id="placeob" name="placeob" required>
-                      </div>
-                      <div class="form-group mb-3 col-md-3">
-                        <label for="gender">Gender:</label>
-                        <select class="form-control" id="gender" name="gender" required>
-                          <option value="">Select Gender</option>
+                        <select class="form-control form-select" id="gender" name="gender" required>
+                          <option value="" selected disabled>Select Gender</option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                         </select>
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="studentmobile">Student Mobile:</label>
-                        <input type="tel" class="form-control" id="studentmobile" name="studentmobile">
+                        <input type="tel" class="form-control" placeholder="Student Mobile" id="studentmobile" name="studentmobile">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="address">Address:</label>
-                        <textarea class="form-control" id="address" name="address"></textarea>
+                        <textarea class="form-control" placeholder="Address" id="address" name="address"></textarea>
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="religion">Religion:</label>
-                        <input type="text" class="form-control" id="religion" name="religion">
+                        <input type="text" class="form-control" placeholder="Religion" id="religion" name="religion">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="state">State:</label>
-                        <input type="text" class="form-control" id="state" name="state">
+                        <input type="text" class="form-control" placeholder="State" id="state" name="state">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="lga">LGA:</label>
-                        <input type="text" class="form-control" id="lga" name="lga">
+                        <input type="text" class="form-control" placeholder="LGA" id="lga" name="lga">
                       </div>
                       <div class="col-md-12 text-end">
                         <button type="button" class="btn btn-primary shadow" onclick="nextTab('academic-tab')">Next</button>
@@ -270,28 +262,22 @@ if ($flutterwave_public_key === null) {
                     <div class="p-3 row">
                       <h6>Step 2: Academic Background</h6>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="schoolname">Last School Attended:</label>
-                        <input type="text" class="form-control" id="schoolname" name="schoolname" required>
+                        <input type="text" class="form-control" placeholder="Last School Attended" id="schoolname" name="schoolname" required>
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="schooladdress">School Address:</label>
-                        <input type="text" class="form-control" id="schooladdress" name="schooladdress">
+                        <input type="text" class="form-control" placeholder="School Address" id="schooladdress" name="schooladdress">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="lastclass">Last Class Attended:</label>
-                        <input type="text" class="form-control" id="lastclass" name="lastclass">
+                        <input type="text" class="form-control" placeholder="Last Class Attended" id="lastclass" name="lastclass">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="session">Session:</label>
-                        <input type="text" class="form-control" id="session" name="session">
+                        <input type="text" class="form-control" placeholder="Session" id="session" name="session">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="term">Term:</label>
-                        <input type="text" class="form-control" id="term" name="term">
+                        <input type="text" class="form-control" placeholder="Term" id="term" name="term">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="hobbies">Hobbies:</label>
-                        <input type="text" class="form-control" id="hobbies" name="hobbies">
+                        <input type="text" class="form-control" placeholder="Hobbies" id="hobbies" name="hobbies">
                       </div>
                       <div class="col-md-12 d-flex">
                         <div class="col-md-6 text-start">
@@ -311,87 +297,67 @@ if ($flutterwave_public_key === null) {
                     <div class="p-3 row">
                       <h6>Step 3: Guardian & Health Information</h6>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="gname">Guardian Name:</label>
-                        <input type="text" class="form-control" id="gname" name="gname">
+                        <input type="text" class="form-control" placeholder="Guardian Name" id="gname" name="gname">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="mobile">Guardian Mobile:</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile">
+                        <input type="text" class="form-control" placeholder="Guardian Mobile" id="mobile" name="mobile">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="goccupation">Guardian Occupation:</label>
-                        <input type="text" class="form-control" id="goccupation" name="goccupation">
+                        <input type="text" class="form-control" placeholder="Guardian Occupation" id="goccupation" name="goccupation">
                       </div>
                       <div class="form-group mb-3 col-md-3">
-                        <label for="grelationship">Guardian Relationship:</label>
-                        <input type="text" class="form-control" id="grelationship" name="grelationship">
+                        <input type="text" class="form-control" placeholder="Guardian Relationship" id="grelationship" name="grelationship">
                       </div>
                       <div class="form-group mb-3 col-md-12">
-                        <label for="gaddress">Guardian Address:</label>
-                        <textarea name="gaddress" id="gaddress" class="form-control"></textarea>
+                        <textarea name="gaddress" id="gaddress" class="form-control" placeholder="Guardian Address"></textarea>
                       </div>
 
                       <hr>
                       <h6>Health Information</h6>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="bloodtype">Blood Type:</label>
-                        <input type="text" class="form-control" id="bloodtype" name="bloodtype">
+                        <input type="text" class="form-control" placeholder="Blood Type" id="bloodtype" name="bloodtype">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="bloodgroup">Blood Group:</label>
-                        <input type="text" class="form-control" id="bloodgroup" name="bloodgroup">
+                        <input type="text" class="form-control" placeholder="Blood Group" id="bloodgroup" name="bloodgroup">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="height">Height (cm):</label>
-                        <input type="text" class="form-control" id="height" name="height">
+                        <input type="text" class="form-control" placeholder="Height (cm)" id="height" name="height">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="weight">Weight (kg):</label>
-                        <input type="text" class="form-control" id="weight" name="weight">
+                        <input type="text" class="form-control" placeholder="Weight (kg)" id="weight" name="weight">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="sickle">Sickle Cell Status:</label>
-                        <input type="text" class="form-control" id="sickle" name="sickle">
+                        <input type="text" class="form-control" placeholder="Sickle Cell Status" id="sickle" name="sickle">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="challenge">Physical Challenge (if any):</label>
-                        <input type="text" class="form-control" id="challenge" name="challenge">
+                        <input type="text" class="form-control" placeholder="Physical Challenge (if any)" id="challenge" name="challenge">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="emergency">Emergency Contact Name:</label>
-                        <input type="text" class="form-control" id="emergency" name="emergency">
+                        <input type="text" class="form-control" placeholder="Emergency Contact Name" id="emergency" name="emergency">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="familydoc">Family Doctor Name:</label>
-                        <input type="text" class="form-control" id="familydoc" name="familydoc">
+                        <input type="text" class="form-control" placeholder="Family Doctor Name" id="familydoc" name="familydoc">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="docaddress">Doctor's Address:</label>
-                        <input type="text" class="form-control" id="docaddress" name="docaddress">
+                        <input type="text" class="form-control" placeholder="Doctor's Address" id="docaddress" name="docaddress">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="docmobile">Doctor's Mobile:</label>
-                        <input type="text" class="form-control" id="docmobile" name="docmobile">
+                        <input type="text" class="form-control" placeholder="Doctor's Mobile" id="docmobile" name="docmobile">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="polio">Polio Vaccination:</label>
-                        <input type="text" class="form-control" id="polio" name="polio">
+                        <input type="text" class="form-control" placeholder="Polio Vaccination" id="polio" name="polio">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="tuberculosis">Tuberculosis Vaccination:</label>
-                        <input type="text" class="form-control" id="tuberculosis" name="tuberculosis">
+                        <input type="text" class="form-control" placeholder="Tuberculosis Vaccination" id="tuberculosis" name="tuberculosis">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="measles">Measles Vaccination:</label>
-                        <input type="text" class="form-control" id="measles" name="measles">
+                        <input type="text" class="form-control" placeholder="Measles Vaccination" id="measles" name="measles">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="tetanus">Tetanus Vaccination:</label>
-                        <input type="text" class="form-control" id="tetanus" name="tetanus">
+                        <input type="text" class="form-control" placeholder="Tetanus Vaccination" id="tetanus" name="tetanus">
                       </div>
                       <div class="form-group mb-3 col-md-2">
-                        <label for="whooping">Whooping Cough Vaccination:</label>
-                        <input type="text" class="form-control" id="whooping" name="whooping">
+                        <input type="text" class="form-control" placeholder="Whooping Cough Vaccination" id="whooping" name="whooping">
                       </div>
 
                       <div class="col-md-12 d-flex">
@@ -453,136 +419,136 @@ if ($flutterwave_public_key === null) {
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-      <script>
-        function nextTab(tabId) {
-            var someTabTriggerEl = document.querySelector('#' + tabId)
-            var tab = new bootstrap.Tab(someTabTriggerEl)
-            tab.show()
-        }
+  <script>
+    function nextTab(tabId) {
+      var someTabTriggerEl = document.querySelector('#' + tabId)
+      var tab = new bootstrap.Tab(someTabTriggerEl)
+      tab.show()
+    }
 
-        function prevTab(tabId) {
-            var someTabTriggerEl = document.querySelector('#' + tabId)
-            var tab = new bootstrap.Tab(someTabTriggerEl)
-            tab.show()
-        }
-    </script>
+    function prevTab(tabId) {
+      var someTabTriggerEl = document.querySelector('#' + tabId)
+      var tab = new bootstrap.Tab(someTabTriggerEl)
+      tab.show()
+    }
+  </script>
 
-    <?php if ($registration_cost > 0): ?>
-        <script src="https://checkout.flutterwave.com/v3.js"></script>
-        <script>
-            document.getElementById('payAndSubmitBtn')?.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default form submission
-
-                var form = document.querySelector('form');
-                var formData = new FormData(form);
-
-                // Basic validation for required fields before payment
-                var name = formData.get('name');
-                var email = formData.get('email');
-                var dob = formData.get('dob');
-                var placeob = formData.get('placeob');
-                var gender = formData.get('gender');
-                var schoolname = formData.get('schoolname');
-                var passport_path = formData.get('passport_path');
-                var transcript_path = formData.get('transcript_path');
-
-                if (!name || !email || !dob || !placeob || !gender || !schoolname || !passport_path || !transcript_path) {
-                    alert('Please fill in all required fields in all tabs before proceeding to payment.');
-                    return;
-                }
-
-                var amount = parseFloat(<?php echo json_encode($registration_cost); ?>);
-                var tx_ref = "ADM-TX-" + Math.floor(Math.random() * 1000000000) + "-" + Date.now();
-
-                // Collect all form data to pass to the callback
-                var applicationData = {};
-                for (var pair of formData.entries()) {
-                    if (pair[0] !== 'passport_path' && pair[0] !== 'transcript_path') { // Exclude files for direct JSON
-                        applicationData[pair[0]] = pair[1];
-                    }
-                }
-                applicationData['tx_ref'] = tx_ref;
-                applicationData['amount'] = amount;
-                applicationData['type'] = 'admission_form';
-
-                var encodedApplicationData = btoa(JSON.stringify(applicationData));
-
-                FlutterwaveCheckout({
-                    public_key: <?php echo json_encode($flutterwave_public_key); ?>,
-                    tx_ref: tx_ref,
-                    amount: amount,
-                    currency: "NGN",
-                    country: "NG",
-                    payment_options: "card, mobilemoney,banktransfer, ussd",
-                    customer: {
-                        email: email,
-                        name: name
-                    },
-                    callback: function(data) {
-                        if (data.status === 'successful') {
-                            // Append payment details to form data and submit
-                            var hiddenTxRef = document.createElement('input');
-                            hiddenTxRef.type = 'hidden';
-                            hiddenTxRef.name = 'flw_tx_ref';
-                            hiddenTxRef.value = data.tx_ref;
-                            form.appendChild(hiddenTxRef);
-
-                            var hiddenTransactionId = document.createElement('input');
-                            hiddenTransactionId.type = 'hidden';
-                            hiddenTransactionId.name = 'flw_transaction_id';
-                            hiddenTransactionId.value = data.transaction_id;
-                            form.appendChild(hiddenTransactionId);
-
-                            var hiddenPaymentStatus = document.createElement('input');
-                            hiddenPaymentStatus.type = 'hidden';
-                            hiddenPaymentStatus.name = 'flw_status';
-                            hiddenPaymentStatus.value = data.status;
-                            form.appendChild(hiddenPaymentStatus);
-
-                            // Submit the form after successful payment
-                            form.submit();
-
-                        } else if (data.status === 'cancelled') {
-                            alert('Payment cancelled. Please try again.');
-                        } else {
-                            alert('Payment failed. Please try again.');
-                        }
-                    },
-                    onclose: function() {
-                        // User closed the payment modal
-                        console.log('Payment modal closed by user.');
-                    },
-                    customizations: {
-                        title: "Admission Form Payment",
-                        description: "Payment for " + name + "'s Admission Form",
-                        logo: "https://your-school-logo.com/logo.png" // Replace with your school logo
-                    }
-                });
-            });
-        </script>
-    <?php endif; ?>
-
+  <?php if ($registration_cost > 0): ?>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script>
-        // Handle messages from process_application_portal.php
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const status = urlParams.get('status');
-            const message = urlParams.get('message');
+      document.getElementById('payAndSubmitBtn')?.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-            if (status && message) {
-                const alertDiv = document.createElement('div');
-                alertDiv.className = `alert alert-${status === 'successful' ? 'success' : 'danger'} mt-3`;
-                alertDiv.textContent = message;
-                document.querySelector('.container-fluid').prepend(alertDiv);
+        var form = document.querySelector('form');
+        var formData = new FormData(form);
 
-                // Remove status and message from URL
-                urlParams.delete('status');
-                urlParams.delete('message');
-                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
-                window.history.replaceState({}, document.title, newUrl);
+        // Basic validation for required fields before payment
+        var name = formData.get('name');
+        var email = formData.get('email');
+        var dob = formData.get('dob');
+        var placeob = formData.get('placeob');
+        var gender = formData.get('gender');
+        var schoolname = formData.get('schoolname');
+        var passport_path = formData.get('passport_path');
+        var transcript_path = formData.get('transcript_path');
+
+        if (!name || !email || !dob || !placeob || !gender || !schoolname || !passport_path || !transcript_path) {
+          alert('Please fill in all required fields in all tabs before proceeding to payment.');
+          return;
+        }
+
+        var amount = parseFloat(<?php echo json_encode($registration_cost); ?>);
+        var tx_ref = "ADM-TX-" + Math.floor(Math.random() * 1000000000) + "-" + Date.now();
+
+        // Collect all form data to pass to the callback
+        var applicationData = {};
+        for (var pair of formData.entries()) {
+          if (pair[0] !== 'passport_path' && pair[0] !== 'transcript_path') { // Exclude files for direct JSON
+            applicationData[pair[0]] = pair[1];
+          }
+        }
+        applicationData['tx_ref'] = tx_ref;
+        applicationData['amount'] = amount;
+        applicationData['type'] = 'admission_form';
+
+        var encodedApplicationData = btoa(JSON.stringify(applicationData));
+
+        FlutterwaveCheckout({
+          public_key: <?php echo json_encode($flutterwave_public_key); ?>,
+          tx_ref: tx_ref,
+          amount: amount,
+          currency: "NGN",
+          country: "NG",
+          payment_options: "card, mobilemoney,banktransfer, ussd",
+          customer: {
+            email: email,
+            name: name
+          },
+          callback: function(data) {
+            if (data.status === 'successful') {
+              // Append payment details to form data and submit
+              var hiddenTxRef = document.createElement('input');
+              hiddenTxRef.type = 'hidden';
+              hiddenTxRef.name = 'flw_tx_ref';
+              hiddenTxRef.value = data.tx_ref;
+              form.appendChild(hiddenTxRef);
+
+              var hiddenTransactionId = document.createElement('input');
+              hiddenTransactionId.type = 'hidden';
+              hiddenTransactionId.name = 'flw_transaction_id';
+              hiddenTransactionId.value = data.transaction_id;
+              form.appendChild(hiddenTransactionId);
+
+              var hiddenPaymentStatus = document.createElement('input');
+              hiddenPaymentStatus.type = 'hidden';
+              hiddenPaymentStatus.name = 'flw_status';
+              hiddenPaymentStatus.value = data.status;
+              form.appendChild(hiddenPaymentStatus);
+
+              // Submit the form after successful payment
+              form.submit();
+
+            } else if (data.status === 'cancelled') {
+              alert('Payment cancelled. Please try again.');
+            } else {
+              alert('Payment failed. Please try again.');
             }
+          },
+          onclose: function() {
+            // User closed the payment modal
+            console.log('Payment modal closed by user.');
+          },
+          customizations: {
+            title: "Admission Form Payment",
+            description: "Payment for " + name + "'s Admission Form",
+            logo: "https://your-school-logo.com/logo.png" // Replace with your school logo
+          }
         });
+      });
     </script>
+  <?php endif; ?>
+
+  <script>
+    // Handle messages from process_application_portal.php
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const status = urlParams.get('status');
+      const message = urlParams.get('message');
+
+      if (status && message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${status === 'successful' ? 'success' : 'danger'} mt-3`;
+        alertDiv.textContent = message;
+        document.querySelector('.container-fluid').prepend(alertDiv);
+
+        // Remove status and message from URL
+        urlParams.delete('status');
+        urlParams.delete('message');
+        const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+        window.history.replaceState({}, document.title, newUrl);
+      }
+    });
+  </script>
 
   <?php include 'components/scripts.php'; ?>
 
