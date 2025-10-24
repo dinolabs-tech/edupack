@@ -24,43 +24,43 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About us</a></li>
+            <li><a href="academics.php">Academics</a></li>
+            <li><a href="terms.php">Terms of service</a></li>
+            <li><a href="privacy.php">Privacy policy</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
   <h4>Our Services</h4>
   <ul>
-    <li><a href="#">Student Enrollment</a></li>
-    <li><a href="#">Result Management</a></li>
-    <li><a href="#">E-Learning Portal</a></li>
-    <li><a href="#">Parent Communication</a></li>
-    <li><a href="#">School Management</a></li>
+    <li><a href="admissions.php">Student Enrollment</a></li>
+    <li><a href="backend/login.php">Result Management</a></li>
+    <li><a href="backend/login.php">E-Learning Portal</a></li>
+    <li><a href="backend/login.php">Parent Communication</a></li>
+    <li><a href="faculty-staff.php">School Management</a></li>
   </ul>
 </div>
 
 <div class="col-lg-2 col-md-3 footer-links">
   <h4>Quick Links</h4>
   <ul>
-    <li><a href="#">About Us</a></li>
-    <li><a href="#">Our History</a></li>
-    <li><a href="#">Our Teachers</a></li>
-    <li><a href="#">Admissions</a></li>
-    <li><a href="#">Contact Us</a></li>
+    <li><a href="about.php">About Us</a></li>
+    <li><a href="about.php">Our History</a></li>
+    <li><a href="faculty-staff.php">Our Teachers</a></li>
+    <li><a href="admissions.php">Admissions</a></li>
+    <li><a href="contact.php">Contact Us</a></li>
   </ul>
 </div>
 
 <div class="col-lg-2 col-md-3 footer-links">
   <h4>Student Resources</h4>
   <ul>
-    <li><a href="#">Check Results</a></li>
-    <li><a href="#">School Calendar</a></li>
-    <li><a href="#">Library Access</a></li>
-    <li><a href="#">Clubs & Societies</a></li>
+    <li><a href="backend/login.php">Check Results</a></li>
+    <li><a href="backend/login.php">School Calendar</a></li>
+    <li><a href="backend/login.php">Library Access</a></li>
+    <li><a href="students-life.php">Clubs & Societies</a></li>
     <li><a href="backend/logout.php">Logout</a></li>
   </ul>
 </div>
