@@ -9,6 +9,25 @@ $page_title = $module_name . " - Review & Act on Application";
 
 $appPortal = new OnlineApplicationPortal($conn);
 
+// Fetch classes for dropdown
+$classes = [];
+$sql_classes = "SELECT DISTINCT class FROM class ORDER BY class";
+$result_classes = $conn->query($sql_classes);
+if ($result_classes && $result_classes->num_rows > 0) {
+    while ($row = $result_classes->fetch_assoc()) {
+        $classes[] = $row['class'];
+    }
+}
+
+// Fetch arms for dropdown
+$arms = [];
+$sql_arms = "SELECT DISTINCT arm FROM arm ORDER BY arm";
+$result_arms = $conn->query($sql_arms);
+if ($result_arms && $result_arms->num_rows > 0) {
+    while ($row = $result_arms->fetch_assoc()) {
+        $arms[] = $row['arm'];
+    }
+}
 
 $application_id = isset($_GET['id']) ? $_GET['id'] : ''; // Application ID is VARCHAR
 if (empty($application_id)) {
@@ -296,10 +315,24 @@ $stmt->close();
                           <input type="text" placeholder="Student ID" class="form-control" id="student_id" name="student_id" required value="<?php echo htmlspecialchars($application_data['assigned_student_id'] ?? ''); ?>">
                         </div>
                         <div class="form-group mb-3 col-md-4">
-                          <input type="text" placeholder="Class" class="form-control" id="class" name="class" required value="<?php echo htmlspecialchars($application_data['assigned_class'] ?? ''); ?>">
+                          <select class="form-control form-select" id="class" name="class" required>
+                            <option value="" selected disabled>Select Class</option>
+                            <?php foreach ($classes as $class_option): ?>
+                              <option value="<?php echo htmlspecialchars($class_option); ?>" <?php echo (isset($application_data['assigned_class']) && $application_data['assigned_class'] == $class_option) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($class_option); ?>
+                              </option>
+                            <?php endforeach; ?>
+                          </select>
                         </div>
                         <div class="form-group mb-3 col-md-4">
-                          <input type="text" placeholder="Arm" class="form-control" id="arm" name="arm" required value="<?php echo htmlspecialchars($application_data['assigned_arm'] ?? ''); ?>">
+                          <select class="form-control form-select" id="arm" name="arm" required>
+                            <option value="" selected disabled>Select Arm</option>
+                            <?php foreach ($arms as $arm_option): ?>
+                              <option value="<?php echo htmlspecialchars($arm_option); ?>" <?php echo (isset($application_data['assigned_arm']) && $application_data['assigned_arm'] == $arm_option) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($arm_option); ?>
+                              </option>
+                            <?php endforeach; ?>
+                          </select>
                         </div>
                         <div class="form-group mb-3 col-md-4">
                           <select class="form-control form-select" id="hostel" name="hostel" required>
