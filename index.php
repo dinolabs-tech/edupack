@@ -87,7 +87,7 @@ session_start();
         <div class="container">
           <div class="row gy-4">
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
-              <!-- <span class="date"></span> -->
+              <span class="date">Events</span>
               <span class="title">View our upcoming events</span>
               <a href="#events" class="btn-register">View</a>
             </div>
