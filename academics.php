@@ -68,40 +68,63 @@ session_start();
 </div>
 
 
-        <div class="programs-navigation" data-aos="fade-up" data-aos-delay="100">
-          <div class="row">
-            <div class="col-12">
-              <div class="program-tabs">
-                <ul class="nav nav-tabs justify-content-center" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#academics-all" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-grid-3x3-gap"></i></span>
-                      <span class="text">All Programs</span>
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="undergraduate-tab" data-bs-toggle="tab" data-bs-target="#academics-undergraduate" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-mortarboard"></i></span>
-                      <span class="text">Undergraduate</span>
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="graduate-tab" data-bs-toggle="tab" data-bs-target="#academics-graduate" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-book"></i></span>
-                      <span class="text">Graduate</span>
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="doctoral-tab" data-bs-toggle="tab" data-bs-target="#academics-doctoral" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-award"></i></span>
-                      <span class="text">Doctoral</span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="programs-navigation" data-aos="fade-up" data-aos-delay="100">
+  <div class="row">
+    <div class="col-12">
+      <div class="program-tabs">
+        <ul class="nav nav-tabs justify-content-center" role="tablist">
+
+          <!-- All Levels -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="all-tab" data-bs-toggle="tab"
+              data-bs-target="#academics-all" type="button" role="tab">
+              <span class="icon"><i class="bi bi-grid"></i></span>
+              <span class="text">All Levels</span>
+            </button>
+          </li>
+
+          <!-- Nursery -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nursery-tab" data-bs-toggle="tab"
+              data-bs-target="#academics-nursery" type="button" role="tab">
+              <span class="icon"><i class="bi bi-brush"></i></span>
+              <span class="text">Nursery</span>
+            </button>
+          </li>
+
+          <!-- Primary 1–6 -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="primary-tab" data-bs-toggle="tab"
+              data-bs-target="#academics-primary" type="button" role="tab">
+              <span class="icon"><i class="bi bi-pencil"></i></span>
+              <span class="text">Primary 1–6</span>
+            </button>
+          </li>
+
+          <!-- JSS 1–3 -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="junior-tab" data-bs-toggle="tab"
+              data-bs-target="#academics-junior" type="button" role="tab">
+              <span class="icon"><i class="bi bi-book"></i></span>
+              <span class="text">JSS 1–3</span>
+            </button>
+          </li>
+
+          <!-- SS 1–3 -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="senior-tab" data-bs-toggle="tab"
+              data-bs-target="#academics-senior" type="button" role="tab">
+              <span class="icon"><i class="bi bi-award-fill"></i></span>
+              <span class="text">SS 1–3</span>
+            </button>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 
         <div class="tab-content programs-content" data-aos="fade-up" data-aos-delay="200">
           <!-- All Programs Tab -->
