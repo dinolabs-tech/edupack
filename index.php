@@ -116,23 +116,23 @@ session_start();
         <div class="row mb-5">
           <div class="col-lg-6 pe-lg-5" data-aos="fade-right" data-aos-delay="200">
             <h2 class="display-6 fw-bold mb-4">Empowering Minds, <span>Shaping Futures</span></h2>
-            <p class="lead mb-4">For over two decades, <strong>Dinolabs</strong> has been at the forefront of transformative education — guiding learners toward academic excellence, personal growth, and lifelong success. We combine technology, innovation, and mentorship to help every student reach their full potential.</p>
+            <p class="lead mb-4">For years, <strong>Dinolabs</strong> has been at the forefront of transformative education — guiding learners toward academic excellence, personal growth, and lifelong success. We combine technology, innovation, and mentorship to help every student reach their full potential.</p>
             <div class="d-flex flex-wrap gap-4 mb-4">
               <div class="stat-box">
-                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>+</span>
+                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>+</span>
                 <span class="stat-label">Years of Excellence</span>
               </div>
               <div class="stat-box">
-                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="2500" data-purecounter-duration="1" class="purecounter"></span>+</span>
+                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="250" data-purecounter-duration="1" class="purecounter"></span>+</span>
                 <span class="stat-label">Active Students</span>
               </div>
               <div class="stat-box">
-                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="125" data-purecounter-duration="1" class="purecounter"></span>+</span>
-                <span class="stat-label">Dedicated Faculty</span>
+                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>+</span>
+                <span class="stat-label">Dedicated Facilities</span>
               </div>
             </div>
             <div class="d-flex align-items-center mt-4 signature-block">
-              <img src="assets/img/misc/signature-1.webp" alt="Principal's Signature" width="120">
+              <!-- <img src="assets/img/misc/signature-1.webp" alt="Principal's Signature" width="120"> -->
               <div class="ms-3">
                 <p class="mb-0 fw-bold">Dr. Elizabeth Morgan</p>
                 <p class="mb-0 text-muted">Principal & Academic Director</p>
