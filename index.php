@@ -29,7 +29,7 @@ session_start();
                 <p>At <strong>Dinolabs</strong>, we believe education goes beyond the classroom. Our mission is to inspire curiosity, nurture talent, and equip students with the skills and confidence to thrive in a fast-changing world. Join a community driven by innovation, creativity, and lifelong learning.</p>
                 <div class="cta-buttons">
                   <a href="admissions.php#admission_form" class="btn-primary">Apply Now</a>
-                  <a href="#" class="btn-secondary">Explore Our Programs</a>
+                  <a href="academics.php" class="btn-secondary">Explore Our Programs</a>
                 </div>
               </div>
             </div>
@@ -87,9 +87,9 @@ session_start();
         <div class="container">
           <div class="row gy-4">
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
-              <span class="date">NOV 15</span>
-              <span class="title">Campus Open Day</span>
-              <a href="#events" class="btn-register">Register</a>
+              <!-- <span class="date"></span> -->
+              <span class="title">View our <a href="#events">upcoming events</a></span>
+              <a href="#events" class="btn-register">View</a>
             </div>
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
               <span class="date">DEC 5</span>
