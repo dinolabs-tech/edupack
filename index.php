@@ -296,7 +296,7 @@ session_start();
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-4.webp" class="img-fluid" alt="Senior Secondary Program">
+                      <img src="assets/img/education/education-5.webp" class="img-fluid" alt="Senior Secondary Program">
                     </div>
                   </div>
                   <div class="col-md-8">
