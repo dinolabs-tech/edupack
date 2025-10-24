@@ -207,7 +207,7 @@ session_start();
                     <div class="program-icon bg-warning">
                       <i class="bi bi-award-fill"></i>
                     </div>
-                    <span class="program-type bg-warning text-white">SS 1–3</span>
+                    <span class="program-type bg-warning">SS 1–3</span>
                   </div>
                   <div class="program-body">
                     <h3>Senior Secondary</h3>
