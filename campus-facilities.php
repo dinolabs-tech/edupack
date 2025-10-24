@@ -37,8 +37,8 @@ session_start();
             <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
               <div class="intro-content">
                 <h2 class="fw-bold">Experience Our Campus</h2>
-                <p class="lead">Discover state-of-the-art facilities designed to inspire learning and growth</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin scelerisque magna vitae eros faucibus, vitae finibus massa pharetra. Nullam egestas dolor in condimentum faucibus.</p>
+                <p class="lead">Where learning thrives in a safe & inspiring environment</p>
+                <p>Our school campus is designed to support academic excellence and holistic development. From modern classrooms to innovative learning resources, every space encourages creativity, collaboration, and growth. We provide a serene and secure environment where students can explore their full potential.</p>
                 <div class="stats-container">
                   <div class="stat-item">
                     <span class="stat-number">120+</span>
@@ -97,6 +97,7 @@ session_start();
           </ul>
 
           <div class="tab-content">
+
             <!-- Academic Facilities Tab -->
             <div class="tab-pane fade show active" id="campus-facilities-academic" role="tabpanel">
               <div class="row gy-4">
@@ -110,12 +111,12 @@ session_start();
                     </div>
                     <div class="facility-description">
                       <h3>World-Class Learning Spaces</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida luctus urna, vel efficitur purus faucibus vitae. Sed interdum ligula eu metus tempor dapibus.</p>
+                      <p>Our school offers well-equipped science and computer laboratories, multimedia classrooms, and resource-rich libraries that support both curiosity and innovation. Teachers and learners work together in a technology-driven environment designed to improve academic performance.</p>
                       <ul class="feature-list">
-                        <li><i class="bi bi-check-circle-fill"></i> Modern classrooms with smart technology</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Specialized research laboratories</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Collaborative study spaces</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Advanced technology centers</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Smart classrooms with digital displays</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Fully equipped science laboratories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Computer and ICT centers</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Individual and group study facilities</li>
                       </ul>
                     </div>
                   </div>
@@ -126,8 +127,8 @@ session_start();
                       <div class="icon-container">
                         <i class="bi bi-laptop"></i>
                       </div>
-                      <h4>Technology Labs</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <h4>ICT Laboratories</h4>
+                      <p>Students learn coding, research skills, and digital literacy with access to high-speed internet and modern computing equipment.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> 24 Labs</span>
                     </div>
 
@@ -135,8 +136,8 @@ session_start();
                       <div class="icon-container">
                         <i class="bi bi-flask"></i>
                       </div>
-                      <h4>Research Centers</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <h4>Science Labs</h4>
+                      <p>Hands-on experiments in Physics, Chemistry, and Biology help develop critical thinking and scientific reasoning.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> 42 Facilities</span>
                     </div>
                   </div>
@@ -156,13 +157,13 @@ session_start();
                       </div>
                     </div>
                     <div class="facility-description">
-                      <h3>State-of-the-Art Athletic Facilities</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida luctus urna, vel efficitur purus faucibus vitae. Sed interdum ligula eu metus tempor dapibus.</p>
+                      <h3>Sports & Wellness for Every Student</h3>
+                      <p>Sports are a vital part of life on campus. We provide professional-grade facilities that help students stay fit, learn teamwork, and compete confidently in local and national events.</p>
                       <ul class="feature-list">
-                        <li><i class="bi bi-check-circle-fill"></i> Olympic-sized swimming pool</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Multi-purpose sports courts</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Professional running track</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Fitness and training centers</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Football and basketball courts</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Track and field grounds</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Gym and fitness centers</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Training support for school teams</li>
                       </ul>
                     </div>
                   </div>
@@ -173,8 +174,8 @@ session_start();
                       <div class="icon-container">
                         <i class="bi bi-water"></i>
                       </div>
-                      <h4>Aquatic Center</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <h4>Swimming Pool</h4>
+                      <p>A safe and supervised aquatic center where students learn water safety and develop swimming skills.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> Olympic Standard</span>
                     </div>
 
@@ -183,7 +184,7 @@ session_start();
                         <i class="bi bi-stopwatch"></i>
                       </div>
                       <h4>Training Facilities</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <p>Dedicated coaches and modern equipment help build discipline and athletic excellence.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> Pro Equipment</span>
                     </div>
                   </div>
@@ -199,17 +200,17 @@ session_start();
                     <div class="facility-slider">
                       <div class="facility-slide">
                         <img src="assets/img/education/campus-7.webp" alt="Residence Hall" class="img-fluid rounded">
-                        <div class="slide-caption">Residence Halls</div>
+                        <div class="slide-caption">Boarding Facilities</div>
                       </div>
                     </div>
                     <div class="facility-description">
-                      <h3>Comfortable Living Environments</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida luctus urna, vel efficitur purus faucibus vitae. Sed interdum ligula eu metus tempor dapibus.</p>
+                      <h3>A Home Away from Home</h3>
+                      <p>Our boarding houses provide a comfortable and secure living environment, supervised by caring staff who ensure student well-being and academic focus throughout the term.</p>
                       <ul class="feature-list">
-                        <li><i class="bi bi-check-circle-fill"></i> Modern residence halls</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Suite-style accommodations</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Community lounges and kitchens</li>
-                        <li><i class="bi bi-check-circle-fill"></i> 24/7 security and support</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Male and female hostels</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Fully furnished living spaces</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Common rooms for recreation</li>
+                        <li><i class="bi bi-check-circle-fill"></i> 24/7 security services</li>
                       </ul>
                     </div>
                   </div>
@@ -221,7 +222,7 @@ session_start();
                         <i class="bi bi-cup-hot"></i>
                       </div>
                       <h4>Dining Facilities</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <p>Nutritious meals are prepared by professional caterers, promoting healthy eating habits among students.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> 5 Locations</span>
                     </div>
 
@@ -230,7 +231,7 @@ session_start();
                         <i class="bi bi-shield-check"></i>
                       </div>
                       <h4>Security Services</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <p>Our campus is secured with trained personnel and surveillance systems to ensure student safety.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> 24/7 Support</span>
                     </div>
                   </div>
@@ -250,13 +251,13 @@ session_start();
                       </div>
                     </div>
                     <div class="facility-description">
-                      <h3>Vibrant Community Spaces</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida luctus urna, vel efficitur purus faucibus vitae. Sed interdum ligula eu metus tempor dapibus.</p>
+                      <h3>Building a Strong School Community</h3>
+                      <p>We encourage students to express themselves, develop leadership skills, and participate in social, cultural, and creative activities that shape character and lifelong values.</p>
                       <ul class="feature-list">
-                        <li><i class="bi bi-check-circle-fill"></i> Student activity center</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Art galleries and theaters</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Green spaces and gardens</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Meeting and event venues</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Cultural and social spaces</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Music, arts, and drama studios</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Relaxation and counselling areas</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Event and meeting halls</li>
                       </ul>
                     </div>
                   </div>
@@ -267,8 +268,8 @@ session_start();
                       <div class="icon-container">
                         <i class="bi bi-music-note-beamed"></i>
                       </div>
-                      <h4>Performance Spaces</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <h4>Creative Studios</h4>
+                      <p>Music and arts laboratories help students discover and nurture their talents.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> 3 Venues</span>
                     </div>
 
@@ -276,14 +277,15 @@ session_start();
                       <div class="icon-container">
                         <i class="bi bi-shop"></i>
                       </div>
-                      <h4>Campus Stores</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum ante vel magna convallis.</p>
+                      <h4>School Stores</h4>
+                      <p>Convenient access to books, stationery, and school essentials on campus.</p>
                       <span class="info-badge"><i class="bi bi-info-circle"></i> 8 Locations</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -306,13 +308,13 @@ session_start();
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
               <img src="assets/img/education/campus-9.webp" alt="Dormitory" class="img-fluid" loading="lazy">
               <div class="gallery-overlay">
-                <h4>Dormitories</h4>
+                <h4>Boarding Dormitories</h4>
               </div>
             </div>
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
               <img src="assets/img/education/campus-10.webp" alt="Study Areas" class="img-fluid" loading="lazy">
               <div class="gallery-overlay">
-                <h4>Study Areas</h4>
+                <h4>Study Spaces</h4>
               </div>
             </div>
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="500">
@@ -330,7 +332,7 @@ session_start();
             <div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
               <div class="map-info">
                 <h2>Campus Map</h2>
-                <p>Navigate our expansive campus with ease using our interactive map. Locate buildings, facilities, and services to find your way around.</p>
+                <p>Explore the school easily using our map. Find classrooms, hostels, laboratories, and activity centers all across our secure campus.</p>
                 <div class="map-legend">
                   <div class="legend-item">
                     <span class="marker academic"></span>
@@ -359,7 +361,7 @@ session_start();
             <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
               <div class="map-container">
                 <div class="ratio ratio-16x9">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.142047033408!2d-73.96257908469264!3d40.8026564793159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f7a00e3ea009%3A0x4e63c3c3d93908b5!2sColumbia%20University!5e0!3m2!1sen!2sus!4v1625598195750!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d640.6690182300736!2d5.2145191194978935!3d7.252504593673251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sng!4v1745751141530!5m2!1sen!2sng" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
               </div>
             </div>
