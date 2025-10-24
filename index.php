@@ -193,182 +193,133 @@ session_start();
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Featured Programs</h2>
-        <p>Explore our most sought-after programs designed to equip students with the skills, creativity, and knowledge to excel in today’s competitive world.</p>
+        <h2>Featured Academic Levels</h2>
+        <p>From early childhood foundation to secondary school graduation, we provide a comprehensive learning journey that builds confidence, creativity, and character.</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
           <ul class="program-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All Programs</li>
-            <li data-filter=".filter-bachelor">Bachelor's</li>
-            <li data-filter=".filter-master">Master's</li>
-            <li data-filter=".filter-certificate">Certificates</li>
+            <li data-filter="*" class="filter-active">All Levels</li>
+            <li data-filter=".filter-nursery">Nursery</li>
+            <li data-filter=".filter-primary">Primary 1–6</li>
+            <li data-filter=".filter-jss">JSS 1–3</li>
+            <li data-filter=".filter-sss">SSS 1–3</li>
           </ul>
 
           <div class="row g-4 isotope-container">
 
-            <!-- Bachelor: Computer Science -->
-            <div class="col-lg-6 isotope-item filter-bachelor" data-aos="zoom-in" data-aos-delay="100">
+            <!-- Nursery -->
+            <div class="col-lg-6 isotope-item filter-nursery" data-aos="zoom-in" data-aos-delay="100">
               <div class="program-item">
-                <div class="program-badge">Bachelor's Degree</div>
+                <div class="program-badge">Nursery School</div>
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-1.webp" class="img-fluid" alt="Computer Science Program">
+                      <img src="assets/img/education/nursery.webp" class="img-fluid" alt="Nursery Program">
                     </div>
                   </div>
                   <div class="col-md-8">
                     <div class="program-content">
-                      <h3>Computer Science</h3>
+                      <h3>Early Years Foundation</h3>
                       <div class="program-highlights">
-                        <span><i class="bi bi-clock"></i> 4 Years</span>
-                        <span><i class="bi bi-people-fill"></i> 120 Credits</span>
-                        <span><i class="bi bi-calendar3"></i> Fall &amp; Spring</span>
-                      </div>
-                      <p>Learn to design, develop, and deploy software solutions that drive innovation across industries. From artificial intelligence to cybersecurity, gain hands-on experience that shapes the digital world.</p>
-                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Program Item -->
-
-            <!-- Bachelor: Business Administration -->
-            <div class="col-lg-6 isotope-item filter-bachelor" data-aos="zoom-in" data-aos-delay="200">
-              <div class="program-item">
-                <div class="program-badge">Bachelor's Degree</div>
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-3.webp" class="img-fluid" alt="Business Administration Program">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="program-content">
-                      <h3>Business Administration</h3>
-                      <div class="program-highlights">
-                        <span><i class="bi bi-clock"></i> 3 Years</span>
-                        <span><i class="bi bi-people-fill"></i> 90 Credits</span>
-                        <span><i class="bi bi-calendar3"></i> Fall Only</span>
-                      </div>
-                      <p>Develop leadership, strategic thinking, and management skills to thrive in the corporate world. Our program blends theory with real-world business challenges to prepare you for entrepreneurship or executive roles.</p>
-                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Program Item -->
-
-            <!-- Bachelor: Medical Sciences -->
-            <div class="col-lg-6 isotope-item filter-bachelor" data-aos="zoom-in" data-aos-delay="300">
-              <div class="program-item">
-                <div class="program-badge">Bachelor's Degree</div>
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-5.webp" class="img-fluid" alt="Medical Sciences Program">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="program-content">
-                      <h3>Medical Sciences</h3>
-                      <div class="program-highlights">
-                        <span><i class="bi bi-clock"></i> 5 Years</span>
-                        <span><i class="bi bi-people-fill"></i> 150 Credits</span>
-                        <span><i class="bi bi-calendar3"></i> Fall Only</span>
-                      </div>
-                      <p>Explore human biology, health systems, and medical innovation. This program prepares students for careers in healthcare, biomedical research, and advanced clinical studies.</p>
-                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Program Item -->
-
-            <!-- Master's: Environmental Studies -->
-            <div class="col-lg-6 isotope-item filter-master" data-aos="zoom-in" data-aos-delay="100">
-              <div class="program-item">
-                <div class="program-badge">Master's Degree</div>
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-7.webp" class="img-fluid" alt="Environmental Studies Program">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="program-content">
-                      <h3>Environmental Studies</h3>
-                      <div class="program-highlights">
-                        <span><i class="bi bi-clock"></i> 2 Years</span>
-                        <span><i class="bi bi-people-fill"></i> 60 Credits</span>
-                        <span><i class="bi bi-calendar3"></i> Spring Only</span>
-                      </div>
-                      <p>Gain the tools to address global environmental challenges through research, policy, and sustainable innovation. This program empowers you to make meaningful contributions to the planet’s future.</p>
-                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Program Item -->
-
-            <!-- Master's: Mechanical Engineering -->
-            <div class="col-lg-6 isotope-item filter-master" data-aos="zoom-in" data-aos-delay="200">
-              <div class="program-item">
-                <div class="program-badge">Master's Degree</div>
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-9.webp" class="img-fluid" alt="Mechanical Engineering Program">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="program-content">
-                      <h3>Mechanical Engineering</h3>
-                      <div class="program-highlights">
-                        <span><i class="bi bi-clock"></i> 2 Years</span>
-                        <span><i class="bi bi-people-fill"></i> 64 Credits</span>
-                        <span><i class="bi bi-calendar3"></i> Fall &amp; Spring</span>
-                      </div>
-                      <p>Master advanced engineering concepts and design principles to create sustainable mechanical systems. Perfect for innovators passionate about technology, design, and problem-solving.</p>
-                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Program Item -->
-
-            <!-- Certificate: Data Science -->
-            <div class="col-lg-6 isotope-item filter-certificate" data-aos="zoom-in" data-aos-delay="100">
-              <div class="program-item">
-                <div class="program-badge">Certificate</div>
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <div class="program-image-wrapper">
-                      <img src="assets/img/education/education-2.webp" class="img-fluid" alt="Data Science Certificate Program">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="program-content">
-                      <h3>Data Science</h3>
-                      <div class="program-highlights">
-                        <span><i class="bi bi-clock"></i> 6 Months</span>
-                        <span><i class="bi bi-people-fill"></i> 24 Credits</span>
+                        <span><i class="bi bi-lightbulb"></i> Ages 2–5</span>
+                        <span><i class="bi bi-people-fill"></i> Small Groups</span>
                         <span><i class="bi bi-calendar3"></i> Year-round</span>
                       </div>
-                      <p>Acquire the analytical and technical expertise to extract insights from complex data. Learn Python, machine learning, and visualization tools in this fast-track, career-focused program.</p>
+                      <p>We nurture social skills, motor development, early numeracy and literacy through engaging, play-based learning.</p>
                       <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
                     </div>
                   </div>
                 </div>
               </div>
-            </div><!-- End Program Item -->
+            </div>
 
-          </div>
+            <!-- Primary -->
+            <div class="col-lg-6 isotope-item filter-primary" data-aos="zoom-in" data-aos-delay="200">
+              <div class="program-item">
+                <div class="program-badge">Primary Education</div>
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <div class="program-image-wrapper">
+                      <img src="assets/img/education/primary.webp" class="img-fluid" alt="Primary School Program">
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="program-content">
+                      <h3>Primary 1–6</h3>
+                      <div class="program-highlights">
+                        <span><i class="bi bi-clock"></i> 6 Years</span>
+                        <span><i class="bi bi-book"></i> Core Subjects</span>
+                        <span><i class="bi bi-award"></i> Basic Education</span>
+                      </div>
+                      <p>Building a strong foundation in literacy, numeracy, creativity, and moral values to prepare learners for JSS.</p>
+                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- JSS -->
+            <div class="col-lg-6 isotope-item filter-jss" data-aos="zoom-in" data-aos-delay="300">
+              <div class="program-item">
+                <div class="program-badge">Junior Secondary</div>
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <div class="program-image-wrapper">
+                      <img src="assets/img/education/jss.webp" class="img-fluid" alt="Junior Secondary Program">
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="program-content">
+                      <h3>JSS 1–3</h3>
+                      <div class="program-highlights">
+                        <span><i class="bi bi-clock"></i> 3 Years</span>
+                        <span><i class="bi bi-people-fill"></i> Skill-based</span>
+                        <span><i class="bi bi-tools"></i> Practical Learning</span>
+                      </div>
+                      <p>Exploring core academic subjects while introducing technical, vocational, and creative pathways—preparing for BECE.</p>
+                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SSS -->
+            <div class="col-lg-6 isotope-item filter-sss" data-aos="zoom-in" data-aos-delay="400">
+              <div class="program-item">
+                <div class="program-badge">Senior Secondary</div>
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <div class="program-image-wrapper">
+                      <img src="assets/img/education/sss.webp" class="img-fluid" alt="Senior Secondary Program">
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="program-content">
+                      <h3>SSS 1–3</h3>
+                      <div class="program-highlights">
+                        <span><i class="bi bi-clock"></i> 3 Years</span>
+                        <span><i class="bi bi-brain"></i> Science, Arts &amp; Commercial</span>
+                        <span><i class="bi bi-award-fill"></i> WAEC / NECO</span>
+                      </div>
+                      <p>Advanced academic pathways that prepare students for university admission, career success, and global opportunities.</p>
+                      <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- End Isotope Container -->
         </div>
       </div>
     </section>
+
     <!-- /Featured Programs Section -->
 
 
@@ -715,134 +666,135 @@ session_start();
     <!-- /Stats Section -->
 
 
-<!-- Recent News Section -->
-<section id="recent-news" class="recent-news section bg-light py-5">
+    <!-- Recent News Section -->
+    <section id="recent-news" class="recent-news section bg-light py-5">
 
-  <!-- Section Title -->
-  <div class="container section-title text-center mb-5" data-aos="fade-up">
-    <h2 class="fw-bold">Recent News</h2>
-    <p class="text-muted">Stay updated with the latest stories, events, and insights from our community.</p>
-  </div>
-
-  <div class="container">
-    <div class="row gy-5">
-
-      <!-- News Item 1 -->
-      <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
-
-          <div class="position-relative">
-            <img src="assets/img/blog/blog-post-1.webp" 
-                 alt="Dolorum optio tempore voluptas dignissimos" 
-                 class="img-fluid w-100 m-0 p-0 d-block border-0 rounded-3">
-            <span class="badge bg-primary position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
-              Politics
-            </span>
-          </div>
-
-          <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
-            <div>
-              <h5 class="fw-semibold mb-2">
-                <a href="blog-details.html" 
-                   class="stretched-link text-dark text-decoration-none hover-text-primary">
-                  Dolorum optio tempore voluptas dignissimos
-                </a>
-              </h5>
-            </div>
-
-            <div class="d-flex align-items-center mt-4 pt-2 border-top">
-              <img src="assets/img/person/person-f-12.webp" 
-                   alt="Maria Doe" 
-                   class="rounded-circle me-3" width="45" height="45">
-              <div>
-                <p class="mb-0 fw-medium">Maria Doe</p>
-                <small class="text-muted">Jan 1, 2022</small>
-              </div>
-            </div>
-          </div>
-
-        </article>
+      <!-- Section Title -->
+      <div class="container section-title text-center mb-5" data-aos="fade-up">
+        <h2 class="fw-bold">Latest Updates</h2>
+        <p class="text-muted">Stay informed on school highlights, student achievements, and upcoming events.</p>
       </div>
 
-      <!-- News Item 2 -->
-      <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
+      <div class="container">
+        <div class="row gy-5">
 
-          <div class="position-relative">
-            <img src="assets/img/blog/blog-post-2.webp" 
-                 alt="Nisi magni odit consequatur autem nulla dolorem" 
-                 class="img-fluid w-100 m-0 p-0 d-block border-0 rounded-3">
-            <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
-              Sports
-            </span>
-          </div>
+          <!-- News Item 1 -->
+          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
 
-          <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
-            <div>
-              <h5 class="fw-semibold mb-2">
-                <a href="blog-details.html" 
-                   class="stretched-link text-dark text-decoration-none hover-text-primary">
-                  Nisi magni odit consequatur autem nulla dolorem
-                </a>
-              </h5>
-            </div>
-
-            <div class="d-flex align-items-center mt-4 pt-2 border-top">
-              <img src="assets/img/person/person-f-13.webp" 
-                   alt="Allisa Mayer" 
-                   class="rounded-circle me-3" width="45" height="45">
-              <div>
-                <p class="mb-0 fw-medium">Allisa Mayer</p>
-                <small class="text-muted">Jun 5, 2022</small>
+              <div class="position-relative">
+                <img src="assets/img/blog/school-event-1.webp"
+                  alt="Inter-house Sports Competition"
+                  class="img-fluid w-100 rounded-3">
+                <span class="badge bg-primary position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
+                  School Events
+                </span>
               </div>
-            </div>
+
+              <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="fw-semibold mb-2">
+                    <a href="news-details.html"
+                      class="stretched-link text-dark text-decoration-none hover-text-primary">
+                      Successful Inter-House Sports Competition 2025
+                    </a>
+                  </h5>
+                  <p class="text-muted small">Students displayed great talent and sportsmanship during this year’s competition.</p>
+                </div>
+
+                <div class="d-flex align-items-center mt-4 pt-2 border-top">
+                  <img src="assets/img/person/staff-1.webp" alt="Sports Coordinator"
+                    class="rounded-circle me-3" width="45" height="45">
+                  <div>
+                    <p class="mb-0 fw-medium">Coach Ibrahim</p>
+                    <small class="text-muted">Oct 12, 2025</small>
+                  </div>
+                </div>
+              </div>
+
+            </article>
           </div>
 
-        </article>
+          <!-- News Item 2 -->
+          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
+
+              <div class="position-relative">
+                <img src="assets/img/blog/school-event-2.webp"
+                  alt="Science Fair Project Showcase"
+                  class="img-fluid w-100 rounded-3">
+                <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
+                  Academics
+                </span>
+              </div>
+
+              <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="fw-semibold mb-2">
+                    <a href="news-details.html"
+                      class="stretched-link text-dark text-decoration-none hover-text-primary">
+                      Primary Students Shine at Science Fair
+                    </a>
+                  </h5>
+                  <p class="text-muted small">Innovative projects on renewable energy and technology captured attention.</p>
+                </div>
+
+                <div class="d-flex align-items-center mt-4 pt-2 border-top">
+                  <img src="assets/img/person/staff-2.webp" alt="Science Teacher"
+                    class="rounded-circle me-3" width="45" height="45">
+                  <div>
+                    <p class="mb-0 fw-medium">Mrs. Okeke</p>
+                    <small class="text-muted">Oct 08, 2025</small>
+                  </div>
+                </div>
+              </div>
+
+            </article>
+          </div>
+
+          <!-- News Item 3 -->
+          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
+
+              <div class="position-relative">
+                <img src="assets/img/blog/school-event-3.webp"
+                  alt="Cultural Day Celebration"
+                  class="img-fluid w-100 rounded-3">
+                <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
+                  Culture & Tradition
+                </span>
+              </div>
+
+              <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="fw-semibold mb-2">
+                    <a href="news-details.html"
+                      class="stretched-link text-dark text-decoration-none hover-text-primary">
+                      Colourful Cultural Day Celebration Across All Levels
+                    </a>
+                  </h5>
+                  <p class="text-muted small">Students proudly showcased Nigeria’s rich cultural heritage in style.</p>
+                </div>
+
+                <div class="d-flex align-items-center mt-4 pt-2 border-top">
+                  <img src="assets/img/person/staff-3.webp" alt="Cultural Coordinator"
+                    class="rounded-circle me-3" width="45" height="45">
+                  <div>
+                    <p class="mb-0 fw-medium">Mr. Daniels</p>
+                    <small class="text-muted">Oct 02, 2025</small>
+                  </div>
+                </div>
+              </div>
+
+            </article>
+          </div>
+
+        </div><!-- End row -->
       </div>
 
-      <!-- News Item 3 -->
-      <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-        <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
+    </section>
 
-          <div class="position-relative">
-            <img src="assets/img/blog/blog-post-3.webp" 
-                 alt="Possimus soluta ut id suscipit ea ut in quo quia et soluta" 
-                 class="img-fluid w-100 m-0 p-0 d-block border-0 rounded-3">
-            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
-              Entertainment
-            </span>
-          </div>
-
-          <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
-            <div>
-              <h5 class="fw-semibold mb-2">
-                <a href="blog-details.html" 
-                   class="stretched-link text-dark text-decoration-none hover-text-primary">
-                  Possimus soluta ut id suscipit ea ut in quo quia et soluta
-                </a>
-              </h5>
-            </div>
-
-            <div class="d-flex align-items-center mt-4 pt-2 border-top">
-              <img src="assets/img/person/person-m-10.webp" 
-                   alt="Mark Dower" 
-                   class="rounded-circle me-3" width="45" height="45">
-              <div>
-                <p class="mb-0 fw-medium">Mark Dower</p>
-                <small class="text-muted">Jun 22, 2022</small>
-              </div>
-            </div>
-          </div>
-
-        </article>
-      </div>
-
-    </div><!-- End row -->
-  </div>
-
-</section>
-<!-- /Recent News Section -->
+    <!-- /Recent News Section -->
 
 
 
