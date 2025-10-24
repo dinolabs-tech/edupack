@@ -88,7 +88,7 @@ session_start();
           <div class="row gy-4">
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
               <!-- <span class="date"></span> -->
-              <span class="title">View our <a href="#events">upcoming events</a></span>
+              <span class="title">View our upcoming events</span>
               <a href="#events" class="btn-register">View</a>
             </div>
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
