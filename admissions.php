@@ -1,23 +1,35 @@
 <?php
 session_start();
-include('backend/db_connection.php');
-require_once('classes/OnlineApplicationPortalClass.php'); // Include the class file
-require_once('classes/AdmissionSettingsClass.php'); // Include the AdmissionSettingsClass
 
-$module_name = "Admissions Module";
-$page_title = $module_name . " - Online Application Portal";
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$appPortal = new OnlineApplicationPortal($conn);
-$applications = $appPortal->getAllApplications(); // Fetch all applications
+try {
+    include('backend/db_connection.php');
+    require_once('classes/OnlineApplicationPortalClass.php'); // Include the class file
+    require_once('classes/AdmissionSettingsClass.php'); // Include the AdmissionSettingsClass
 
-$admissionSettings = new AdmissionSettings($conn);
-$registration_cost = $admissionSettings->getSetting('registration_cost');
-if ($registration_cost === null) {
-    $registration_cost = 0.00; // Default to 0 if not set in settings
-}
-$flutterwave_public_key = $admissionSettings->getSetting('flutterwave_public_key');
-if ($flutterwave_public_key === null) {
-    $flutterwave_public_key = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Default test key
+    $module_name = "Admissions Module";
+    $page_title = $module_name . " - Online Application Portal";
+
+    $appPortal = new OnlineApplicationPortal($conn);
+    $applications = $appPortal->getAllApplications(); // Fetch all applications
+
+    $admissionSettings = new AdmissionSettings($conn);
+    $registration_cost = $admissionSettings->getSetting('registration_cost');
+    if ($registration_cost === null) {
+        $registration_cost = 0.00; // Default to 0 if not set in settings
+    }
+    $flutterwave_public_key = $admissionSettings->getSetting('flutterwave_public_key');
+    if ($flutterwave_public_key === null) {
+        $flutterwave_public_key = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Default test key
+    }
+} catch (Throwable $e) {
+    error_log("Fatal error in admissions.php: " . $e->getMessage() . " on line " . $e->getLine());
+    // Optionally, display a user-friendly error message
+    die("An unexpected error occurred. Please try again later. (Error ID: " . uniqid() . ")");
 }
 ?>
 
