@@ -92,14 +92,14 @@ session_start();
               <a href="events.php" class="btn-register">View</a>
             </div>
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
-              <span class="date">DEC 5</span>
-              <span class="title">Admissions & Scholarship Workshop</span>
-              <a href="#events" class="btn-register">Register</a>
+              <span class="date">Gallery</span>
+              <span class="title">View our gallery</span>
+              <a href="gallery.php" class="btn-register">View</a>
             </div>
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
-              <span class="date">JAN 10</span>
+              <span class="date">Blog</span>
               <span class="title">International Student Orientation</span>
-              <a href="#events" class="btn-register">Register</a>
+              <a href="blog.php" class="btn-register">View</a>
             </div>
           </div>
         </div>
