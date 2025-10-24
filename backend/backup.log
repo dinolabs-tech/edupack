@@ -1,8 +1,0 @@
-[2025-10-20 16:49:03] Command executed: "mysqldump" --host="localhost" --user="root" --password="" "edupack" > "C:\xampp\htdocs\edupack\backend/backup_edupack.sql" 2>&1
-[2025-10-20 16:49:03] Return code: 1
-[2025-10-20 16:49:03] Error: Backup failed with status code 1
-[2025-10-20 16:49:03] Output: 
-[2025-10-23 17:05:23] Command executed: "mysqldump" --host="localhost" --user="root" --password="" "edupack" > "C:\xampp\htdocs\edupack\backend/backup_edupack.sql" 2>&1
-[2025-10-23 17:05:23] Return code: 1
-[2025-10-23 17:05:23] Error: Backup failed with status code 1
-[2025-10-23 17:05:23] Output: 
