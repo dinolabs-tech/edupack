@@ -135,7 +135,7 @@ session_start();
               <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                 <div class="program-item nursery">
                   <div class="program-header">
-                    <div class="program-icon">
+                    <div class="program-icon bg-primary text-white">
                       <i class="bi bi-brush"></i>
                     </div>
                     <span class="program-type bg-success text-white">Nursery</span>
@@ -158,7 +158,7 @@ session_start();
               <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
                 <div class="program-item primary">
                   <div class="program-header">
-                    <div class="program-icon">
+                    <div class="program-icon bg-secondary">
                       <i class="bi bi-pencil"></i>
                     </div>
                     <span class="program-type bg-success text-white">Primary 1–6</span>
@@ -181,7 +181,7 @@ session_start();
               <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
                 <div class="program-item jss">
                   <div class="program-header">
-                    <div class="program-icon">
+                    <div class="program-icon bg-info">
                       <i class="bi bi-book-half"></i>
                     </div>
                     <span class="program-type bg-success text-white">JSS 1–3</span>
@@ -204,7 +204,7 @@ session_start();
               <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
                 <div class="program-item sss">
                   <div class="program-header">
-                    <div class="program-icon">
+                    <div class="program-icon bg-warning">
                       <i class="bi bi-award-fill"></i>
                     </div>
                     <span class="program-type bg-success text-white">SS 1–3</span>
