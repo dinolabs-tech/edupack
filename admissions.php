@@ -13,11 +13,11 @@ $applications = $appPortal->getAllApplications(); // Fetch all applications
 $admissionSettings = new AdmissionSettings($conn);
 $registration_cost = $admissionSettings->getSetting('registration_cost');
 if ($registration_cost === null) {
-  $registration_cost = 0.00; // Default to 0 if not set in settings
+    $registration_cost = 0.00; // Default to 0 if not set in settings
 }
 $flutterwave_public_key = $admissionSettings->getSetting('flutterwave_public_key');
 if ($flutterwave_public_key === null) {
-  $flutterwave_public_key = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Default test key
+    $flutterwave_public_key = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Default test key
 }
 ?>
 
@@ -218,11 +218,12 @@ if ($flutterwave_public_key === null) {
                       <div class="form-group mb-3 col-md-3">
                         <input type="text" class="form-control" placeholder="Full Name" id="name" name="name" required>
                       </div>
-                      <input type="date" class="form-control" id="dob" name="dob" required
+                      <div class="form-group mb-3 col-md-3">
+                         <input type="date" class="form-control" id="dob" name="dob" required
                         onfocus="this.type='date'"
                         onblur="if(!this.value)this.type='text'"
                         placeholder="Date of Birth">
-
+                      </div>
                       <div class="form-group mb-3 col-md-3">
                         <input type="text" class="form-control" placeholder="Place of Birth" id="placeob" name="placeob" required>
                       </div>
@@ -419,136 +420,136 @@ if ($flutterwave_public_key === null) {
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <script>
-    function nextTab(tabId) {
-      var someTabTriggerEl = document.querySelector('#' + tabId)
-      var tab = new bootstrap.Tab(someTabTriggerEl)
-      tab.show()
-    }
-
-    function prevTab(tabId) {
-      var someTabTriggerEl = document.querySelector('#' + tabId)
-      var tab = new bootstrap.Tab(someTabTriggerEl)
-      tab.show()
-    }
-  </script>
-
-  <?php if ($registration_cost > 0): ?>
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <script>
-      document.getElementById('payAndSubmitBtn')?.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        var form = document.querySelector('form');
-        var formData = new FormData(form);
-
-        // Basic validation for required fields before payment
-        var name = formData.get('name');
-        var email = formData.get('email');
-        var dob = formData.get('dob');
-        var placeob = formData.get('placeob');
-        var gender = formData.get('gender');
-        var schoolname = formData.get('schoolname');
-        var passport_path = formData.get('passport_path');
-        var transcript_path = formData.get('transcript_path');
-
-        if (!name || !email || !dob || !placeob || !gender || !schoolname || !passport_path || !transcript_path) {
-          alert('Please fill in all required fields in all tabs before proceeding to payment.');
-          return;
+      <script>
+        function nextTab(tabId) {
+            var someTabTriggerEl = document.querySelector('#' + tabId)
+            var tab = new bootstrap.Tab(someTabTriggerEl)
+            tab.show()
         }
 
-        var amount = parseFloat(<?php echo json_encode($registration_cost); ?>);
-        var tx_ref = "ADM-TX-" + Math.floor(Math.random() * 1000000000) + "-" + Date.now();
-
-        // Collect all form data to pass to the callback
-        var applicationData = {};
-        for (var pair of formData.entries()) {
-          if (pair[0] !== 'passport_path' && pair[0] !== 'transcript_path') { // Exclude files for direct JSON
-            applicationData[pair[0]] = pair[1];
-          }
+        function prevTab(tabId) {
+            var someTabTriggerEl = document.querySelector('#' + tabId)
+            var tab = new bootstrap.Tab(someTabTriggerEl)
+            tab.show()
         }
-        applicationData['tx_ref'] = tx_ref;
-        applicationData['amount'] = amount;
-        applicationData['type'] = 'admission_form';
-
-        var encodedApplicationData = btoa(JSON.stringify(applicationData));
-
-        FlutterwaveCheckout({
-          public_key: <?php echo json_encode($flutterwave_public_key); ?>,
-          tx_ref: tx_ref,
-          amount: amount,
-          currency: "NGN",
-          country: "NG",
-          payment_options: "card, mobilemoney,banktransfer, ussd",
-          customer: {
-            email: email,
-            name: name
-          },
-          callback: function(data) {
-            if (data.status === 'successful') {
-              // Append payment details to form data and submit
-              var hiddenTxRef = document.createElement('input');
-              hiddenTxRef.type = 'hidden';
-              hiddenTxRef.name = 'flw_tx_ref';
-              hiddenTxRef.value = data.tx_ref;
-              form.appendChild(hiddenTxRef);
-
-              var hiddenTransactionId = document.createElement('input');
-              hiddenTransactionId.type = 'hidden';
-              hiddenTransactionId.name = 'flw_transaction_id';
-              hiddenTransactionId.value = data.transaction_id;
-              form.appendChild(hiddenTransactionId);
-
-              var hiddenPaymentStatus = document.createElement('input');
-              hiddenPaymentStatus.type = 'hidden';
-              hiddenPaymentStatus.name = 'flw_status';
-              hiddenPaymentStatus.value = data.status;
-              form.appendChild(hiddenPaymentStatus);
-
-              // Submit the form after successful payment
-              form.submit();
-
-            } else if (data.status === 'cancelled') {
-              alert('Payment cancelled. Please try again.');
-            } else {
-              alert('Payment failed. Please try again.');
-            }
-          },
-          onclose: function() {
-            // User closed the payment modal
-            console.log('Payment modal closed by user.');
-          },
-          customizations: {
-            title: "Admission Form Payment",
-            description: "Payment for " + name + "'s Admission Form",
-            logo: "https://your-school-logo.com/logo.png" // Replace with your school logo
-          }
-        });
-      });
     </script>
-  <?php endif; ?>
 
-  <script>
-    // Handle messages from process_application_portal.php
-    document.addEventListener('DOMContentLoaded', function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const status = urlParams.get('status');
-      const message = urlParams.get('message');
+    <?php if ($registration_cost > 0): ?>
+        <script src="https://checkout.flutterwave.com/v3.js"></script>
+        <script>
+            document.getElementById('payAndSubmitBtn')?.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission
 
-      if (status && message) {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = `alert alert-${status === 'successful' ? 'success' : 'danger'} mt-3`;
-        alertDiv.textContent = message;
-        document.querySelector('.container-fluid').prepend(alertDiv);
+                var form = document.querySelector('form');
+                var formData = new FormData(form);
 
-        // Remove status and message from URL
-        urlParams.delete('status');
-        urlParams.delete('message');
-        const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
-        window.history.replaceState({}, document.title, newUrl);
-      }
-    });
-  </script>
+                // Basic validation for required fields before payment
+                var name = formData.get('name');
+                var email = formData.get('email');
+                var dob = formData.get('dob');
+                var placeob = formData.get('placeob');
+                var gender = formData.get('gender');
+                var schoolname = formData.get('schoolname');
+                var passport_path = formData.get('passport_path');
+                var transcript_path = formData.get('transcript_path');
+
+                if (!name || !email || !dob || !placeob || !gender || !schoolname || !passport_path || !transcript_path) {
+                    alert('Please fill in all required fields in all tabs before proceeding to payment.');
+                    return;
+                }
+
+                var amount = parseFloat(<?php echo json_encode($registration_cost); ?>);
+                var tx_ref = "ADM-TX-" + Math.floor(Math.random() * 1000000000) + "-" + Date.now();
+
+                // Collect all form data to pass to the callback
+                var applicationData = {};
+                for (var pair of formData.entries()) {
+                    if (pair[0] !== 'passport_path' && pair[0] !== 'transcript_path') { // Exclude files for direct JSON
+                        applicationData[pair[0]] = pair[1];
+                    }
+                }
+                applicationData['tx_ref'] = tx_ref;
+                applicationData['amount'] = amount;
+                applicationData['type'] = 'admission_form';
+
+                var encodedApplicationData = btoa(JSON.stringify(applicationData));
+
+                FlutterwaveCheckout({
+                    public_key: <?php echo json_encode($flutterwave_public_key); ?>,
+                    tx_ref: tx_ref,
+                    amount: amount,
+                    currency: "NGN",
+                    country: "NG",
+                    payment_options: "card, mobilemoney,banktransfer, ussd",
+                    customer: {
+                        email: email,
+                        name: name
+                    },
+                    callback: function(data) {
+                        if (data.status === 'successful') {
+                            // Append payment details to form data and submit
+                            var hiddenTxRef = document.createElement('input');
+                            hiddenTxRef.type = 'hidden';
+                            hiddenTxRef.name = 'flw_tx_ref';
+                            hiddenTxRef.value = data.tx_ref;
+                            form.appendChild(hiddenTxRef);
+
+                            var hiddenTransactionId = document.createElement('input');
+                            hiddenTransactionId.type = 'hidden';
+                            hiddenTransactionId.name = 'flw_transaction_id';
+                            hiddenTransactionId.value = data.transaction_id;
+                            form.appendChild(hiddenTransactionId);
+
+                            var hiddenPaymentStatus = document.createElement('input');
+                            hiddenPaymentStatus.type = 'hidden';
+                            hiddenPaymentStatus.name = 'flw_status';
+                            hiddenPaymentStatus.value = data.status;
+                            form.appendChild(hiddenPaymentStatus);
+
+                            // Submit the form after successful payment
+                            form.submit();
+
+                        } else if (data.status === 'cancelled') {
+                            alert('Payment cancelled. Please try again.');
+                        } else {
+                            alert('Payment failed. Please try again.');
+                        }
+                    },
+                    onclose: function() {
+                        // User closed the payment modal
+                        console.log('Payment modal closed by user.');
+                    },
+                    customizations: {
+                        title: "Admission Form Payment",
+                        description: "Payment for " + name + "'s Admission Form",
+                        logo: "https://your-school-logo.com/logo.png" // Replace with your school logo
+                    }
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+    <script>
+        // Handle messages from process_application_portal.php
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${status === 'successful' ? 'success' : 'danger'} mt-3`;
+                alertDiv.textContent = message;
+                document.querySelector('.container-fluid').prepend(alertDiv);
+
+                // Remove status and message from URL
+                urlParams.delete('status');
+                urlParams.delete('message');
+                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        });
+    </script>
 
   <?php include 'components/scripts.php'; ?>
 
