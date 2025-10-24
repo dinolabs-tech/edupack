@@ -8,8 +8,8 @@
             <span class="sitename">Edupack</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>5th floor, wing-B Tisco Building, </p>
-            <p>Alagbaka Akure,Ondo State, Nigeria.</p>
+            <p>5th Floor, Wing-B Tisco Building, </p>
+            <p>Alagbaka Akure, Ondo State, Nigeria.</p>
             <p class="mt-3"><strong>Phone:</strong> <span>+234 704 324 7461</span></p>
             <p><strong>Email:</strong> <span>enquiries@dinolabstech.com</span></p>
           </div>

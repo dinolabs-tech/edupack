@@ -403,7 +403,7 @@ session_start();
 
             <!-- CTA Button -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-              <a href="students-life.html" class="btn btn-primary rounded-pill px-4 py-2">
+              <a href="students-life.php" class="btn btn-primary rounded-pill px-4 py-2">
                 View All Student Activities
               </a>
             </div>
@@ -547,19 +547,19 @@ session_start();
           <!-- Left Column: Overview -->
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="stats-overview pe-lg-4">
-              <h2 class="fw-bold mb-3">Excellence in Education for Over 50 Years</h2>
+              <h2 class="fw-bold mb-3">Excellence in Education for Over 12 Years</h2>
               <p class="text-muted mb-4">
-                For more than half a century, we’ve been shaping minds and building futures.
+                For over a decade, we’ve been shaping minds and building futures.
                 Our programs, faculty, and facilities are designed to inspire curiosity, creativity, and leadership.
               </p>
-              <div class="d-flex gap-3">
+              <!-- <div class="d-flex gap-3">
                 <a href="#" class="btn btn-primary px-4 py-2">
                   <i class="bi bi-book me-2"></i> Learn More
                 </a>
                 <a href="#" class="btn btn-outline-primary px-4 py-2">
                   <i class="bi bi-camera-video me-2"></i> Virtual Tour
                 </a>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -573,7 +573,7 @@ session_start();
                     <i class="bi bi-people-fill"></i>
                   </div>
                   <div class="stats-number fw-bold fs-3 text-dark">
-                    <span data-purecounter-start="0" data-purecounter-end="94" data-purecounter-duration="1" class="purecounter"></span>%
+                    <span data-purecounter-start="0" data-purecounter-end="98" data-purecounter-duration="1" class="purecounter"></span>%
                   </div>
                   <div class="stats-label text-secondary small mt-1">Graduation Rate</div>
                 </div>
@@ -587,7 +587,7 @@ session_start();
                   <div class="stats-number fw-bold fs-3 text-dark">
                     <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>:1
                   </div>
-                  <div class="stats-label text-secondary small mt-1">Student-Faculty Ratio</div>
+                  <div class="stats-label text-secondary small mt-1">Student-Class Ratio</div>
                 </div>
               </div>
 
@@ -597,9 +597,9 @@ session_start();
                     <i class="bi bi-award"></i>
                   </div>
                   <div class="stats-number fw-bold fs-3 text-dark">
-                    <span data-purecounter-start="0" data-purecounter-end="125" data-purecounter-duration="1" class="purecounter"></span>+
+                    <span data-purecounter-start="0" data-purecounter-end="45" data-purecounter-duration="1" class="purecounter"></span>+
                   </div>
-                  <div class="stats-label text-secondary small mt-1">Academic Programs</div>
+                  <div class="stats-label text-secondary small mt-1">Academic Tutors</div>
                 </div>
               </div>
 
@@ -609,9 +609,9 @@ session_start();
                     <i class="bi bi-cash-stack"></i>
                   </div>
                   <div class="stats-number fw-bold fs-3 text-dark">
-                    $<span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>M
+                    <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
                   </div>
-                  <div class="stats-label text-secondary small mt-1">Research Funding</div>
+                  <div class="stats-label text-secondary small mt-1">Facilities</div>
                 </div>
               </div>
 
