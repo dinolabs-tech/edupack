@@ -48,7 +48,6 @@ session_start();
             <ul>
                 <li><strong>Personal Information:</strong> Such as your name, email address, phone number, date of birth, and address, provided when you register, apply, or communicate with us.</li>
                 <li><strong>Academic Information:</strong> Details about your academic background, including last school attended and grade level, submitted during the application process.</li>
-                <li><strong>Usage Data:</strong> Information on how the services are accessed and used, which may include your computer's Internet Protocol (IP) address, browser type, browser version, the pages of our service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</li>
                 <li><strong>Document Uploads:</strong> Files such as transcripts and letters of recommendation that you upload during the application process.</li>
             </ul>
 
