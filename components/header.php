@@ -21,7 +21,7 @@
               <li><a href="academics.php">Academics</a></li>
               <li><a href="faculty-staff.php">Faculty &amp; Staff</a></li>
               <li><a href="campus-facilities.php">Campus &amp; Facilities</a></li>
-              <li><a href="alumni.php">Alumni</a></li>
+              <!-- <li><a href="alumni.php">Alumni</a></li> -->
             </ul>
           </li>
           <!-- <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
