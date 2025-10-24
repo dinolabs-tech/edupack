@@ -337,7 +337,7 @@ session_start();
                 <div class="row align-items-center">
                   <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right" data-aos-delay="100">
                     <div class="featured-program-image">
-                      <img src="assets/img/education/science-lab.webp" alt="Senior Secondary Science" class="img-fluid">
+                      <img src="assets/img/education/students-1.webp" alt="Senior Secondary Science" class="img-fluid">
                       <div class="program-label">
                         <span>Featured</span>
                       </div>
