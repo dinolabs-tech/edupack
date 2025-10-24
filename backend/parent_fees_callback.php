@@ -1,20 +1,17 @@
 <?php
-include('db_connection.php'); // This file now directly establishes $conn and handles errors
-include('components/fees_management.php'); // Contains recordStudentPayment
+include('db_connection.php');
+include('components/fees_management.php'); // For recordStudentPayment
+include('includes/config.php'); // Include the config file
 
-// $conn should be available after db_connection.php is included
-
-$student_id = isset($_GET['student_id']) ? $_GET['student_id'] : '';
-
-if (empty($student_id)) {
-    header('Location: parent_payment.php?status=failed&message=' . urlencode("Student ID not provided for fees callback."));
-    exit();
+// Ensure the constants are defined
+if (!defined('FLUTTERWAVE_PUBLIC_KEY') || !defined('FLUTTERWAVE_SECRET_KEY')) {
+    die("Flutterwave API keys are not defined in config.php");
 }
 
 $message = "";
-$status_type = "failed";
+$error = "";
+$student_id = isset($_GET['student_id']) ? $_GET['student_id'] : '';
 
-// Handle Flutterwave callback
 if (isset($_GET['status']) && $_GET['status'] == 'successful') {
     $tx_ref = $_GET['tx_ref'];
     $transaction_id_fw = $_GET['transaction_id'];
@@ -22,54 +19,85 @@ if (isset($_GET['status']) && $_GET['status'] == 'successful') {
     $payment_details_json = isset($_GET['payment_details']) ? base64_decode($_GET['payment_details']) : '';
     $payment_details = json_decode($payment_details_json, true);
 
-    if ($payment_details && $payment_details['student_id'] == $student_id && $payment_details['tx_ref'] == $tx_ref && $payment_details['type'] == 'fees') {
-        $amount_paid = $payment_details['amount'];
-        $payment_method = "Flutterwave (Parent Fees)";
-        $recorded_by = "Parent";
-        $session_paid = $payment_details['session'];
-        $term_paid = $payment_details['term'];
+    // Server-side verification of Flutterwave transaction
+    $curl = curl_init();
+    $url = "https://api.flutterwave.com/v3/transactions/{$transaction_id_fw}/verify";
 
-        // Dynamically find a fee_definition_id
-        // Assuming student_class and student_arm are available or can be fetched
-        // For simplicity, we'll fetch student details again here.
-        $student_stmt = $conn->prepare("SELECT class, arm FROM students WHERE id = ?");
-        $student_stmt->bind_param("s", $student_id);
-        $student_stmt->execute();
-        $student_result = $student_stmt->get_result();
-        $student_data = $student_result->fetch_assoc();
-        $student_class = $student_data ? $student_data['class'] : 'N/A';
-        $student_arm = $student_data ? $student_data['arm'] : 'N/A';
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/json",
+            "Authorization: Bearer " . FLUTTERWAVE_SECRET_KEY
+        ),
+    ));
 
-        $general_fee_stmt = $conn->prepare("SELECT id FROM fee WHERE class = ? AND arm = ? AND term = ? AND session = ? LIMIT 1");
-        $general_fee_stmt->bind_param("ssss", $student_class, $student_arm, $term_paid, $session_paid);
-        $general_fee_stmt->execute();
-        $general_fee_result = $general_fee_stmt->get_result();
-        $general_fee_data = $general_fee_result->fetch_assoc();
-        $fee_definition_id_to_save = $general_fee_data ? $general_fee_data['id'] : 'GENERAL-FEE';
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
 
-        if (recordStudentPayment($conn, $student_id, $fee_definition_id_to_save, $amount_paid, $payment_method, $tx_ref, $recorded_by, $session_paid, $term_paid)) {
-            $message = "Fees payment of " . number_format($amount_paid, 2) . " recorded successfully! Transaction Ref: " . htmlspecialchars($tx_ref);
-            $status_type = "successful";
-        } else {
-            $message = "Error saving fees payment details to database.";
-            $status_type = "failed";
-        }
+    if ($err) {
+        $error = "cURL Error #:" . $err;
     } else {
-        $message = "Fees payment verification failed or details mismatched.";
-        $status_type = "failed";
+        $flutterwave_response = json_decode($response, true);
+
+        if ($flutterwave_response['status'] === 'success' && $flutterwave_response['data']['status'] === 'successful') {
+            $verified_amount = $flutterwave_response['data']['amount'];
+            $verified_currency = $flutterwave_response['data']['currency'];
+
+            if ($payment_details && $payment_details['student_id'] == $student_id && $payment_details['tx_ref'] == $tx_ref && $verified_amount == $payment_details['amount'] && $verified_currency == "NGN" && $payment_details['type'] == 'fees') {
+                $amount_paid = $payment_details['amount'];
+                $payment_method = "Flutterwave";
+                $recorded_by = "Parent"; // Recorded by parent
+                $session_paid = $payment_details['session'];
+                $term_paid = $payment_details['term'];
+
+                // Get student details to find class and arm for fee_definition_id
+                $student_stmt = $conn->prepare("SELECT class, arm FROM students WHERE id = ?");
+                $student_stmt->bind_param("s", $student_id);
+                $student_stmt->execute();
+                $student_result = $student_stmt->get_result();
+                $student_data = $student_result->fetch_assoc();
+                $student_class = $student_data['class'];
+                $student_arm = $student_data['arm'];
+
+                // Dynamically find a fee_definition_id
+                $general_fee_stmt = $conn->prepare("SELECT id FROM fee WHERE class = ? AND arm = ? AND term = ? AND session = ? LIMIT 1");
+                $general_fee_stmt->bind_param("ssss", $student_class, $student_arm, $term_paid, $session_paid);
+                $general_fee_stmt->execute();
+                $general_fee_result = $general_fee_stmt->get_result();
+                $general_fee_data = $general_fee_result->fetch_assoc();
+                $fee_definition_id_to_save = $general_fee_data ? $general_fee_data['id'] : 'GENERAL-FEE';
+
+                if (recordStudentPayment($conn, $student_id, $fee_definition_id_to_save, $amount_paid, $payment_method, $tx_ref, $recorded_by, $session_paid, $term_paid)) {
+                    $message = "Payment of " . number_format($amount_paid, 2) . " recorded successfully! Transaction Ref: " . htmlspecialchars($tx_ref);
+                    header("Location: parent_payment.php?status=successful&message=" . urlencode($message) . "&student_id=" . urlencode($student_id));
+                    exit();
+                } else {
+                    $error = "Error saving payment details to database.";
+                }
+            } else {
+                $error = "Fees payment verification failed: details mismatched or amount not matching.";
+            }
+        } else {
+            $error = "Fees payment verification failed: Flutterwave status not successful.";
+        }
     }
 } elseif (isset($_GET['status']) && $_GET['status'] == 'cancelled') {
-    $message = "Fees payment was cancelled by the parent.";
-    $status_type = "failed";
+    $error = "Fees payment was cancelled by the user.";
 } elseif (isset($_GET['status']) && $_GET['status'] == 'failed') {
-    $message = "Fees payment failed. Please try again.";
-    $status_type = "failed";
-} else {
-    $message = "Invalid fees payment status received.";
-    $status_type = "failed";
+    $error = "Fees payment failed. Please try again.";
 }
 
-header('Location: parent_payment.php?student_id=' . urlencode($student_id) . '&status=' . urlencode($status_type) . '&message=' . urlencode($message));
-exit();
-// CloseCon($conn); // Removed as CloseCon is no longer defined in db_connection.php
+// Redirect with error message if any
+if ($error) {
+    header("Location: parent_payment.php?status=failed&message=" . urlencode($error) . "&student_id=" . urlencode($student_id));
+    exit();
+}
 ?>

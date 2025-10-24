@@ -5,10 +5,10 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">NiceSchool</span>
+            <span class="sitename">Edupack</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>5th floor,wing-B Tisco Building, </p>
+            <p>5th floor, wing-B Tisco Building, </p>
             <p>Alagbaka Akure,Ondo State, Nigeria.</p>
             <p class="mt-3"><strong>Phone:</strong> <span>+234 704 324 7461</span></p>
             <p><strong>Email:</strong> <span>enquiries@dinolabstech.com</span></p>

@@ -114,7 +114,7 @@ if (isset($_POST['expirydate_submit'])) {
                     <div class="col col-stats ms-3 ms-sm-0">
                       <div class="numbers">
                         <p class="card-category">Total Amount Due</p>
-                        <h4 class="card-title"><?php echo $total_students * 2000; ?></h4>
+                        <h4 class="card-title"><?php echo $total_students * 3000; ?></h4>
 
                       </div>
                     </div>

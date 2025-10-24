@@ -1,8 +1,13 @@
-<?php include('components/parent_logic.php');
-
-
+<?php
+include('components/parent_logic.php');
 include('db_connection.php'); // This file now directly establishes $conn and handles errors
 include('components/fees_management.php'); // Contains getStudentFeeStatus and getPreviousOutstandingBalances
+include('includes/config.php'); // Include the config file
+
+// Ensure the constants are defined
+if (!defined('FLUTTERWAVE_PUBLIC_KEY') || !defined('FLUTTERWAVE_SECRET_KEY')) {
+    die("Flutterwave API keys are not defined in config.php");
+}
 
 // $conn should be available after db_connection.php is included
 
@@ -223,10 +228,6 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
 
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script>
-      // Flutterwave Public Keys (PLACEHOLDERS - REPLACE WITH ACTUAL UNIQUE KEYS)
-      const FLUTTERWAVE_PUBLIC_KEY_FEES = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Same key as payment.php
-      const FLUTTERWAVE_PUBLIC_KEY_TUCKSHOP = "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X"; // Same key as payment.php
-
       document.getElementById('feesPaymentForm')?.addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -260,7 +261,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
         var encodedPaymentDetails = btoa(JSON.stringify(paymentDetails));
 
         FlutterwaveCheckout({
-          public_key: FLUTTERWAVE_PUBLIC_KEY_FEES,
+          public_key: "<?php echo FLUTTERWAVE_PUBLIC_KEY; ?>", // Use the public key from config
           tx_ref: tx_ref,
           amount: amount,
           currency: "NGN",
@@ -313,7 +314,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
         var encodedPaymentDetails = btoa(JSON.stringify(paymentDetails));
 
         FlutterwaveCheckout({
-          public_key: FLUTTERWAVE_PUBLIC_KEY_TUCKSHOP,
+          public_key: "<?php echo FLUTTERWAVE_PUBLIC_KEY; ?>", // Use the public key from config
           tx_ref: tx_ref,
           amount: amount,
           currency: "NGN",

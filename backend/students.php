@@ -2,9 +2,13 @@
 
 include('components/students_logic.php');
 include('components/birthday_logic.php');
-
-
 include('components/fees_management.php');
+include('includes/config.php'); // Include the config file
+
+// Ensure the constants are defined
+if (!defined('FLUTTERWAVE_PUBLIC_KEY') || !defined('FLUTTERWAVE_SECRET_KEY')) {
+    die("Flutterwave API keys are not defined in config.php");
+}
 
 // For demonstration purposes, assume a student ID is passed or retrieved from session
 $student_id = $_SESSION['user_id']; // Example student ID
@@ -889,7 +893,7 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
             var encodedPaymentDetails = btoa(JSON.stringify(paymentDetails));
 
             FlutterwaveCheckout({
-                public_key: "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X", // Reusing the same public key
+                public_key: "<?php echo FLUTTERWAVE_PUBLIC_KEY; ?>", // Use the public key from config
                 tx_ref: tx_ref,
                 amount: amount,
                 currency: "NGN",

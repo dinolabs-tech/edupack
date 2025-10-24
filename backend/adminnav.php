@@ -84,6 +84,13 @@
               </ul>
             </div>
           </li>
+
+          <li class="nav-item">
+            <a href="manage_applications.php">
+              <i class="fas fa-graduation-cap"></i>
+              <p>Manage Applications</p>
+            </a>
+          </li>
           <!-- End Icons Nav -->
         <?php
         }
@@ -402,6 +409,16 @@
                 <li>
                   <a href="fees_dashboard.php">
                     <span class="sub-item">Fee Management</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="admission_settings.php">
+                    <span class="sub-item">Admission &amp; Payment Gateway Settings</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="admission_transactions.php">
+                    <span class="sub-item">Admission Transactions</span>
                   </a>
                 </li>
                 <li>

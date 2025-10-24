@@ -1,6 +1,12 @@
-<?php include('components/students_logic.php');
-
+<?php
+include('components/students_logic.php');
 include('components/fees_management.php');
+include('includes/config.php'); // Include the config file
+
+// Ensure the constants are defined
+if (!defined('FLUTTERWAVE_PUBLIC_KEY') || !defined('FLUTTERWAVE_SECRET_KEY')) {
+    die("Flutterwave API keys are not defined in config.php");
+}
 
 
 $student_id = isset($_GET['student_id']) ? $_GET['student_id'] : '';
@@ -54,37 +60,73 @@ if (isset($_GET['status']) && $_GET['status'] == 'successful') {
     $payment_details_json = isset($_GET['payment_details']) ? base64_decode($_GET['payment_details']) : '';
     $payment_details = json_decode($payment_details_json, true);
 
-    if ($payment_details && $payment_details['student_id'] == $student_id && $payment_details['tx_ref'] == $tx_ref) {
-        $amount_paid = $payment_details['amount'];
-        $payment_method = "Flutterwave";
-        $recorded_by = "Student";
-        $session_paid = $payment_details['session'];
-        $term_paid = $payment_details['term'];
+    // Server-side verification of Flutterwave transaction
+    $curl = curl_init();
+    $url = "https://api.flutterwave.com/v3/transactions/{$transaction_id_fw}/verify";
 
-        // Dynamically find a fee_definition_id
-        $general_fee_stmt = $conn->prepare("SELECT id FROM fee WHERE class = ? AND arm = ? AND term = ? AND session = ? LIMIT 1");
-        $general_fee_stmt->bind_param("ssss", $student_class, $student_arm, $current_term, $current_session);
-        $general_fee_stmt->execute();
-        $general_fee_result = $general_fee_stmt->get_result();
-        $general_fee_data = $general_fee_result->fetch_assoc();
-        $fee_definition_id_to_save = $general_fee_data ? $general_fee_data['id'] : 'GENERAL-FEE';
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/json",
+            "Authorization: Bearer " . FLUTTERWAVE_SECRET_KEY
+        ),
+    ));
 
-        if (recordStudentPayment($conn, $student_id, $fee_definition_id_to_save, $amount_paid, $payment_method, $tx_ref, $recorded_by, $session_paid, $term_paid)) {
-            $message = "Payment of " . number_format($amount_paid, 2) . " recorded successfully! Transaction Ref: " . htmlspecialchars($tx_ref);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
 
-            // Refresh balances
-            $fee_status = getStudentFeeStatus($conn, $student_id, $current_session, $current_term);
-            $total_fee_current_period = $fee_status ? $fee_status['fee'] : 0;
-            $total_paid_current_period = $fee_status ? $fee_status['paid'] : 0;
-            $outstanding_current_period = $fee_status ? ($fee_status['fee'] - $fee_status['paid']) : 0;
-            $previous_outstanding_balances = getPreviousOutstandingBalances($conn, $student_id, $current_session, $current_term);
-            $sum_previous_outstanding = array_sum(array_column($previous_outstanding_balances, 'outstanding'));
-            $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outstanding;
-        } else {
-            $error = "Error saving payment details to database.";
-        }
+    if ($err) {
+        $error = "cURL Error #:" . $err;
     } else {
-        $error = "Payment verification failed or details mismatched.";
+        $flutterwave_response = json_decode($response, true);
+
+        if ($flutterwave_response['status'] === 'success' && $flutterwave_response['data']['status'] === 'successful') {
+            $verified_amount = $flutterwave_response['data']['amount'];
+            $verified_currency = $flutterwave_response['data']['currency'];
+
+            if ($payment_details && $payment_details['student_id'] == $student_id && $payment_details['tx_ref'] == $tx_ref && $verified_amount == $payment_details['amount'] && $verified_currency == "NGN") {
+                $amount_paid = $payment_details['amount'];
+                $payment_method = "Flutterwave";
+                $recorded_by = "Student";
+                $session_paid = $payment_details['session'];
+                $term_paid = $payment_details['term'];
+
+                // Dynamically find a fee_definition_id
+                $general_fee_stmt = $conn->prepare("SELECT id FROM fee WHERE class = ? AND arm = ? AND term = ? AND session = ? LIMIT 1");
+                $general_fee_stmt->bind_param("ssss", $student_class, $student_arm, $current_term, $current_session);
+                $general_fee_stmt->execute();
+                $general_fee_result = $general_fee_stmt->get_result();
+                $general_fee_data = $general_fee_result->fetch_assoc();
+                $fee_definition_id_to_save = $general_fee_data ? $general_fee_data['id'] : 'GENERAL-FEE';
+
+                if (recordStudentPayment($conn, $student_id, $fee_definition_id_to_save, $amount_paid, $payment_method, $tx_ref, $recorded_by, $session_paid, $term_paid)) {
+                    $message = "Payment of " . number_format($amount_paid, 2) . " recorded successfully! Transaction Ref: " . htmlspecialchars($tx_ref);
+
+                    // Refresh balances
+                    $fee_status = getStudentFeeStatus($conn, $student_id, $current_session, $current_term);
+                    $total_fee_current_period = $fee_status ? $fee_status['fee'] : 0;
+                    $total_paid_current_period = $fee_status ? $fee_status['paid'] : 0;
+                    $outstanding_current_period = $fee_status ? ($fee_status['fee'] - $fee_status['paid']) : 0;
+                    $previous_outstanding_balances = getPreviousOutstandingBalances($conn, $student_id, $current_session, $current_term);
+                    $sum_previous_outstanding = array_sum(array_column($previous_outstanding_balances, 'outstanding'));
+                    $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outstanding;
+                } else {
+                    $error = "Error saving payment details to database.";
+                }
+            } else {
+                $error = "Payment verification failed: details mismatched or amount not matching.";
+            }
+        } else {
+            $error = "Payment verification failed: Flutterwave status not successful.";
+        }
     }
 } elseif (isset($_GET['status']) && $_GET['status'] == 'cancelled') {
     $error = "Payment was cancelled by the user.";
@@ -230,7 +272,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'successful') {
             var encodedPaymentDetails = btoa(JSON.stringify(paymentDetails));
 
             FlutterwaveCheckout({
-                public_key: "FLWPUBK_TEST-352add210234da9f75c4cf8a2b79cd38-X",
+                public_key: "<?php echo FLUTTERWAVE_PUBLIC_KEY; ?>", // Use the public key from config
                 tx_ref: tx_ref,
                 amount: amount,
                 currency: "NGN",

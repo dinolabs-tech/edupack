@@ -114,6 +114,13 @@ $access_rules = [
     'maintenance.php' => ['Superuser','Administrator', 'Teacher'],
     'expiry.php' => ['Administrator', 'Superuser'],
     '404.php' => ['Administrator', 'Teacher', 'Student', 'Parent', 'Alumni', 'Superuser', 'Tuckshop', 'Admission', 'Bursary'],
+
+    'admission_settings.php' => ['Administrator', 'Superuser', 'Bursary'],
+    'manage_applications.php' => ['Administrator', 'Superuser', 'Admission'],
+    'assign_admin_details.php' => ['Administrator', 'Superuser', 'Admission'],
+    'admission_transactions.php' => ['Administrator', 'Superuser', 'Bursary'],
+    'view_applications.php' => ['Administrator', 'Superuser', 'Admission'],
+
     'login.php' => [],
     'logout.php' => [],
     'index.php' => [],

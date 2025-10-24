@@ -1108,6 +1108,110 @@ $tables = [
             name VARCHAR(255) NOT NULL UNIQUE
         )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
     ",
+
+    // Table: admission_settings
+    "admission_settings" => "
+            CREATE TABLE IF NOT EXISTS `admission_settings` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `setting_name` VARCHAR(255) NOT NULL UNIQUE,
+                `setting_value` TEXT,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ",
+    // Table: admission_transactions
+    "admission_transactions" => "
+        CREATE TABLE IF NOT EXISTS `admission_transactions` (
+            `transaction_id` INT AUTO_INCREMENT PRIMARY KEY,
+            `application_id` VARCHAR(100) NOT NULL,
+            `student_id` VARCHAR(100) DEFAULT NULL,
+            `amount` DECIMAL(10, 2) NOT NULL,
+            `transaction_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+            `payment_method` VARCHAR(50) NOT NULL,
+            `status` VARCHAR(50) NOT NULL DEFAULT 'Pending', -- Pending, Completed, Failed, Refunded
+            `notes` TEXT,
+            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+
+    // Table: entrance_exams
+    "entrance_exams" => "
+        CREATE TABLE IF NOT EXISTS `entrance_exams` (
+            `exam_id` INT (11) NOT NULL AUTO_INCREMENT,
+            `application_id` VARCHAR(100) NOT NULL,
+            `exam_date` DATE NOT NULL,
+            `exam_time` TIME NOT NULL,
+            `exam_location` VARCHAR(255) NOT NULL,
+            `exam_result` VARCHAR(50) DEFAULT NULL, -- e.g., 'pass', 'fail', 'score'
+            `status` VARCHAR(50) NOT NULL DEFAULT 'scheduled', -- scheduled, completed, cancelled
+            PRIMARY KEY (`exam_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+    
+
+    // Table: entrance_exams
+    "student_applications" => "
+        CREATE TABLE IF NOT EXISTS `student_applications` (
+        `id` VARCHAR(100) NOT NULL,
+        `name` VARCHAR(222) NOT NULL,
+        `gender` VARCHAR(222) NOT NULL,
+        `dob` VARCHAR(222) NOT NULL,
+        `placeob` VARCHAR(222) NOT NULL,
+        `address` VARCHAR(222) NOT NULL,
+        `studentmobile` VARCHAR(222) NOT NULL,
+        `email` VARCHAR(222) NOT NULL,
+        `religion` VARCHAR(222) NOT NULL,
+        `state` VARCHAR(222) NOT NULL,
+        `lga` VARCHAR(222) NOT NULL,
+        `class` VARCHAR(222) NOT NULL,
+        `arm` VARCHAR(222) NOT NULL,
+        `session` VARCHAR(222) NOT NULL,
+        `term` VARCHAR(222) NOT NULL,
+        `schoolname` VARCHAR(222) NOT NULL,
+        `schooladdress` VARCHAR(222) NOT NULL,
+        `hobbies` VARCHAR(222) NOT NULL,
+        `lastclass` VARCHAR(222) NOT NULL,
+        `sickle` VARCHAR(222) NOT NULL,
+        `challenge` VARCHAR(222) NOT NULL,
+        `emergency` VARCHAR(222) NOT NULL,
+        `familydoc` VARCHAR(222) NOT NULL,
+        `docaddress` VARCHAR(222) NOT NULL,
+        `docmobile` VARCHAR(222) NOT NULL,
+        `polio` VARCHAR(222) NOT NULL,
+        `tuberculosis` VARCHAR(222) NOT NULL,
+        `measles` VARCHAR(222) NOT NULL,
+        `tetanus` VARCHAR(222) NOT NULL,
+        `whooping` VARCHAR(222) NOT NULL,
+        `gname` VARCHAR(222) NOT NULL,
+        `mobile` VARCHAR(222) NOT NULL,
+        `goccupation` VARCHAR(222) NOT NULL,
+        `gaddress` VARCHAR(222) NOT NULL,
+        `grelationship` VARCHAR(222) NOT NULL,
+        `hostel` VARCHAR(111) NOT NULL,
+        `bloodtype` VARCHAR(111) NOT NULL,
+        `bloodgroup` VARCHAR(111) NOT NULL,
+        `height` VARCHAR(111) NOT NULL,
+        `weight` VARCHAR(111) NOT NULL,
+        `photo` VARCHAR(255),
+        `status` INT (11) NOT NULL,
+        `password` VARCHAR(222) NOT NULL,
+        `result` INT (11) NOT NULL COMMENT '0 = allow, 1 = revoke',
+        `passport_path` VARCHAR(255) DEFAULT NULL,
+        `transcript_path` VARCHAR(255) DEFAULT NULL,
+        `admission_status` VARCHAR(50) NOT NULL DEFAULT 'pending', -- pending, exam_scheduled, approved, rejected
+        `assigned_student_id` VARCHAR(100) DEFAULT NULL,
+        `assigned_class` VARCHAR(222) DEFAULT NULL,
+        `assigned_arm` VARCHAR(222) DEFAULT NULL,
+        `assigned_hostel` VARCHAR(111) DEFAULT NULL,
+        `entrance_exam_scheduled` TINYINT (1) DEFAULT 0,
+        `entrance_exam_date` DATE DEFAULT NULL,
+        `entrance_exam_time` TIME DEFAULT NULL,
+        `entrance_exam_location` VARCHAR(255) DEFAULT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ",
+
     // Table: parent_student
     "parent_student" => "
         CREATE TABLE IF NOT EXISTS `parent_student` (
