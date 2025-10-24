@@ -218,7 +218,7 @@ session_start();
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="program-image-wrapper">
-                      <img src="assets/img/education/nursery.webp" class="img-fluid" alt="Nursery Program">
+                      <img src="assets/img/education/education-1.webp" class="img-fluid" alt="Nursery Program">
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -244,7 +244,7 @@ session_start();
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="program-image-wrapper">
-                      <img src="assets/img/education/primary.webp" class="img-fluid" alt="Primary School Program">
+                      <img src="assets/img/education/education-2.webp" class="img-fluid" alt="Primary School Program">
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -270,7 +270,7 @@ session_start();
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="program-image-wrapper">
-                      <img src="assets/img/education/jss.webp" class="img-fluid" alt="Junior Secondary Program">
+                      <img src="assets/img/education/education-3.webp" class="img-fluid" alt="Junior Secondary Program">
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -296,7 +296,7 @@ session_start();
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="program-image-wrapper">
-                      <img src="assets/img/education/sss.webp" class="img-fluid" alt="Senior Secondary Program">
+                      <img src="assets/img/education/education-4.webp" class="img-fluid" alt="Senior Secondary Program">
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -683,7 +683,7 @@ session_start();
             <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
 
               <div class="position-relative">
-                <img src="assets/img/blog/school-event-1.webp"
+                <img src="assets/img/blog/blog-post-1.webp"
                   alt="Inter-house Sports Competition"
                   class="img-fluid w-100 rounded-3">
                 <span class="badge bg-primary position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
@@ -703,7 +703,7 @@ session_start();
                 </div>
 
                 <div class="d-flex align-items-center mt-4 pt-2 border-top">
-                  <img src="assets/img/person/staff-1.webp" alt="Sports Coordinator"
+                  <img src="assets/img/person/blog-post-2.webp" alt="Sports Coordinator"
                     class="rounded-circle me-3" width="45" height="45">
                   <div>
                     <p class="mb-0 fw-medium">Coach Ibrahim</p>
@@ -720,7 +720,7 @@ session_start();
             <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
 
               <div class="position-relative">
-                <img src="assets/img/blog/school-event-2.webp"
+                <img src="assets/img/blog/blog-post-3.webp"
                   alt="Science Fair Project Showcase"
                   class="img-fluid w-100 rounded-3">
                 <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
@@ -757,7 +757,7 @@ session_start();
             <article class="news-card rounded-4 overflow-hidden bg-white h-100 d-flex flex-column shadow-lg hover-shadow transition-all">
 
               <div class="position-relative">
-                <img src="assets/img/blog/school-event-3.webp"
+                <img src="assets/img/blog/blog-post-4.webp"
                   alt="Cultural Day Celebration"
                   class="img-fluid w-100 rounded-3">
                 <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 text-uppercase small">
