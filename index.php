@@ -28,7 +28,7 @@ session_start();
                 <h1>Empowering Minds, Shaping the Future</h1>
                 <p>At <strong>Dinolabs</strong>, we believe education goes beyond the classroom. Our mission is to inspire curiosity, nurture talent, and equip students with the skills and confidence to thrive in a fast-changing world. Join a community driven by innovation, creativity, and lifelong learning.</p>
                 <div class="cta-buttons">
-                  <a href="admissions.php#admission_form" class="btn-primary">Apply Now.</a>
+                  <a href="admissions.php#admission_form" class="btn-primary">Apply Now</a>
                   <a href="#" class="btn-secondary">Explore Our Programs</a>
                 </div>
               </div>
