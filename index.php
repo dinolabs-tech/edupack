@@ -89,7 +89,7 @@ session_start();
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
               <span class="date">Events</span>
               <span class="title">View our upcoming events</span>
-              <a href="#events" class="btn-register">View</a>
+              <a href="events.php" class="btn-register">View</a>
             </div>
             <div class="col-md-6 col-xl-4 col-12 ticker-item">
               <span class="date">DEC 5</span>
