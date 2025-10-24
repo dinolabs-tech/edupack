@@ -148,9 +148,9 @@ session_start();
                       <li><i class="bi bi-calendar-check"></i> Continuous Assessment</li>
                     </ul>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -171,9 +171,9 @@ session_start();
                       <li><i class="bi bi-people"></i> 21st-century learning</li>
                     </ul>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -194,9 +194,9 @@ session_start();
                       <li><i class="bi bi-lightbulb"></i> Skill development</li>
                     </ul>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -217,9 +217,9 @@ session_start();
                       <li><i class="bi bi-briefcase"></i> Career readiness</li>
                     </ul>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -241,9 +241,9 @@ session_start();
                     <h3>Early Years Learning</h3>
                     <p>Play-based and activity-based learning for cognitive and emotional growth.</p>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -264,9 +264,9 @@ session_start();
                     <h3>Basic Education</h3>
                     <p>Math, English, Social Studies, Science, Verbal/Quantitative Reasoning, ICT and more.</p>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -408,7 +408,7 @@ session_start();
                   We are committed to academic excellence, character development, and a safe learning
                   environment where every child can thrive from Nursery to Senior Secondary School.
                 </p>
-                <a href="#about" class="btn-about">Learn More About Us</a>
+                <a href="about.php" class="btn-about">Learn More About Us</a>
               </div>
             </div>
 
