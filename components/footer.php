@@ -59,7 +59,7 @@
   <ul>
     <li><a href="backend/login.php">Check Results</a></li>
     <li><a href="backend/login.php">School Calendar</a></li>
-    <li><a href="backend/login.php">Library Access</a></li>
+    <li><a href="backend/login.php">Computer Based Test</a></li>
     <li><a href="students-life.php">Clubs & Societies</a></li>
     <li><a href="backend/logout.php">Logout</a></li>
   </ul>
