@@ -183,7 +183,7 @@ session_start();
                   </div>
                 </div>
 
-                <a href="#" class="btn btn-explore mt-4">Explore All Clubs <i class="bi bi-arrow-right"></i></a>
+                <!-- <a href="#" class="btn btn-explore mt-4">Explore All Clubs <i class="bi bi-arrow-right"></i></a> -->
               </div>
             </div>
           </div>
@@ -197,7 +197,7 @@ session_start();
               <p>
                 We nurture not just academic excellence but also physical fitness and teamwork. Students participate in football, basketball, track events, and more through house competitions and inter-school tournaments.
               </p>
-              <a href="#" class="btn btn-explore">View Sports Schedule <i class="bi bi-arrow-right"></i></a>
+              <!-- <a href="#" class="btn btn-explore">View Sports Schedule <i class="bi bi-arrow-right"></i></a> -->
             </div>
 
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
@@ -309,8 +309,8 @@ session_start();
           </div>
           <div class="col-lg-4" data-aos="fade-left" data-aos-delay="400">
             <div class="cta-buttons">
-              <a href="#" class="btn btn-primary">Schedule a Visit</a>
-              <a href="#" class="btn btn-outline">Apply Now</a>
+              <a href="contact.php" class="btn btn-primary">Schedule a Visit</a>
+              <a href="admissions.php#admission_form" class="btn btn-outline">Apply Now</a>
             </div>
           </div>
         </div>

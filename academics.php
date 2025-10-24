@@ -138,7 +138,7 @@ session_start();
                     <div class="program-icon">
                       <i class="bi bi-brush"></i>
                     </div>
-                    <span class="program-type">Nursery</span>
+                    <span class="program-type text-success">Nursery</span>
                   </div>
                   <div class="program-body">
                     <h3>Early Years Learning</h3>
@@ -161,7 +161,7 @@ session_start();
                     <div class="program-icon">
                       <i class="bi bi-pencil"></i>
                     </div>
-                    <span class="program-type">Primary 1–6</span>
+                    <span class="program-type text-success">Primary 1–6</span>
                   </div>
                   <div class="program-body">
                     <h3>Basic Education</h3>
@@ -184,7 +184,7 @@ session_start();
                     <div class="program-icon">
                       <i class="bi bi-book-half"></i>
                     </div>
-                    <span class="program-type">JSS 1–3</span>
+                    <span class="program-type text-success">JSS 1–3</span>
                   </div>
                   <div class="program-body">
                     <h3>Junior Secondary</h3>
@@ -207,7 +207,7 @@ session_start();
                     <div class="program-icon">
                       <i class="bi bi-award-fill"></i>
                     </div>
-                    <span class="program-type">SS 1–3</span>
+                    <span class="program-type text-success">SS 1–3</span>
                   </div>
                   <div class="program-body">
                     <h3>Senior Secondary</h3>

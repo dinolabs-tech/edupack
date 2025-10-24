@@ -148,19 +148,19 @@ if ($flutterwave_public_key === null) {
               <div class="deadline-grid mt-4">
                 <div class="deadline-item">
                   <h4>First Term</h4>
-                  <div class="date">March 15, 2025</div>
+                  <div class="date">September 2025</div>
                 </div>
                 <div class="deadline-item">
                   <h4>Second Term</h4>
-                  <div class="date">July 10, 2025</div>
+                  <div class="date">January 2026</div>
                 </div>
                 <div class="deadline-item">
                   <h4>Third Term</h4>
-                  <div class="date">November 30, 2025</div>
+                  <div class="date">April 2026</div>
                 </div>
                 <div class="deadline-item">
                   <h4>Early Enrollment</h4>
-                  <div class="date">January 10, 2025</div>
+                  <div class="date">August 2026</div>
                 </div>
               </div>
             </div>
