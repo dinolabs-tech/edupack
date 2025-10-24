@@ -703,7 +703,7 @@ session_start();
                 </div>
 
                 <div class="d-flex align-items-center mt-4 pt-2 border-top">
-                  <img src="assets/img/person/blog-post-2.webp" alt="Sports Coordinator"
+                  <img src="assets/img/person/person-m-2.webp" alt="Sports Coordinator"
                     class="rounded-circle me-3" width="45" height="45">
                   <div>
                     <p class="mb-0 fw-medium">Coach Ibrahim</p>
@@ -740,7 +740,7 @@ session_start();
                 </div>
 
                 <div class="d-flex align-items-center mt-4 pt-2 border-top">
-                  <img src="assets/img/person/staff-2.webp" alt="Science Teacher"
+                  <img src="assets/img/person/person-f-1.webp" alt="Science Teacher"
                     class="rounded-circle me-3" width="45" height="45">
                   <div>
                     <p class="mb-0 fw-medium">Mrs. Okeke</p>
@@ -777,7 +777,7 @@ session_start();
                 </div>
 
                 <div class="d-flex align-items-center mt-4 pt-2 border-top">
-                  <img src="assets/img/person/staff-3.webp" alt="Cultural Coordinator"
+                  <img src="assets/img/person/person-m-1.webp" alt="Cultural Coordinator"
                     class="rounded-circle me-3" width="45" height="45">
                   <div>
                     <p class="mb-0 fw-medium">Mr. Daniels</p>
