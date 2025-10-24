@@ -287,9 +287,9 @@ session_start();
                     <h3>Junior Secondary</h3>
                     <p>Core subjects including Basic Science, Business Studies, Computer Studies and Civic Education.</p>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -310,9 +310,9 @@ session_start();
                     <h3>Senior Secondary</h3>
                     <p>Students follow subject pathways such as Sciences, Commercial or Arts with exam-focused learning.</p>
                   </div>
-                  <div class="program-footer">
+                  <!-- <div class="program-footer">
                     <a href="#" class="program-link">View Level <i class="bi bi-arrow-right"></i></a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
