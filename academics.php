@@ -41,21 +41,23 @@ session_start();
             </div>
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
               <div class="intro-content">
-                <span class="subtitle">Excellence in Education</span>
-                <h2>Discover Our Academic Programs</h2>
-                <p class="intro-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Sed non mauris vitae erat consequat auctor eu in elit.</p>
+                <span class="subtitle">Quality Learning for Every Child</span>
+                <h2>Our Curriculum Approach</h2>
+                <p class="intro-text">
+                  We provide a rich and engaging academic experience designed to nurture creativity, critical thinking, and strong moral values. From foundational learning in primary school to advanced preparation in secondary school, our curriculum supports each learner’s unique strengths.
+                </p>
                 <div class="key-highlights">
                   <div class="highlight-item">
                     <i class="bi bi-check-circle-fill"></i>
-                    <span>Experiential learning opportunities</span>
+                    <span>Child-centered learning experiences</span>
                   </div>
                   <div class="highlight-item">
                     <i class="bi bi-check-circle-fill"></i>
-                    <span>World-class faculty members</span>
+                    <span>Experienced and passionate educators</span>
                   </div>
                   <div class="highlight-item">
                     <i class="bi bi-check-circle-fill"></i>
-                    <span>Cutting-edge research facilities</span>
+                    <span>Modern classrooms & digital learning tools</span>
                   </div>
                 </div>
               </div>
@@ -63,469 +65,147 @@ session_start();
           </div>
         </div>
 
+        <!-- Tabs Navigation -->
         <div class="programs-navigation" data-aos="fade-up" data-aos-delay="100">
-          <div class="row">
-            <div class="col-12">
-              <div class="program-tabs">
-                <ul class="nav nav-tabs justify-content-center" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#academics-all" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-grid-3x3-gap"></i></span>
-                      <span class="text">All Programs</span>
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="undergraduate-tab" data-bs-toggle="tab" data-bs-target="#academics-undergraduate" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-mortarboard"></i></span>
-                      <span class="text">Undergraduate</span>
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="graduate-tab" data-bs-toggle="tab" data-bs-target="#academics-graduate" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-book"></i></span>
-                      <span class="text">Graduate</span>
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="doctoral-tab" data-bs-toggle="tab" data-bs-target="#academics-doctoral" type="button" role="tab">
-                      <span class="icon"><i class="bi bi-award"></i></span>
-                      <span class="text">Doctoral</span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <ul class="nav nav-tabs justify-content-center" role="tablist">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#primary">
+                <i class="bi bi-pencil"></i> Primary School
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#secondary">
+                <i class="bi bi-book-half"></i> Secondary School
+              </button>
+            </li>
+          </ul>
         </div>
 
         <div class="tab-content programs-content" data-aos="fade-up" data-aos-delay="200">
-          <!-- All Programs Tab -->
-          <div class="tab-pane fade show active" id="academics-all" role="tabpanel">
+
+          <!-- Primary School Tab -->
+          <div class="tab-pane fade show active" id="primary">
             <div class="row g-4">
               <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                <div class="program-item undergraduate">
+              <div class="col-lg-4 col-md-6">
+                <div class="program-item">
                   <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-cpu"></i>
-                    </div>
-                    <span class="program-type">Undergraduate</span>
+                    <i class="bi bi-pencil-square"></i>
+                    <span>Core Subject</span>
                   </div>
                   <div class="program-body">
-                    <h3>Computer Science</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 4 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> B.Sc. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
+                    <h3>English Language</h3>
+                    <p>Developing reading, writing, phonics, grammar, and communication skills for lifelong literacy.</p>
                   </div>
                 </div>
               </div>
 
               <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                <div class="program-item graduate">
+              <div class="col-lg-4 col-md-6">
+                <div class="program-item">
                   <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-briefcase"></i>
-                    </div>
-                    <span class="program-type">Graduate</span>
+                    <i class="bi bi-calculator"></i>
+                    <span>Core Subject</span>
                   </div>
                   <div class="program-body">
-                    <h3>Business Administration</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 2 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> MBA Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
+                    <h3>Mathematics</h3>
+                    <p>Building strong numerical reasoning and problem-solving foundations through fun activities.</p>
                   </div>
                 </div>
               </div>
 
               <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                <div class="program-item doctoral">
+              <div class="col-lg-4 col-md-6">
+                <div class="program-item">
                   <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-diagram-3"></i>
-                    </div>
-                    <span class="program-type">Doctoral</span>
+                    <i class="bi bi-globe-africa"></i>
+                    <span>Core Subject</span>
                   </div>
                   <div class="program-body">
-                    <h3>Neuroscience</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 5 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> Ph.D. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall Intake</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
+                    <h3>Basic Science & Technology</h3>
+                    <p>Hands-on exposure to scientific discovery, digital literacy, and environmental awareness.</p>
                   </div>
                 </div>
               </div>
 
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                <div class="program-item undergraduate">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-tree"></i>
-                    </div>
-                    <span class="program-type">Undergraduate</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Environmental Science</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 4 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> B.Sc. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                <div class="program-item graduate">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-graph-up"></i>
-                    </div>
-                    <span class="program-type">Graduate</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Data Science</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 2 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> M.Sc. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                <div class="program-item doctoral">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-people"></i>
-                    </div>
-                    <span class="program-type">Doctoral</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Psychology</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 4 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> Ph.D. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall Intake</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+          </div><!-- End Primary -->
 
-          <!-- Undergraduate Tab -->
-          <div class="tab-pane fade" id="academics-undergraduate" role="tabpanel">
+          <!-- Secondary School Tab -->
+          <div class="tab-pane fade" id="secondary">
             <div class="row g-4">
+
               <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                <div class="program-item undergraduate">
+              <div class="col-lg-4 col-md-6">
+                <div class="program-item">
                   <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-cpu"></i>
-                    </div>
-                    <span class="program-type">Undergraduate</span>
+                    <i class="bi bi-journal-bookmark"></i>
+                    <span>Secondary Subject</span>
                   </div>
                   <div class="program-body">
-                    <h3>Computer Science</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 4 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> B.Sc. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
+                    <h3>Mathematics & Further Maths</h3>
+                    <p>Preparing students for advanced analytical thinking and future STEM-related careers.</p>
                   </div>
                 </div>
               </div>
 
               <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                <div class="program-item undergraduate">
+              <div class="col-lg-4 col-md-6">
+                <div class="program-item">
                   <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-tree"></i>
-                    </div>
-                    <span class="program-type">Undergraduate</span>
+                    <i class="bi bi-layers"></i>
+                    <span>Secondary Subject</span>
                   </div>
                   <div class="program-body">
-                    <h3>Environmental Science</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 4 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> B.Sc. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
+                    <h3>Sciences (Physics, Chemistry & Biology)</h3>
+                    <p>Exploring the natural world through experiments, research and laboratory sessions.</p>
                   </div>
                 </div>
               </div>
+
+              <!-- Program Item -->
+              <div class="col-lg-4 col-md-6">
+                <div class="program-item">
+                  <div class="program-header">
+                    <i class="bi bi-palette"></i>
+                    <span>Secondary Subject</span>
+                  </div>
+                  <div class="program-body">
+                    <h3>Arts & Humanities</h3>
+                    <p>Literature, History, Government, and Fine Arts to broaden creativity and critical thinking.</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
-          </div>
+          </div><!-- End Secondary -->
 
-          <!-- Graduate Tab -->
-          <div class="tab-pane fade" id="academics-graduate" role="tabpanel">
-            <div class="row g-4">
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                <div class="program-item graduate">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-briefcase"></i>
-                    </div>
-                    <span class="program-type">Graduate</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Business Administration</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 2 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> MBA Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                <div class="program-item graduate">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-graph-up"></i>
-                    </div>
-                    <span class="program-type">Graduate</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Data Science</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 2 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> M.Sc. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall &amp; Spring</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Doctoral Tab -->
-          <div class="tab-pane fade" id="academics-doctoral" role="tabpanel">
-            <div class="row g-4">
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                <div class="program-item doctoral">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-diagram-3"></i>
-                    </div>
-                    <span class="program-type">Doctoral</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Neuroscience</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 5 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> Ph.D. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall Intake</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Program Item -->
-              <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                <div class="program-item doctoral">
-                  <div class="program-header">
-                    <div class="program-icon">
-                      <i class="bi bi-people"></i>
-                    </div>
-                    <span class="program-type">Doctoral</span>
-                  </div>
-                  <div class="program-body">
-                    <h3>Psychology</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
-                    <ul class="program-details">
-                      <li><i class="bi bi-clock"></i> 4 years</li>
-                      <li><i class="bi bi-mortarboard-fill"></i> Ph.D. Degree</li>
-                      <li><i class="bi bi-calendar-check"></i> Fall Intake</li>
-                    </ul>
-                  </div>
-                  <div class="program-footer">
-                    <a href="#" class="program-link">View Program <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
+        <!-- Featured Program Section -->
         <div class="featured-program-wrapper" data-aos="fade-up">
-          <div class="row">
-            <div class="col-12">
-              <div class="section-heading text-center mb-4">
-                <h2>Featured Program</h2>
-                <p>Our most sought-after academic offering</p>
-              </div>
-            </div>
+          <div class="section-heading text-center mb-4">
+            <h2>Featured Program</h2>
+            <p>Innovative learning for future-ready students</p>
           </div>
+
           <div class="row">
             <div class="col-lg-10 mx-auto">
-              <div class="featured-program-card">
-                <div class="row align-items-center">
-                  <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right" data-aos-delay="100">
-                    <div class="featured-program-image">
-                      <img src="assets/img/education/education-5.webp" alt="Artificial Intelligence Program" class="img-fluid">
-                      <div class="program-label">
-                        <span>Featured</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
-                    <div class="featured-program-content">
-                      <h3>Master of Science in Artificial Intelligence</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.</p>
-
-                      <div class="program-highlights">
-                        <div class="highlight">
-                          <div class="highlight-icon">
-                            <i class="bi bi-clock"></i>
-                          </div>
-                          <div class="highlight-info">
-                            <h4>Duration</h4>
-                            <p>24 Months</p>
-                          </div>
-                        </div>
-                        <div class="highlight">
-                          <div class="highlight-icon">
-                            <i class="bi bi-cash-stack"></i>
-                          </div>
-                          <div class="highlight-info">
-                            <h4>Avg. Starting Salary</h4>
-                            <p>$82,000</p>
-                          </div>
-                        </div>
-                        <div class="highlight">
-                          <div class="highlight-icon">
-                            <i class="bi bi-graph-up-arrow"></i>
-                          </div>
-                          <div class="highlight-info">
-                            <h4>Employment Rate</h4>
-                            <p>94%</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="featured-program-action">
-                        <a href="#" class="btn-apply">Apply Now</a>
-                        <a href="#" class="btn-details">Program Details</a>
-                      </div>
-                    </div>
-                  </div>
+              <div class="featured-program-card row align-items-center">
+                <div class="col-lg-5">
+                  <img src="assets/img/education/education-5.webp" class="img-fluid rounded" alt="STEM Innovation">
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                <div class="col-lg-7">
+                  <h3>STEM Innovation Program</h3>
+                  <p>Students engage in robotics, coding, engineering challenges, and practical science projects that build creativity and teamwork skills.</p>
 
-        <div class="stats-wrapper" data-aos="fade-up">
-          <div class="row align-items-center">
-            <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right" data-aos-delay="100">
-              <div class="stats-content">
-                <span class="subtitle">By The Numbers</span>
-                <h2>Our Academic Excellence</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas sed diam eget risus varius blandit.</p>
-                <a href="#" class="btn-about">About Our Institution</a>
-              </div>
-            </div>
-            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
-              <div class="stats-grid">
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="stat-icon">
-                    <i class="bi bi-people-fill"></i>
+                  <div class="program-highlights">
+                    <p><strong>Available To:</strong> Primary 4 – SS3</p>
+                    <p><strong>Focus Areas:</strong> Coding · Robotics · Renewable Energy · Engineering Design</p>
+                    <p><strong>Benefits:</strong> Modern skill development for global opportunities</p>
                   </div>
-                  <div class="stat-number">
-                    <span data-purecounter-start="0" data-purecounter-end="92" data-purecounter-duration="1" class="purecounter"></span>%
-                  </div>
-                  <div class="stat-title">Student Satisfaction</div>
-                </div>
 
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-                  <div class="stat-icon">
-                    <i class="bi bi-journal-bookmark-fill"></i>
-                  </div>
-                  <div class="stat-number">
-                    <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>+
-                  </div>
-                  <div class="stat-title">Academic Programs</div>
-                </div>
-
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-                  <div class="stat-icon">
-                    <i class="bi bi-award-fill"></i>
-                  </div>
-                  <div class="stat-number">
-                    <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>+
-                  </div>
-                  <div class="stat-title">Research Centers</div>
-                </div>
-
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
-                  <div class="stat-icon">
-                    <i class="bi bi-mortarboard-fill"></i>
-                  </div>
-                  <div class="stat-number">
-                    <span data-purecounter-start="0" data-purecounter-end="96" data-purecounter-duration="1" class="purecounter"></span>%
-                  </div>
-                  <div class="stat-title">Graduation Rate</div>
+                  <a href="#" class="btn-apply">Enroll Today</a>
                 </div>
               </div>
             </div>
@@ -534,17 +214,10 @@ session_start();
 
       </div>
 
-    </section><!-- /Academics Section -->
+    </section>
 
   </main>
 
   <?php include 'components/footer.php'; ?>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <?php include 'components/scripts.php'; ?>
-
 </body>
-
 </html>
