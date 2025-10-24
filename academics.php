@@ -138,7 +138,7 @@ session_start();
                     <div class="program-icon bg-primary text-white">
                       <i class="bi bi-brush"></i>
                     </div>
-                    <span class="program-type bg-success text-white">Nursery</span>
+                    <span class="program-type bg-primary text-white">Nursery</span>
                   </div>
                   <div class="program-body">
                     <h3>Early Years Learning</h3>
@@ -158,10 +158,10 @@ session_start();
               <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
                 <div class="program-item primary">
                   <div class="program-header">
-                    <div class="program-icon bg-secondary">
+                    <div class="program-icon bg-danger text-white">
                       <i class="bi bi-pencil"></i>
                     </div>
-                    <span class="program-type bg-success text-white">Primary 1–6</span>
+                    <span class="program-type bg-danger text-white">Primary 1–6</span>
                   </div>
                   <div class="program-body">
                     <h3>Basic Education</h3>
@@ -184,7 +184,7 @@ session_start();
                     <div class="program-icon bg-info">
                       <i class="bi bi-book-half"></i>
                     </div>
-                    <span class="program-type bg-success text-white">JSS 1–3</span>
+                    <span class="program-type bg-info text-white">JSS 1–3</span>
                   </div>
                   <div class="program-body">
                     <h3>Junior Secondary</h3>
@@ -207,7 +207,7 @@ session_start();
                     <div class="program-icon bg-warning">
                       <i class="bi bi-award-fill"></i>
                     </div>
-                    <span class="program-type bg-success text-white">SS 1–3</span>
+                    <span class="program-type bg-warning text-white">SS 1–3</span>
                   </div>
                   <div class="program-body">
                     <h3>Senior Secondary</h3>
