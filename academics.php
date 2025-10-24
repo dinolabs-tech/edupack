@@ -384,8 +384,8 @@ session_start();
                       </div>
 
                       <div class="featured-program-action">
-                        <a href="#" class="btn-apply">Enroll Now</a>
-                        <a href="#" class="btn-details">Program Details</a>
+                        <a href="admissions.php#admission_form" class="btn-apply">Enroll Now</a>
+                        <!-- <a href="#" class="btn-details">Program Details</a> -->
                       </div>
                     </div>
                   </div>
