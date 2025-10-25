@@ -131,84 +131,147 @@ if ($result && $row = $result->fetch_assoc()) {
       </li>
 
 <!-- Quick Shortcuts -->
-   <li class="nav-item topbar-icon dropdown hidden-caret">
-                  <a
-                    class="nav-link"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
-                    <i class="fas fa-layer-group"></i>
-                  </a>
-                  <div class="dropdown-menu quick-actions animated fadeIn">
-                    <div class="quick-actions-header">
-                      <span class="title mb-1">Quick Actions</span>
-                      <span class="subtitle op-7">Shortcuts</span>
-                    </div>
-                    <div class="quick-actions-scroll scrollbar-outer">
-                      <div class="quick-actions-items">
-                        <div class="row m-0">
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div class="avatar-item bg-danger rounded-circle">
-                                <i class="far fa-calendar-alt"></i>
-                              </div>
-                              <span class="text">Calendar</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-warning rounded-circle"
-                              >
-                                <i class="fas fa-map"></i>
-                              </div>
-                              <span class="text">Maps</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div class="avatar-item bg-info rounded-circle">
-                                <i class="fas fa-file-excel"></i>
-                              </div>
-                              <span class="text">Reports</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-success rounded-circle"
-                              >
-                                <i class="fas fa-envelope"></i>
-                              </div>
-                              <span class="text">Emails</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-primary rounded-circle"
-                              >
-                                <i class="fas fa-file-invoice-dollar"></i>
-                              </div>
-                              <span class="text">Invoice</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-secondary rounded-circle"
-                              >
-                                <i class="fas fa-credit-card"></i>
-                              </div>
-                              <span class="text">Payments</span>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+<li class="nav-item topbar-icon dropdown hidden-caret">
+    <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+        <i class="fas fa-layer-group"></i>
+    </a>
+    <div class="dropdown-menu quick-actions animated fadeIn">
+        <div class="quick-actions-header">
+            <span class="title mb-1">Quick Actions</span>
+            <span class="subtitle op-7">Shortcuts</span>
+        </div>
+        <div class="quick-actions-scroll scrollbar-outer">
+            <div class="quick-actions-items">
+                <div class="row m-0">
+                    <?php
+                    $role = $_SESSION['role'];
+                    $quick_actions = [];
+
+                    // Superuser Quick Actions
+                    if ($role === 'Superuser') {
+                        $quick_actions = [
+                            ['link' => 'superdashboard.php', 'icon' => 'fas fa-home', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'registerstudents.php', 'icon' => 'fas fa-user-plus', 'text' => 'Enroll Student', 'color' => 'bg-info'],
+                            ['link' => 'manage_applications.php', 'icon' => 'fas fa-graduation-cap', 'text' => 'Manage Apps', 'color' => 'bg-success'],
+                            ['link' => 'mark_attendance.php', 'icon' => 'fas fa-user-check', 'text' => 'Mark Attendance', 'color' => 'bg-warning'],
+                            ['link' => 'uploadresults.php', 'icon' => 'fas fa-upload', 'text' => 'Upload Results', 'color' => 'bg-danger'],
+                            ['link' => 'addquestion.php', 'icon' => 'fas fa-question-circle', 'text' => 'Add CBT Qs', 'color' => 'bg-secondary'],
+                            ['link' => 'fees_dashboard.php', 'icon' => 'fas fa-money-bill-wave', 'text' => 'Manage Fees', 'color' => 'bg-dark'],
+                            ['link' => 'usercontrol.php', 'icon' => 'fas fa-user-cog', 'text' => 'User Control', 'color' => 'bg-primary'],
+                            ['link' => 'expiry.php', 'icon' => 'fas fa-money-bill-alt', 'text' => 'Extend License', 'color' => 'bg-info'],
+                        ];
+                    }
+                    // Administrator Quick Actions
+                    elseif ($role === 'Administrator') {
+                        $quick_actions = [
+                            ['link' => 'dashboard.php', 'icon' => 'fas fa-home', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'registerstudents.php', 'icon' => 'fas fa-user-plus', 'text' => 'Enroll Student', 'color' => 'bg-info'],
+                            ['link' => 'manage_applications.php', 'icon' => 'fas fa-graduation-cap', 'text' => 'Manage Apps', 'color' => 'bg-success'],
+                            ['link' => 'mark_attendance.php', 'icon' => 'fas fa-user-check', 'text' => 'Mark Attendance', 'color' => 'bg-warning'],
+                            ['link' => 'uploadresults.php', 'icon' => 'fas fa-upload', 'text' => 'Upload Results', 'color' => 'bg-danger'],
+                            ['link' => 'fees_dashboard.php', 'icon' => 'fas fa-money-bill-wave', 'text' => 'Manage Fees', 'color' => 'bg-dark'],
+                            ['link' => 'timetable.php', 'icon' => 'fas fa-th-list', 'text' => 'Class Schedule', 'color' => 'bg-secondary'],
+                            ['link' => 'usercontrol.php', 'icon' => 'fas fa-user-cog', 'text' => 'User Control', 'color' => 'bg-primary'],
+                            ['link' => 'send_notice.php', 'icon' => 'fas fa-envelope-open', 'text' => 'Send Notice', 'color' => 'bg-info'],
+                        ];
+                    }
+                    // Admission Quick Actions
+                    elseif ($role === 'Admission') {
+                        $quick_actions = [
+                            ['link' => 'dashboard.php', 'icon' => 'fas fa-home', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'registerstudents.php', 'icon' => 'fas fa-user-plus', 'text' => 'Enroll Student', 'color' => 'bg-info'],
+                            ['link' => 'modifystudents.php', 'icon' => 'fas fa-user-edit', 'text' => 'Modify Students', 'color' => 'bg-success'],
+                            ['link' => 'viewstudents.php', 'icon' => 'fas fa-eye', 'text' => 'View Student Profile', 'color' => 'bg-warning'],
+                            ['link' => 'filter_students.php', 'icon' => 'fas fa-filter', 'text' => 'Filter Students', 'color' => 'bg-danger'],
+                            ['link' => 'manage_applications.php', 'icon' => 'fas fa-graduation-cap', 'text' => 'Manage Apps', 'color' => 'bg-secondary'],
+                            ['link' => 'admission_settings.php', 'icon' => 'fas fa-cogs', 'text' => 'Admission Settings', 'color' => 'bg-dark'],
+                            ['link' => 'admission_transactions.php', 'icon' => 'fas fa-exchange-alt', 'text' => 'Admission Trans.', 'color' => 'bg-primary'],
+                            ['link' => 'register_parent.php', 'icon' => 'fas fa-user-friends', 'text' => 'Register Parents', 'color' => 'bg-info'],
+                        ];
+                    }
+                    // Teacher Quick Actions
+                    elseif ($role === 'Teacher') {
+                        $quick_actions = [
+                            ['link' => 'dashboard.php', 'icon' => 'fas fa-home', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'mark_attendance.php', 'icon' => 'fas fa-user-check', 'text' => 'Mark Attendance', 'color' => 'bg-info'],
+                            ['link' => 'uploadresults.php', 'icon' => 'fas fa-upload', 'text' => 'Upload Results', 'color' => 'bg-success'],
+                            ['link' => 'classteachercomment.php', 'icon' => 'fas fa-comment-dots', 'text' => 'Teacher Comments', 'color' => 'bg-warning'],
+                            ['link' => 'uploadassignments.php', 'icon' => 'fas fa-tasks', 'text' => 'Upload Assignments', 'color' => 'bg-danger'],
+                            ['link' => 'uploadnotes.php', 'icon' => 'fas fa-pencil-alt', 'text' => 'Upload Notes', 'color' => 'bg-secondary'],
+                            ['link' => 'uploadcurriculum.php', 'icon' => 'fas fa-book', 'text' => 'Upload Curriculum', 'color' => 'bg-dark'],
+                            ['link' => 'addquestion.php', 'icon' => 'fas fa-question-circle', 'text' => 'Add CBT Qs', 'color' => 'bg-primary'],
+                            ['link' => 'settime.php', 'icon' => 'fas fa-clock', 'text' => 'Set CBT Time', 'color' => 'bg-info'],
+                        ];
+                    }
+                    // Tuckshop Quick Actions
+                    elseif ($role === 'Tuckshop') {
+                        $quick_actions = [
+                            ['link' => 'tuckdashboard.php', 'icon' => 'fas fa-store', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'regtuck.php', 'icon' => 'fas fa-cash-register', 'text' => 'Register Items', 'color' => 'bg-info'],
+                            ['link' => 'sellingpoint.php', 'icon' => 'fas fa-cart-plus', 'text' => 'POS', 'color' => 'bg-success'],
+                            ['link' => 'inventory.php', 'icon' => 'fas fa-boxes', 'text' => 'Inventory', 'color' => 'bg-warning'],
+                            ['link' => 'supplier.php', 'icon' => 'fas fa-truck', 'text' => 'Suppliers', 'color' => 'bg-danger'],
+                            ['link' => 'transactions.php', 'icon' => 'fas fa-exchange-alt', 'text' => 'Transactions', 'color' => 'bg-secondary'],
+                            ['link' => 'admin_tuckshop_payment_history.php', 'icon' => 'fas fa-history', 'text' => 'Recharge History', 'color' => 'bg-dark'],
+                            ['link' => '#', 'icon' => 'fas fa-users-cog', 'text' => 'Manage Users', 'color' => 'bg-primary'], // Placeholder
+                            ['link' => '#', 'icon' => 'fas fa-chart-line', 'text' => 'View Reports', 'color' => 'bg-info'], // Placeholder
+                        ];
+                    }
+                    // Bursary Quick Actions
+                    elseif ($role === 'Bursary') {
+                        $quick_actions = [
+                            ['link' => 'bursary_dashboard.php', 'icon' => 'fas fa-hand-holding-usd', 'text' => 'Bursary Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'fees_dashboard.php', 'icon' => 'fas fa-money-check-alt', 'text' => 'Fee Management', 'color' => 'bg-info'],
+                            ['link' => 'admission_settings.php', 'icon' => 'fas fa-cogs', 'text' => 'Admission Settings', 'color' => 'bg-success'],
+                            ['link' => 'admission_transactions.php', 'icon' => 'fas fa-exchange-alt', 'text' => 'Admission Trans.', 'color' => 'bg-warning'],
+                            ['link' => 'student_payment.php', 'icon' => 'fas fa-cash-register', 'text' => 'Student Payment', 'color' => 'bg-danger'],
+                            ['link' => 'transaction_history.php', 'icon' => 'fas fa-history', 'text' => 'Transaction History', 'color' => 'bg-secondary'],
+                            ['link' => 'print_receipt.php', 'icon' => 'fas fa-print', 'text' => 'Print Receipt', 'color' => 'bg-dark'],
+                            ['link' => 'approvepayments.php', 'icon' => 'fas fa-check-circle', 'text' => 'Approve Payments', 'color' => 'bg-primary'],
+                            ['link' => 'print_student_transactions.php', 'icon' => 'fas fa-download', 'text' => 'Download Trans.', 'color' => 'bg-info'],
+                        ];
+                    }
+                    // Student Quick Actions
+                    elseif ($role === 'Student') {
+                        $quick_actions = [
+                            ['link' => 'students.php', 'icon' => 'fas fa-home', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => '#', 'icon' => 'fas fa-chart-bar', 'text' => 'Check Result', 'color' => 'bg-info', 'onclick' => 'showPopup()'],
+                            ['link' => 'viewassignment.php', 'icon' => 'fas fa-tasks', 'text' => 'View Assignments', 'color' => 'bg-success'],
+                            ['link' => 'viewnotes.php', 'icon' => 'fas fa-pencil-alt', 'text' => 'View Notes', 'color' => 'bg-warning'],
+                            ['link' => 'viewcurriculum.php', 'icon' => 'fas fa-book-reader', 'text' => 'View Curriculum', 'color' => 'bg-danger'],
+                            ['link' => 'sublist.php', 'icon' => 'fas fa-laptop-code', 'text' => 'Take CBT Test', 'color' => 'bg-secondary'],
+                            ['link' => 'result.php', 'icon' => 'fas fa-poll', 'text' => 'View CBT Result', 'color' => 'bg-dark'],
+                            ['link' => 'student_fee_breakdown.php', 'icon' => 'fas fa-money-bill-wave', 'text' => 'Fee Breakdown', 'color' => 'bg-primary'],
+                            ['link' => 'viewtimetable.php', 'icon' => 'fas fa-th-list', 'text' => 'Class Schedule', 'color' => 'bg-info'],
+                        ];
+                    }
+                    // Parent Quick Actions
+                    elseif ($role === 'Parent') {
+                        $quick_actions = [
+                            ['link' => 'parent_dashboard.php', 'icon' => 'fas fa-home', 'text' => 'Dashboard', 'color' => 'bg-primary'],
+                            ['link' => 'read_notice.php', 'icon' => 'fas fa-bell', 'text' => 'Read Notices', 'color' => 'bg-info'],
+                            ['link' => 'parent_transaction_history.php', 'icon' => 'fas fa-history', 'text' => 'Transaction History', 'color' => 'bg-success'],
+                            ['link' => '../index.php', 'icon' => 'fas fa-globe', 'text' => 'Visit Site', 'color' => 'bg-warning'],
+                            ['link' => 'logout.php', 'icon' => 'fas fa-sign-out-alt', 'text' => 'Logout', 'color' => 'bg-danger'],
+                        ];
+                    }
+
+                    foreach ($quick_actions as $action) {
+                        echo '<a class="col-6 col-md-4 p-0" href="' . htmlspecialchars($action['link']) . '"' . (isset($action['onclick']) ? ' onclick="' . htmlspecialchars($action['onclick']) . '; return false;"' : '') . '>';
+                        echo '<div class="quick-actions-item">';
+                        echo '<div class="avatar-item ' . htmlspecialchars($action['color']) . ' rounded-circle">';
+                        echo '<i class="' . htmlspecialchars($action['icon']) . '"></i>';
+                        echo '</div>';
+                        echo '<span class="text">' . htmlspecialchars($action['text']) . '</span>';
+                        echo '</div>';
+                        echo '</a>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
                 
 
       <li class="nav-item topbar-user dropdown hidden-caret">

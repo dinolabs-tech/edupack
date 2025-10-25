@@ -287,7 +287,7 @@ $conn->close();
                         <select id="role" name="role" class="form-select">
                           <option value="" selected disabled>Select Role</option>
                           <?php
-                          $roles = ['Administrator', 'Tuckshop', 'Teacher', 'Bursary', 'Store', 'Library', 'Admission'];
+                          $roles = ['Administrator', 'Tuckshop', 'Teacher', 'Bursary', 'Admission'];
                           foreach ($roles as $r) {
                             $selected = ($edit_mode && $edit_role === $r) ? 'selected' : '';
                             echo "<option value=\"$r\" $selected>$r</option>";
