@@ -17,7 +17,8 @@ if ($conn->connect_error) {
 
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 $user_id = $_SESSION['user_id'];
-$display_name = '';
+$display_name = $student_name;
+
 $profile_image_path = 'assets/img/profile-img.jpg'; // Default profile picture
 
 // Fetch user data based on role
