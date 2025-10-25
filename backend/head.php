@@ -3,7 +3,7 @@
   include 'access_control.php';
    ?>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>EDUHIVE</title>
+  <title>EDUPACK</title>
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
   <link rel="icon" href="assets/img/kaiadmin/d-icon.ico" type="image/x-icon" />
 
