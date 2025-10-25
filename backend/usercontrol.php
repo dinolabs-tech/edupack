@@ -141,18 +141,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
       } else {
         // Only Superuser can create 'test' accounts
         if ($type === 'test' && $_SESSION['role'] !== 'Superuser') {
-            $message = "Only Superusers can create 'test' accounts.";
+          $message = "Only Superusers can create 'test' accounts.";
         } else {
-            $stmt = $conn->prepare("INSERT INTO login (staffname, username, password, role, type) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssss", $name, $username, $password, $role, $type);
+          $stmt = $conn->prepare("INSERT INTO login (staffname, username, password, role, type) VALUES (?, ?, ?, ?, ?)");
+          $stmt->bind_param("sssss", $name, $username, $password, $role, $type);
 
-            if ($stmt->execute()) {
-              $message = "Record saved successfully!";
-            } else {
-              $message = "<script>alert('Error saving record: " . addslashes($stmt->error) . "');</script>";
-            }
+          if ($stmt->execute()) {
+            $message = "Record saved successfully!";
+          } else {
+            $message = "<script>alert('Error saving record: " . addslashes($stmt->error) . "');</script>";
+          }
 
-            $stmt->close();
+          $stmt->close();
         }
       }
 
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
 
 
 
-// Fetch data from the login table
+
 // Fetch data from the login table
 $sql = "SELECT id, staffname, username, role, status, type FROM login";
 $params = [];
@@ -305,7 +305,7 @@ $conn->close();
                               $selected = ($edit_mode && $edit_type === $t) ? 'selected' : '';
                               // Only Superuser can create 'test' accounts
                               if ($t === 'test' && $_SESSION['role'] !== 'Superuser' && !$edit_mode) {
-                                  continue;
+                                continue;
                               }
                               echo "<option value=\"$t\" $selected>$t</option>";
                             }
