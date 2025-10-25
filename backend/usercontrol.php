@@ -341,7 +341,7 @@ $conn->close();
                                       <form method="POST" style="display:inline;">
                                         <input type="hidden" name="user_id_status" value="<?php echo htmlspecialchars($user['id']); ?>">
                                         <input type="hidden" name="new_status" value="1">
-                                        <button type="submit" class="btn btn-success btn-icon btn-round ps-1" title="Activate Account">
+                                        <button type="submit" class="btn btn-success btn-icon btn-round" title="Activate Account">
                                           <i class="fa fa-check"></i>
                                         </button>
                                       </form>
