@@ -13,11 +13,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_log' && isset($_GET['lo
     $log_file = '';
 
     if ($log_type === 'error_log') {
-        $log_file = '../error_log.txt'; // Assuming error_log.txt is in the parent directory
+        $log_file = 'error_log.txt'; // Assuming error_log.txt is in the parent directory
     } elseif ($log_type === 'backup_log') {
         $log_file = 'backup.log'; // Assuming backup.log is in the backend directory
-    } elseif ($log_type === 'error_log_md') {
-        $log_file = 'error_log.md'; // Assuming error_log.md is in the current directory
+    } elseif ($log_type === 'error_log_no_ext') {
+        $log_file = 'error_log'; // Assuming error_log (no extension) is in the current directory
     }
 
     if (!empty($log_file) && file_exists($log_file)) {
@@ -54,11 +54,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'clear_log' && isset($_GET['lo
     $log_file = '';
 
     if ($log_type === 'error_log') {
-        $log_file = '../error_log.txt';
+        $log_file = 'error_log.txt';
     } elseif ($log_type === 'backup_log') {
         $log_file = 'backup.log';
-    } elseif ($log_type === 'error_log_md') {
-        $log_file = 'error_log.md';
+    } elseif ($log_type === 'error_log_no_ext') {
+        $log_file = 'error_log';
     }
 
     if (!empty($log_file) && file_exists($log_file)) {
@@ -124,155 +124,159 @@ if (isset($_GET['action']) && $_GET['action'] === 'clear_log' && isset($_GET['lo
                                     View Logs and Download Backup
                                 </div>
                                 <div class="card-body">
-                                    <button class="btn btn-primary mb-2" id="viewErrorLog">View error_log.txt</button>
-                                    <button class="btn btn-warning mb-2" id="clearErrorLog">Clear error_log.txt</button>
-                                    <br>
-                                    <button class="btn btn-info mb-2" id="viewBackupLog">View backup.log</button>
-                                    <button class="btn btn-danger mb-2" id="clearBackupLog">Clear backup.log</button>
-                                    <br>
-                                    <button class="btn btn-primary mb-2" id="viewErrorLogMd">View error_log.md</button>
-                                    <button class="btn btn-warning mb-2" id="clearErrorLogMd">Clear error_log.md</button>
-                                    <br>
-                                    <a href="developer.php?action=download_backup" class="btn btn-success mb-2">Download
-                                        backup_dinolabs_edupack.sql</a>
-                                    <div id="logContent" class="mt-3"
-                                        style="white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; max-height: 500px; overflow-y: scroll;">
-                                        <!-- Log content will be loaded here -->
+                                    <div class="row">
+                                        <div class="col-12 d-flex flex-wrap gap-1">
+                                            <button class="btn btn-primary" id="viewErrorLog">View error_log.txt</button>
+                                            <button class="btn btn-warning" id="clearErrorLog">Clear error_log.txt</button>
+                                            <button class="btn btn-info" id="viewBackupLog">View backup.log</button>
+                                            <button class="btn btn-danger" id="clearBackupLog">Clear backup.log</button>
+                                            <button class="btn btn-primary" id="viewErrorLogNoExt">View error_log</button>
+                                            <button class="btn btn-warning" id="clearErrorLogNoExt">Clear error_log</button>
+                                            <a href="developer.php?action=download_backup" class="btn btn-success">
+                                            Download SQL Backup
+                                        </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div id="logContent" class="mt-3"
+                                            style="white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; max-height: 500px; overflow-y: scroll;">
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <?php include('footer.php'); ?>
+                <!-- Includes the footer section of the page -->
             </div>
 
-            <?php include('footer.php'); ?>
-            <!-- Includes the footer section of the page -->
+            <!-- Custom template | don't include it in your project! -->
+            <?php include('cust-color.php'); ?>
+            <!-- Includes custom color settings or scripts -->
+            <!-- End Custom template -->
         </div>
+        <?php include('scripts.php'); ?>
+        <!-- Includes general JavaScript scripts for the page -->
 
-        <!-- Custom template | don't include it in your project! -->
-        <?php include('cust-color.php'); ?>
-        <!-- Includes custom color settings or scripts -->
-        <!-- End Custom template -->
-    </div>
-    <?php include('scripts.php'); ?>
-    <!-- Includes general JavaScript scripts for the page -->
-
-    <script>
-        $(document).ready(function() {
-            $('#viewErrorLog').click(function() {
-                $.ajax({
-                    url: 'developer.php', // Call developer.php itself
-                    type: 'GET',
-                    data: {
-                        action: 'fetch_log',
-                        log_type: 'error_log'
-                    },
-                    success: function(response) {
-                        $('#logContent').text(response);
-                    },
-                    error: function() {
-                        $('#logContent').text('Error fetching error_log.txt');
-                    }
-                });
-            });
-
-            $('#viewBackupLog').click(function() {
-                $.ajax({
-                    url: 'developer.php', // Call developer.php itself
-                    type: 'GET',
-                    data: {
-                        action: 'fetch_log',
-                        log_type: 'backup_log'
-                    },
-                    success: function(response) {
-                        $('#logContent').text(response);
-                    },
-                    error: function() {
-                        $('#logContent').text('Error fetching backup.log');
-                    }
-                });
-            });
-
-            $('#clearErrorLog').click(function() {
-                if (confirm(
-                        'Are you sure you want to clear error_log.txt? This action cannot be undone.')) {
+        <script>
+            $(document).ready(function() {
+                $('#viewErrorLog').click(function() {
                     $.ajax({
-                        url: 'developer.php',
+                        url: 'developer.php', // Call developer.php itself
                         type: 'GET',
                         data: {
-                            action: 'clear_log',
+                            action: 'fetch_log',
                             log_type: 'error_log'
                         },
                         success: function(response) {
-                            alert(response);
-                            $('#logContent').text(''); // Clear displayed content
+                            $('#logContent').text(response);
                         },
                         error: function() {
-                            alert('Error clearing error_log.txt');
+                            $('#logContent').text('Error fetching error_log.txt');
                         }
                     });
-                }
-            });
+                });
 
-            $('#clearBackupLog').click(function() {
-                if (confirm('Are you sure you want to clear backup.log? This action cannot be undone.')) {
+                $('#viewBackupLog').click(function() {
                     $.ajax({
-                        url: 'developer.php',
+                        url: 'developer.php', // Call developer.php itself
                         type: 'GET',
                         data: {
-                            action: 'clear_log',
+                            action: 'fetch_log',
                             log_type: 'backup_log'
                         },
                         success: function(response) {
-                            alert(response);
-                            $('#logContent').text(''); // Clear displayed content
+                            $('#logContent').text(response);
                         },
                         error: function() {
-                            alert('Error clearing backup.log');
+                            $('#logContent').text('Error fetching backup.log');
                         }
                     });
-                }
-            });
+                });
 
-            $('#viewErrorLogMd').click(function() {
-                $.ajax({
-                    url: 'developer.php',
-                    type: 'GET',
-                    data: {
-                        action: 'fetch_log',
-                        log_type: 'error_log_md'
-                    },
-                    success: function(response) {
-                        $('#logContent').text(response);
-                    },
-                    error: function() {
-                        $('#logContent').text('Error fetching error_log.md');
+                $('#clearErrorLog').click(function() {
+                    if (confirm(
+                            'Are you sure you want to clear error_log.txt? This action cannot be undone.')) {
+                        $.ajax({
+                            url: 'developer.php',
+                            type: 'GET',
+                            data: {
+                                action: 'clear_log',
+                                log_type: 'error_log'
+                            },
+                            success: function(response) {
+                                alert(response);
+                                $('#logContent').text(''); // Clear displayed content
+                            },
+                            error: function() {
+                                alert('Error clearing error_log.txt');
+                            }
+                        });
                     }
                 });
-            });
 
-            $('#clearErrorLogMd').click(function() {
-                if (confirm('Are you sure you want to clear error_log.md? This action cannot be undone.')) {
+                $('#clearBackupLog').click(function() {
+                    if (confirm('Are you sure you want to clear backup.log? This action cannot be undone.')) {
+                        $.ajax({
+                            url: 'developer.php',
+                            type: 'GET',
+                            data: {
+                                action: 'clear_log',
+                                log_type: 'backup_log'
+                            },
+                            success: function(response) {
+                                alert(response);
+                                $('#logContent').text(''); // Clear displayed content
+                            },
+                            error: function() {
+                                alert('Error clearing backup.log');
+                            }
+                        });
+                    }
+                });
+
+                $('#viewErrorLogNoExt').click(function() {
                     $.ajax({
                         url: 'developer.php',
                         type: 'GET',
                         data: {
-                            action: 'clear_log',
-                            log_type: 'error_log_md'
+                            action: 'fetch_log',
+                            log_type: 'error_log_no_ext'
                         },
                         success: function(response) {
-                            alert(response);
-                            $('#logContent').text(''); // Clear displayed content
+                            $('#logContent').text(response);
                         },
                         error: function() {
-                            alert('Error clearing error_log.md');
+                            $('#logContent').text('Error fetching error_log');
                         }
                     });
-                }
+                });
+
+                $('#clearErrorLogNoExt').click(function() {
+                    if (confirm('Are you sure you want to clear error_log? This action cannot be undone.')) {
+                        $.ajax({
+                            url: 'developer.php',
+                            type: 'GET',
+                            data: {
+                                action: 'clear_log',
+                                log_type: 'error_log_no_ext'
+                            },
+                            success: function(response) {
+                                alert(response);
+                                $('#logContent').text(''); // Clear displayed content
+                            },
+                            error: function() {
+                                alert('Error clearing error_log');
+                            }
+                        });
+                    }
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
