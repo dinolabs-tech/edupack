@@ -15,8 +15,49 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+$user_id = $_SESSION['user_id'];
+$display_name = '';
+$profile_image_path = 'assets/img/profile-img.jpg'; // Default profile picture
+
+// Fetch user data based on role
+if ($role === 'Student' || $role === 'Alumni') {
+    $stmt = $conn->prepare("SELECT studentname, profile_picture FROM students WHERE studentid = ?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($user_data = $result->fetch_assoc()) {
+        $display_name = $user_data['studentname'];
+        if (!empty($user_data['profile_picture'])) {
+            $profile_image_path = $user_data['profile_picture'];
+        }
+    }
+    $stmt->close();
+} elseif ($role === 'Parent') {
+    $stmt = $conn->prepare("SELECT parentname, profile_picture FROM parents WHERE parentid = ?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($user_data = $result->fetch_assoc()) {
+        $display_name = $user_data['parentname'];
+        if (!empty($user_data['profile_picture'])) {
+            $profile_image_path = $user_data['profile_picture'];
+        }
+    }
+    $stmt->close();
+} else { // Administrator, Superuser, Teacher, Bursary, Tuckshop, Admission
+    $stmt = $conn->prepare("SELECT staffname, profile_picture FROM login WHERE username = ?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($user_data = $result->fetch_assoc()) {
+        $display_name = $user_data['staffname'];
+        if (!empty($user_data['profile_picture'])) {
+            $profile_image_path = $user_data['profile_picture'];
+        }
+    }
+    $stmt->close();
+}
 //set the appropriate url based on the user role
 if ($role === 'Student') {
   $backurl = 'studentprofile.php';
@@ -37,7 +78,6 @@ if ($role === 'Student') {
 } elseif ($role === 'Parent') {
   $backurl = 'parentprofile.php';
 }
-
 
 
 // Assume the logged in user's id is stored in the session variable 'user_id'
@@ -99,13 +139,13 @@ if ($result && $row = $result->fetch_assoc()) {
           aria-expanded="false">
           <div class="avatar-sm">
             <img
-              src="assets/img/profile-img.jpg"
-              alt="..."
+              src="<?php echo htmlspecialchars($profile_image_path); ?>"
+              alt="Profile Picture"
               class="avatar-img rounded-circle" />
           </div>
           <span class="profile-username">
             <span class="op-7">Welcome,</span>
-            <span class="fw-bold"> <?php echo htmlspecialchars($student_name); ?></span>
+            <span class="fw-bold"> <?php echo htmlspecialchars($display_name); ?></span>
           </span>
         </a>
         <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -114,12 +154,12 @@ if ($result && $row = $result->fetch_assoc()) {
               <div class="user-box">
                 <div class="avatar-lg" style="width: 50px; height: 50px;">
                   <img
-                    src="assets/img/profile-img.jpg"
-                    alt="image profile"
+                    src="<?php echo htmlspecialchars($profile_image_path); ?>"
+                    alt="Profile Picture"
                     class="avatar-img rounded" />
                 </div>
                 <div class="u-text">
-                  <h4> <?php echo htmlspecialchars($student_name); ?> </h4>
+                  <h4> <?php echo htmlspecialchars($display_name); ?> </h4>
                   <!-- <p class="text-muted">hello@example.com</p> -->
                   <p><?php echo htmlspecialchars($role); ?></p>
 

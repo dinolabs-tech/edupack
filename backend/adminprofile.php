@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <?php if (!empty($user_data['profile_picture'])): ?>
                                             <img src="<?php echo htmlspecialchars($user_data['profile_picture']); ?>" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                                         <?php else: ?>
-                                            <img src="assets/img/default-avatar.png" alt="Default Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                            <img src="assets/img/profile-img.jpg" alt="Default Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                                         <?php endif; ?>
                                         <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
                                         <small class="form-text text-muted">Upload a new profile picture (JPG, PNG, GIF)</small>
