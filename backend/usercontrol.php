@@ -73,19 +73,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id_status'], $_P
     $stmt_check_role->close();
 
     if ($target_user_role === 'Superuser' && $_SESSION['role'] !== 'Superuser') {
-        $message = "You do not have permission to change the status of a Superuser account.";
+      $message = "You do not have permission to change the status of a Superuser account.";
     } elseif ($user_id_status == $_SESSION['user_id'] && $new_status == 0) {
-        $message = "You cannot deactivate your own account.";
+      $message = "You cannot deactivate your own account.";
     } else {
-        $stmt = $conn->prepare("UPDATE login SET status = ? WHERE id = ?");
-        $stmt->bind_param("ii", $new_status, $user_id_status);
+      $stmt = $conn->prepare("UPDATE login SET status = ? WHERE id = ?");
+      $stmt->bind_param("ii", $new_status, $user_id_status);
 
-        if ($stmt->execute()) {
-            $message = "Account status updated successfully!";
-        } else {
-            $message = "Error updating account status: " . $stmt->error;
-        }
-        $stmt->close();
+      if ($stmt->execute()) {
+        $message = "Account status updated successfully!";
+      } else {
+        $message = "Error updating account status: " . $stmt->error;
+      }
+      $stmt->close();
     }
   } else {
     $message = "You do not have permission to change account status.";
@@ -256,9 +256,9 @@ $conn->close();
                       <div class="col-md-3">
                         <select id="role" name="role" class="form-select">
                           <option value="" selected disabled>Select Role</option>
-                          <?php if ($_SESSION['role'] === 'Superuser') {?>
+                          <?php if ($_SESSION['role'] === 'Superuser') { ?>
                             <option value="Test">Test</option>
-                            <?php } ?>
+                          <?php } ?>
                           <?php
                           $roles = ['Administrator', 'Tuckshop', 'Teacher', 'Bursary', 'Store', 'Library', 'Admission'];
                           foreach ($roles as $r) {
@@ -268,10 +268,12 @@ $conn->close();
                           ?>
                         </select>
                       </div>
-                      <button type="submit" class="ms-3 me-2 ps-1 btn btn-success btn-icon btn-round"><span class="btn-label">
-                          <i class="fa fa-save"></i></button>
-                      <a href="usercontrol.php" class="ps-1 btn btn-secondary btn-icon btn-round"><span class="btn-label">
-                          <i class="fa fa-undo"></i></a>
+                      <div class="col-md-12 text-center">
+                        <button type="submit" class="ms-3 me-2 ps-1 btn btn-success btn-icon btn-round"><span class="btn-label">
+                            <i class="fa fa-save"></i></button>
+                        <a href="usercontrol.php" class="ps-1 btn btn-secondary btn-icon btn-round"><span class="btn-label">
+                            <i class="fa fa-undo"></i></a>
+                      </div>
                     </form>
 
 
