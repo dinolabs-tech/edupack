@@ -177,8 +177,8 @@ if ($_SESSION['role'] === 'Superuser') {
   $params[] = 'test';
   $types_str .= "s";
 } else {
-  // Other roles do not see Superusers
-  $sql .= " WHERE role != 'Superuser'";
+  // Other roles (including Administrator) do not see Superusers or Test accounts
+  $sql .= " WHERE role != 'Superuser' AND type != 'test'";
 }
 
 $stmt = $conn->prepare($sql);
