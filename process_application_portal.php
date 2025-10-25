@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $payment_successful = true;
                 } else {
                     $_SESSION['error_message'] = "Payment verification failed. Please try again or contact support.";
-                    header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+                    header("Location: admissions.php?status=failed&message=" . urlencode($_SESSION['error_message']));
                     exit();
                 }
             } else {
                 $_SESSION['error_message'] = "Payment details missing or payment not successful.";
-                header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+                header("Location: admissions.php?status=failed&message=" . urlencode($_SESSION['error_message']));
                 exit();
             }
         } else {
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$payment_successful) {
             $_SESSION['error_message'] = "Payment required but not successful.";
-            header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+            header("Location: admissions.php?status=failed&message=" . urlencode($_SESSION['error_message']));
             exit();
         }
 
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Basic validation for required fields
         if (empty($applicant_data['name']) || empty($applicant_data['email']) || empty($applicant_data['dob']) || empty($applicant_data['gender']) || empty($applicant_data['placeob'])) {
             $_SESSION['error_message'] = "Please fill in all required personal information fields.";
-            header("Location: online_application_portal.php");
+            header("Location: admissions.php");
             exit();
         }
 
@@ -138,12 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $applicant_data['passport_path'] = $passport_target_file;
             } else {
                 $_SESSION['error_message'] = "Failed to upload passport photo.";
-                header("Location: online_application_portal.php");
+                header("Location: admissions.php");
                 exit();
             }
         } else {
             $_SESSION['error_message'] = "Passport photo is required.";
-            header("Location: online_application_portal.php");
+            header("Location: admissions.php");
             exit();
         }
 
@@ -161,12 +161,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $applicant_data['transcript_path'] = $transcript_target_file;
             } else {
                 $_SESSION['error_message'] = "Failed to upload transcript.";
-                header("Location: online_application_portal.php");
+                header("Location: admissions.php");
                 exit();
             }
         } else {
             $_SESSION['error_message'] = "Transcripts are required.";
-            header("Location: online_application_portal.php");
+            header("Location: admissions.php");
             exit();
         }
 
@@ -207,13 +207,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['error_message'] = "Failed to submit application.";
         }
 
-        header("Location: online_application_portal.php");
+        header("Location: admissions.php");
         exit();
     } elseif (isset($_GET['action']) && $_GET['action'] === 'update_status' && isset($_GET['id']) && isset($_GET['status'])) {
         // Admin action to update application status
         if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'Administrator' && $_SESSION['role'] !== 'Superuser')) {
             $_SESSION['error_message'] = "Unauthorized access.";
-            header("Location: online_application_portal.php");
+            header("Location: admissions.php");
             exit();
         }
 
@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $valid_statuses = ['pending', 'exam_scheduled', 'approved', 'rejected'];
         if (!in_array($new_status, $valid_statuses)) {
             $_SESSION['error_message'] = "Invalid status provided.";
-            header("Location: online_application_portal.php");
+            header("Location: admissions.php");
             exit();
         }
 
@@ -249,15 +249,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['error_message'] = "Failed to update application ID {$application_id} status.";
         }
-        header("Location: online_application_portal.php");
+        header("Location: admissions.php");
         exit();
     }
 
-    header("Location: online_application_portal.php");
+    header("Location: admissions.php");
     exit();
 } else {
     // For GET requests, simply redirect to the portal
-    header("Location: online_application_portal.php");
+    header("Location: admissions.php");
     exit();
 }
 ?>
