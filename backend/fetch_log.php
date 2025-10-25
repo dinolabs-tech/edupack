@@ -1,10 +1,6 @@
 <?php
 session_start();
-// Check if the user is logged in and is a super user
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'super_user') {
-    echo "Access Denied";
-    exit();
-}
+
 
 if (isset($_GET['log_type'])) {
     $log_type = $_GET['log_type'];
