@@ -559,12 +559,6 @@
               <p>Documentation</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="developer.php">
-              <i class="fas fa-code"></i>
-              <p>Developer</p>
-            </a>
-          </li>
         <?php
         }
         ?>
