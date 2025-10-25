@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <?php else: ?>
                                             <img src="assets/img/profile-img.jpg" alt="Default Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                                         <?php endif; ?>
-                                        <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+                                        <input type="file" class="form-control-file form-control" id="profile_picture" name="profile_picture">
                                         <small class="form-text text-muted">Upload a new profile picture (JPG, PNG, GIF)</small>
                                     </div>
                                     <div class="form-group">
@@ -205,7 +205,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-primary btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span> Update Profile</button>
+                                        <button class="btn btn-primary btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span></button>
                                     </div>
                                 </form>
                                 <div class="message mt-3">
@@ -237,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm New Password" required>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-success btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span> Change Password</button>
+                                        <button class="btn btn-success btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span></button>
                                     </div>
                                 </form>
                                 <div class="message mt-3">
