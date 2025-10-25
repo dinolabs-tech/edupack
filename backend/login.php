@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt1->store_result();
 
     // Prepare SQL for other users
-    $stmt2 = $conn->prepare("SELECT id, staffname, username, password, role FROM login WHERE username=? AND password=?");
+    $stmt2 = $conn->prepare("SELECT id, staffname, username, password, role, status FROM login WHERE username=? AND password=?");
     $stmt2->bind_param("ss", $user, $pass);
     $stmt2->execute();
     $stmt2->store_result();
@@ -98,56 +98,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } elseif ($stmt2->num_rows > 0) {
         // Other users login
-        $stmt2->bind_result($id, $staffname, $username, $password, $role);
+        $stmt2->bind_result($id, $staffname, $username, $password, $role, $account_status); // Added $account_status
         $stmt2->fetch();
 
-        // Set session variables
-        $_SESSION['user_id'] = $id;
-        $_SESSION['role'] = $role;
-        $_SESSION['staffname'] = $staffname;
+        // Check if account is active
+        if ($account_status == 0) {
+            $login_error = "Your account is inactive. Please contact the administrator.";
+            // Do not proceed with login or redirection
+        } else {
+            // Set session variables
+            $_SESSION['user_id'] = $id;
+            $_SESSION['role'] = $role;
+            $_SESSION['staffname'] = $staffname;
 
-        // Check expiry for non-Student/Alumni/Superuser roles
-        if ($role !== 'Superuser') {
-            // Fetch the subscription expiry date
-            $stmtExp = $conn->prepare("SELECT expdate FROM sub WHERE id = 1 LIMIT 1");
-            $stmtExp->execute();
-            $stmtExp->bind_result($expdate);
-            $stmtExp->fetch();
-            $stmtExp->close();
+            // Check expiry for non-Student/Alumni/Superuser roles
+            if ($role !== 'Superuser') {
+                // Fetch the subscription expiry date
+                $stmtExp = $conn->prepare("SELECT expdate FROM sub WHERE id = 1 LIMIT 1");
+                $stmtExp->execute();
+                $stmtExp->bind_result($expdate);
+                $stmtExp->fetch();
+                $stmtExp->close();
 
-            // Parse d/m/y format into a DateTime object
-            $dateObj = DateTime::createFromFormat('d/m/Y', $expdate);
-            // If parsing failed, treat as expired
-            if (!$dateObj) {
-                header("Location: expiry.php");
-                exit();
+                // Parse d/m/y format into a DateTime object
+                $dateObj = DateTime::createFromFormat('d/m/Y', $expdate);
+                // If parsing failed, treat as expired
+                if (!$dateObj) {
+                    header("Location: expiry.php");
+                    exit();
+                }
+                $expiryTimestamp = $dateObj->getTimestamp();
+                $currentTimestamp = time();
+
+                // If today is past the expiry date, redirect to expiry page
+                if ($currentTimestamp > $expiryTimestamp) {
+                    header("Location: expiry.php");
+                    exit();
+                }
+                // Otherwise, allow login to proceed as usual
             }
-            $expiryTimestamp = $dateObj->getTimestamp();
-            $currentTimestamp = time();
 
-            // If today is past the expiry date, redirect to expiry page
-            if ($currentTimestamp > $expiryTimestamp) {
-                header("Location: expiry.php");
-                exit();
+            // Redirect based on role
+            switch ($role) {
+                case 'Administrator':
+                case 'Teacher':
+                case 'Tuckshop':
+                case 'Admission':
+                case 'Bursary':
+                    header("Location: dashboard.php");
+                    break;
+                case 'Superuser':
+                    header("Location: superdashboard.php");
+                    break;
             }
-            // Otherwise, allow login to proceed as usual
+            exit();
         }
-
-
-        // Redirect based on role
-        switch ($role) {
-            case 'Administrator':
-            case 'Teacher':
-            case 'Tuckshop':
-            case 'Admission':
-            case 'Bursary':
-                header("Location: dashboard.php");
-                break;
-            case 'Superuser':
-                header("Location: superdashboard.php");
-                break;
-        }
-        exit();
     } elseif ($stmt3->num_rows > 0) {
         // Parent login
         $stmt3->bind_result($id, $parentname, $mobile, $email, $username, $password);
@@ -323,7 +328,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="card-body">
                                     <h2 class="login-title text-center mb-4">Login</h2>
                                     <?php if (!empty($login_error)): ?>
-                                        <p class="error"><?php echo htmlspecialchars($login_error); ?></p>
+                                        <p class="error alert alert-danger"><?php echo htmlspecialchars($login_error); ?></p>
                                     <?php endif; ?>
                                     <form method="post" action="login.php">
                                         <div class="input-group mb-3">

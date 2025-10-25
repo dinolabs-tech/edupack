@@ -40,17 +40,56 @@ $message = "";
 
 // Handle delete request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
-  $delete_id = intval($_POST['delete_id']);
-  $stmt = $conn->prepare("DELETE FROM login WHERE id = ?");
-  $stmt->bind_param("i", $delete_id);
+  // Check if the logged-in user is an Admin or Superuser
+  if ($_SESSION['role'] === 'Administrator' || $_SESSION['role'] === 'Superuser') {
+    $delete_id = intval($_POST['delete_id']);
+    $stmt = $conn->prepare("DELETE FROM login WHERE id = ?");
+    $stmt->bind_param("i", $delete_id);
 
-  if ($stmt->execute()) {
-    $message = "Record deleted successfully!";
+    if ($stmt->execute()) {
+      $message = "Record deleted successfully!";
+    } else {
+      $message = "Error deleting record: " . $stmt->error;
+    }
+    $stmt->close();
   } else {
-    $message = "Error deleting record: " . $stmt->error;
+    $message = "You do not have permission to delete accounts.";
   }
+}
 
-  $stmt->close();
+// Handle account status change request (deactivate/activate)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id_status'], $_POST['new_status'])) {
+  // Check if the logged-in user is an Admin or Superuser
+  if ($_SESSION['role'] === 'Administrator' || $_SESSION['role'] === 'Superuser') {
+    $user_id_status = intval($_POST['user_id_status']);
+    $new_status = intval($_POST['new_status']); // 0 for deactivate, 1 for activate
+
+    // Prevent Superuser from deactivating themselves or other Superusers
+    $stmt_check_role = $conn->prepare("SELECT role FROM login WHERE id = ?");
+    $stmt_check_role->bind_param("i", $user_id_status);
+    $stmt_check_role->execute();
+    $stmt_check_role->bind_result($target_user_role);
+    $stmt_check_role->fetch();
+    $stmt_check_role->close();
+
+    if ($target_user_role === 'Superuser' && $_SESSION['role'] !== 'Superuser') {
+        $message = "You do not have permission to change the status of a Superuser account.";
+    } elseif ($user_id_status == $_SESSION['user_id'] && $new_status == 0) {
+        $message = "You cannot deactivate your own account.";
+    } else {
+        $stmt = $conn->prepare("UPDATE login SET status = ? WHERE id = ?");
+        $stmt->bind_param("ii", $new_status, $user_id_status);
+
+        if ($stmt->execute()) {
+            $message = "Account status updated successfully!";
+        } else {
+            $message = "Error updating account status: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+  } else {
+    $message = "You do not have permission to change account status.";
+  }
 }
 
 // Handle form submission
@@ -108,19 +147,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
 
 
 // Fetch data from the login table
-$sql = "SELECT id, staffname, username, role FROM login WHERE role != 'Superuser'";
+// Only Superuser can see other Superusers
+if ($_SESSION['role'] === 'Superuser') {
+  $sql = "SELECT id, staffname, username, role, status FROM login";
+} else {
+  $sql = "SELECT id, staffname, username, role, status FROM login WHERE role != 'Superuser'";
+}
+
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
   customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
-  $students = [];
+  $users = []; // Renamed from $students to $users for clarity
 } else {
   $stmt->execute();
   $result = $stmt->get_result();
   // Convert result set into an array so it can be looped over safely later
-  $students = [];
+  $users = []; // Renamed from $students to $users for clarity
   if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-      $students[] = $row;
+      $users[] = $row;
     }
   }
   $stmt->close();
@@ -262,35 +307,58 @@ $conn->close();
                             <th>Name</th>
                             <th>Username</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <?php if (!empty($students)): ?>
-                            <?php foreach ($students as $student): ?>
+                          <?php if (!empty($users)): ?>
+                            <?php foreach ($users as $user): ?>
                               <tr>
-                                <td style="display: none;"><?php echo htmlspecialchars($student['id']); ?></td>
-                                <td><?php echo htmlspecialchars($student['staffname']); ?></td>
-                                <td><?php echo htmlspecialchars($student['username']); ?></td>
-                                <td><?php echo htmlspecialchars($student['role']); ?></td>
+                                <td style="display: none;"><?php echo htmlspecialchars($user['id']); ?></td>
+                                <td><?php echo htmlspecialchars($user['staffname']); ?></td>
+                                <td><?php echo htmlspecialchars($user['username']); ?></td>
+                                <td><?php echo htmlspecialchars($user['role']); ?></td>
+                                <td>
+                                  <?php
+                                  $status_text = ($user['status'] == 1) ? 'Active' : 'Inactive';
+                                  $status_class = ($user['status'] == 1) ? 'badge bg-success' : 'badge bg-danger';
+                                  echo "<span class=\"$status_class\">$status_text</span>";
+                                  ?>
+                                </td>
                                 <td>
                                   <form method="POST" style="display:inline;">
-                                    <a href="?edit_id=<?php echo htmlspecialchars($student['id']); ?>"
+                                    <a href="?edit_id=<?php echo htmlspecialchars($user['id']); ?>"
                                       class="btn btn-warning btn-icon btn-round ps-1">
                                       <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <input type="hidden" name="delete_id"
-                                      value="<?php echo htmlspecialchars($student['id']); ?>">
-                                    <button type="submit" class="btn btn-danger btn-icon btn-round ps-1"><span class="btn-label">
-                                        <i class="fa fa-trash"></i></button>
+                                    <?php if ($_SESSION['role'] === 'Administrator' || $_SESSION['role'] === 'Superuser'): ?>
+                                      <?php if ($user['status'] == 1): ?>
+                                        <input type="hidden" name="user_id_status" value="<?php echo htmlspecialchars($user['id']); ?>">
+                                        <input type="hidden" name="new_status" value="0">
+                                        <button type="submit" class="btn btn-danger btn-icon btn-round ps-1" title="Deactivate Account">
+                                          <i class="fa fa-ban"></i>
+                                        </button>
+                                      <?php else: ?>
+                                        <input type="hidden" name="user_id_status" value="<?php echo htmlspecialchars($user['id']); ?>">
+                                        <input type="hidden" name="new_status" value="1">
+                                        <button type="submit" class="btn btn-success btn-icon btn-round ps-1" title="Activate Account">
+                                          <i class="fa fa-check"></i>
+                                        </button>
+                                      <?php endif; ?>
+                                      <input type="hidden" name="delete_id"
+                                        value="<?php echo htmlspecialchars($user['id']); ?>">
+                                      <button type="submit" class="btn btn-danger btn-icon btn-round ps-1" title="Delete Account"><span class="btn-label">
+                                          <i class="fa fa-trash"></i></button>
+                                    <?php endif; ?>
                                   </form>
                                 </td>
                               </tr>
                             <?php endforeach; ?>
                           <?php else: ?>
                             <tr>
-                              <td colspan="5" class="text-center">No records found</td>
+                              <td colspan="6" class="text-center">No records found</td>
                             </tr>
                           <?php endif; ?>
                         </tbody>
