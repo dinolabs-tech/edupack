@@ -102,7 +102,7 @@ if (isset($_POST['expirydate_submit'])) {
 
           <!-- ================ STUDENT ENROLLED PANEL =================== -->
           <div class="row">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-3">
               <div class="card card-stats card-success card-round">
                 <div class="card-body skew-shadow">
                   <div class="row align-items-center">
@@ -123,7 +123,7 @@ if (isset($_POST['expirydate_submit'])) {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-3">
               <div class="card card-stats card-danger card-round">
                 <div class="card-body bubble-shadow">
                   <div class="row align-items-center">
@@ -145,7 +145,7 @@ if (isset($_POST['expirydate_submit'])) {
             </div>
 
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-3">
               <div class="card card-stats card-danger card-round">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -279,7 +279,7 @@ if (isset($_POST['expirydate_submit'])) {
 
           </div>
 
-          
+
           <!-- ===================== ADMIN WIDGETS PANEL ENDS HERE ======================= -->
 
 
