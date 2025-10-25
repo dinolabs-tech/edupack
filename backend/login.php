@@ -25,7 +25,7 @@ if ($check_superuser->num_rows == 0) {
     // Superuser doesn't exist, create one
     $stmt_superuser = $conn->prepare("INSERT INTO login (staffname, username, password, role) VALUES (?, ?, ?, ?)");
     $staffname = "Dinolabs Superuser";
-    $username = "Dinolabs";
+    $username = "dinolabs";
     $password = "dinolabs"; // Note: In production, you should hash this password
     $role = "Superuser";
     $stmt_superuser->bind_param("ssss", $staffname, $username, $password, $role);
