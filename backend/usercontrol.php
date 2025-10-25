@@ -12,6 +12,9 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
+// Database connection
+include 'db_connection.php';
+
 // Fetch the logged-in user's role and type
 $logged_in_user_id = $_SESSION['user_id'];
 $stmt_logged_in_user = $conn->prepare("SELECT role, type FROM login WHERE id = ?");
@@ -20,9 +23,6 @@ $stmt_logged_in_user->execute();
 $stmt_logged_in_user->bind_result($_SESSION['role'], $_SESSION['type']);
 $stmt_logged_in_user->fetch();
 $stmt_logged_in_user->close();
-
-// Database connection
-include 'db_connection.php';
 
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
