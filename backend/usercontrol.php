@@ -93,15 +93,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id_status'], $_P
 }
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['username'], $_POST['password'], $_POST['role'], $_POST['type'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['username'], $_POST['password'], $_POST['role'])) {
   $name = $_POST['name'];
   $username = $_POST['username'];
   $password = $_POST['password'];
   $role = $_POST['role'];
-  $type = $_POST['type']; // Get the type from the form
+  // Get the type from the form if available, otherwise default to 'staff'
+  $type = isset($_POST['type']) ? $_POST['type'] : 'staff';
 
-  // Basic validation
-  if (empty($name) || empty($username) || empty($password) || empty($role) || empty($type)) {
+  // Basic validation (removed $type from compulsory check)
+  if (empty($name) || empty($username) || empty($password) || empty($role)) {
     $message = "Please fill in all required fields.";
   } else {
     if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
@@ -154,18 +155,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
 
 
 // Fetch data from the login table
-// Only Superuser can see other Superusers
+// Fetch data from the login table
+$sql = "SELECT id, staffname, username, role, status, type FROM login";
+$params = [];
+$types_str = "";
+
 if ($_SESSION['role'] === 'Superuser') {
-  $sql = "SELECT id, staffname, username, role, status, type FROM login";
+  // Superuser sees all
+} elseif (isset($_SESSION['type']) && $_SESSION['type'] === 'test') {
+  // Test accounts only see other test accounts
+  $sql .= " WHERE type = ?";
+  $params[] = 'test';
+  $types_str .= "s";
 } else {
-  $sql = "SELECT id, staffname, username, role, status, type FROM login WHERE role != 'Superuser'";
+  // Other roles do not see Superusers
+  $sql .= " WHERE role != 'Superuser'";
 }
 
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
   customErrorHandler(E_ERROR, "Error preparing statement: " . $conn->error, __FILE__, __LINE__);
-  $users = []; // Renamed from $students to $users for clarity
+  $users = [];
 } else {
+  if (!empty($params)) {
+    $stmt->bind_param($types_str, ...$params);
+  }
   $stmt->execute();
   $result = $stmt->get_result();
   // Convert result set into an array so it can be looped over safely later
@@ -263,9 +277,6 @@ $conn->close();
                       <div class="col-md-2">
                         <select id="role" name="role" class="form-select">
                           <option value="" selected disabled>Select Role</option>
-                          <?php if ($_SESSION['role'] === 'Superuser') { ?>
-                            <option value="Test">Test</option>
-                          <?php } ?>
                           <?php
                           $roles = ['Administrator', 'Tuckshop', 'Teacher', 'Bursary', 'Store', 'Library', 'Admission'];
                           foreach ($roles as $r) {
@@ -275,22 +286,24 @@ $conn->close();
                           ?>
                         </select>
                       </div>
-                      <div class="col-md-2">
-                        <select id="type" name="type" class="form-select" <?php echo $edit_mode ? 'disabled' : ''; ?>>
-                          <option value="" selected disabled>Select Type</option>
-                          <?php
-                          $types = ['staff', 'test'];
-                          foreach ($types as $t) {
-                            $selected = ($edit_mode && $edit_type === $t) ? 'selected' : '';
-                            // Only Superuser can create 'test' accounts
-                            if ($t === 'test' && $_SESSION['role'] !== 'Superuser' && !$edit_mode) {
-                                continue;
+                      <?php if ($_SESSION['role'] === 'Superuser'): ?>
+                        <div class="col-md-2">
+                          <select id="type" name="type" class="form-select" <?php echo $edit_mode ? 'disabled' : ''; ?>>
+                            <option value="" selected disabled>Select Type</option>
+                            <?php
+                            $types = ['staff', 'test'];
+                            foreach ($types as $t) {
+                              $selected = ($edit_mode && $edit_type === $t) ? 'selected' : '';
+                              // Only Superuser can create 'test' accounts
+                              if ($t === 'test' && $_SESSION['role'] !== 'Superuser' && !$edit_mode) {
+                                  continue;
+                              }
+                              echo "<option value=\"$t\" $selected>$t</option>";
                             }
-                            echo "<option value=\"$t\" $selected>$t</option>";
-                          }
-                          ?>
-                        </select>
-                      </div>
+                            ?>
+                          </select>
+                        </div>
+                      <?php endif; ?>
                       <div class="col-md-12 text-center">
                         <button type="submit" class="ms-3 me-2 ps-1 btn btn-success btn-icon btn-round"><span class="btn-label">
                             <i class="fa fa-save"></i></button>
@@ -328,7 +341,9 @@ $conn->close();
                             <th>Name</th>
                             <th>Username</th>
                             <th>Role</th>
-                            <th>Type</th>
+                            <?php if ($_SESSION['role'] === 'Superuser'): ?>
+                              <th>Type</th>
+                            <?php endif; ?>
                             <th>Status</th>
                             <th>Actions</th>
                           </tr>
@@ -341,7 +356,9 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($user['staffname']); ?></td>
                                 <td><?php echo htmlspecialchars($user['username']); ?></td>
                                 <td><?php echo htmlspecialchars($user['role']); ?></td>
-                                <td><?php echo htmlspecialchars($user['type']); ?></td>
+                                <?php if ($_SESSION['role'] === 'Superuser'): ?>
+                                  <td><?php echo htmlspecialchars($user['type']); ?></td>
+                                <?php endif; ?>
                                 <td>
                                   <?php
                                   $status_text = ($user['status'] == 1) ? 'Active' : 'Inactive';
