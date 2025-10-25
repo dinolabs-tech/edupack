@@ -27,10 +27,10 @@ if (isset($_GET['edit_id'])) {
   $edit_id = intval($_GET['edit_id']);
   $edit_mode = true;
 
-  $stmt = $conn->prepare("SELECT staffname, username, password, role FROM login WHERE id = ?");
+  $stmt = $conn->prepare("SELECT staffname, username, password, role, type FROM login WHERE id = ?");
   $stmt->bind_param("i", $edit_id);
   $stmt->execute();
-  $stmt->bind_result($edit_name, $edit_username, $edit_password, $edit_role);
+  $stmt->bind_result($edit_name, $edit_username, $edit_password, $edit_role, $edit_type);
   $stmt->fetch();
   $stmt->close();
 }
@@ -93,19 +93,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id_status'], $_P
 }
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['username'], $_POST['password'], $_POST['role'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['username'], $_POST['password'], $_POST['role'], $_POST['type'])) {
   $name = $_POST['name'];
   $username = $_POST['username'];
   $password = $_POST['password'];
   $role = $_POST['role'];
+  $type = $_POST['type']; // Get the type from the form
 
   // Basic validation
-  if (empty($name) || empty($username) || empty($password) || empty($role)) {
+  if (empty($name) || empty($username) || empty($password) || empty($role) || empty($type)) {
     $message = "Please fill in all required fields.";
   } else {
     if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
       // Update existing user
       $edit_id = intval($_POST['edit_id']);
+      // Type is not editable for existing users, so we don't include it in the UPDATE statement
       $stmt = $conn->prepare("UPDATE login SET staffname=?, username=?, password=?, role=? WHERE id=?");
       $stmt->bind_param("ssssi", $name, $username, $password, $role, $edit_id);
 
@@ -127,16 +129,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
       if ($check_stmt->num_rows > 0) {
         $message = "Username already exists. Please choose another.";
       } else {
-        $stmt = $conn->prepare("INSERT INTO login (staffname, username, password, role) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $name, $username, $password, $role);
-
-        if ($stmt->execute()) {
-          $message = "Record saved successfully!";
+        // Only Superuser can create 'test' accounts
+        if ($type === 'test' && $_SESSION['role'] !== 'Superuser') {
+            $message = "Only Superusers can create 'test' accounts.";
         } else {
-          $message = "<script>alert('Error saving record: " . addslashes($stmt->error) . "');</script>";
-        }
+            $stmt = $conn->prepare("INSERT INTO login (staffname, username, password, role, type) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $name, $username, $password, $role, $type);
 
-        $stmt->close();
+            if ($stmt->execute()) {
+              $message = "Record saved successfully!";
+            } else {
+              $message = "<script>alert('Error saving record: " . addslashes($stmt->error) . "');</script>";
+            }
+
+            $stmt->close();
+        }
       }
 
       $check_stmt->close();
@@ -149,9 +156,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['usern
 // Fetch data from the login table
 // Only Superuser can see other Superusers
 if ($_SESSION['role'] === 'Superuser') {
-  $sql = "SELECT id, staffname, username, role, status FROM login";
+  $sql = "SELECT id, staffname, username, role, status, type FROM login";
 } else {
-  $sql = "SELECT id, staffname, username, role, status FROM login WHERE role != 'Superuser'";
+  $sql = "SELECT id, staffname, username, role, status, type FROM login WHERE role != 'Superuser'";
 }
 
 $stmt = $conn->prepare($sql);
@@ -253,7 +260,7 @@ $conn->close();
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_password) : ''; ?>">
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <select id="role" name="role" class="form-select">
                           <option value="" selected disabled>Select Role</option>
                           <?php if ($_SESSION['role'] === 'Superuser') { ?>
@@ -264,6 +271,22 @@ $conn->close();
                           foreach ($roles as $r) {
                             $selected = ($edit_mode && $edit_role === $r) ? 'selected' : '';
                             echo "<option value=\"$r\" $selected>$r</option>";
+                          }
+                          ?>
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <select id="type" name="type" class="form-select" <?php echo $edit_mode ? 'disabled' : ''; ?>>
+                          <option value="" selected disabled>Select Type</option>
+                          <?php
+                          $types = ['staff', 'test'];
+                          foreach ($types as $t) {
+                            $selected = ($edit_mode && $edit_type === $t) ? 'selected' : '';
+                            // Only Superuser can create 'test' accounts
+                            if ($t === 'test' && $_SESSION['role'] !== 'Superuser' && !$edit_mode) {
+                                continue;
+                            }
+                            echo "<option value=\"$t\" $selected>$t</option>";
                           }
                           ?>
                         </select>
@@ -305,6 +328,7 @@ $conn->close();
                             <th>Name</th>
                             <th>Username</th>
                             <th>Role</th>
+                            <th>Type</th>
                             <th>Status</th>
                             <th>Actions</th>
                           </tr>
@@ -317,6 +341,7 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($user['staffname']); ?></td>
                                 <td><?php echo htmlspecialchars($user['username']); ?></td>
                                 <td><?php echo htmlspecialchars($user['role']); ?></td>
+                                <td><?php echo htmlspecialchars($user['type']); ?></td>
                                 <td>
                                   <?php
                                   $status_text = ($user['status'] == 1) ? 'Active' : 'Inactive';
@@ -360,7 +385,7 @@ $conn->close();
                             <?php endforeach; ?>
                           <?php else: ?>
                             <tr>
-                              <td colspan="6" class="text-center">No records found</td>
+                              <td colspan="7" class="text-center">No records found</td>
                             </tr>
                           <?php endif; ?>
                         </tbody>

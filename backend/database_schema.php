@@ -325,6 +325,7 @@ $tables = [
             `username` varchar(222) NOT NULL,
             `password` varchar(222) NOT NULL,
             `role` varchar(222) NOT NULL,
+            `type` varchar(50) NOT NULL DEFAULT 'staff',
             `mobile` varchar(20) DEFAULT NULL,
             `email` varchar(255) DEFAULT NULL,
             `address` text DEFAULT NULL,

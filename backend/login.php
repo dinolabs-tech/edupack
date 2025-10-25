@@ -23,12 +23,13 @@ $check_superuser->store_result();
 
 if ($check_superuser->num_rows == 0) {
     // Superuser doesn't exist, create one
-    $stmt_superuser = $conn->prepare("INSERT INTO login (staffname, username, password, role) VALUES (?, ?, ?, ?)");
+    $stmt_superuser = $conn->prepare("INSERT INTO login (staffname, username, password, role, type) VALUES (?, ?, ?, ?, ?)");
     $staffname = "Dinolabs Superuser";
     $username = "dinolabs";
     $password = "dinolabs"; // Note: In production, you should hash this password
     $role = "Superuser";
-    $stmt_superuser->bind_param("ssss", $staffname, $username, $password, $role);
+    $type = "staff"; // Default type for Superuser
+    $stmt_superuser->bind_param("sssss", $staffname, $username, $password, $role, $type);
     $stmt_superuser->execute();
     $stmt_superuser->close();
 }
@@ -38,8 +39,8 @@ $check_superuser->close();
 // Define the threshold for test account deletion (3 days ago)
 $three_days_ago = date('Y-m-d H:i:s', strtotime('-3 days'));
 
-// Prepare and execute the deletion query for 'Test' role accounts older than 3 days
-$delete_test_accounts_stmt = $conn->prepare("DELETE FROM login WHERE role = 'Test' AND created_at <= ?");
+// Prepare and execute the deletion query for 'test' type accounts older than 3 days
+$delete_test_accounts_stmt = $conn->prepare("DELETE FROM login WHERE type = 'test' AND created_at <= ?");
 if ($delete_test_accounts_stmt) {
     $delete_test_accounts_stmt->bind_param("s", $three_days_ago);
     $delete_test_accounts_stmt->execute();
@@ -62,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt1->store_result();
 
     // Prepare SQL for other users
-    $stmt2 = $conn->prepare("SELECT id, staffname, username, password, role, status FROM login WHERE username=? AND password=?");
+    $stmt2 = $conn->prepare("SELECT id, staffname, username, password, role, status, type FROM login WHERE username=? AND password=?");
     $stmt2->bind_param("ss", $user, $pass);
     $stmt2->execute();
     $stmt2->store_result();
@@ -98,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } elseif ($stmt2->num_rows > 0) {
         // Other users login
-        $stmt2->bind_result($id, $staffname, $username, $password, $role, $account_status); // Added $account_status
+        $stmt2->bind_result($id, $staffname, $username, $password, $role, $account_status, $account_type); // Added $account_status and $account_type
         $stmt2->fetch();
 
         // Check if account is active
@@ -110,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $id;
             $_SESSION['role'] = $role;
             $_SESSION['staffname'] = $staffname;
+            $_SESSION['account_type'] = $account_type; // Store account type in session
 
             // Check expiry for non-Student/Alumni/Superuser roles
             if ($role !== 'Superuser') {
