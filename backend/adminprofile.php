@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="card-body pb-0">
                             <div class="mb-4 mt-2">
-                                <form method="POST" action="" enctype="multipart/form-data">
+                                <form method="POST" action="" enctype="multipart/form-data" class="row">
                                     <div class="form-group text-center">
                                         <?php if (!empty($user_data['profile_picture'])): ?>
                                             <img src="<?php echo htmlspecialchars($user_data['profile_picture']); ?>" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
@@ -175,30 +175,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <input type="file" class="form-control-file form-control" id="profile_picture" name="profile_picture">
                                         <small class="form-text text-muted">Upload a new profile picture (JPG, PNG, GIF)</small>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="staffname">Full Name</label>
-                                        <input class="form-control" type="text" id="staffname" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
+                                    <div class="form-group col-md-12">
+                                        <input class="form-control" placeholder="Full Name" type="text" id="staffname" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="mobile">Mobile</label>
-                                        <input class="form-control" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
+                                    <div class="form-group col-md-6">
+                                        <input class="form-control" placeholder="Mobile" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input class="form-control" type="email" id="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>">
+                                    <div class="form-group col-md-6">
+                                        <input class="form-control" placeholder="Email" type="email" id="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="address">Address</label>
-                                        <textarea class="form-control" id="address" name="address"><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
+                                    <div class="form-group col-md-12">
+                                        <textarea class="form-control" id="address" name="address" placeholder="Address"><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="date_of_birth">Date of Birth</label>
+                                    <div class="form-group col-md-6">
                                         <input class="form-control" type="date" id="date_of_birth" name="date_of_birth" value="<?php echo htmlspecialchars($user_data['date_of_birth'] ?? ''); ?>">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="gender">Gender</label>
-                                        <select class="form-control" id="gender" name="gender">
-                                            <option value="">Select Gender</option>
+                                    <div class="form-group col-md-6">
+                                        <select class="form-control form-select" id="gender" name="gender">
+                                            <option value="" selected disabled>Select Gender</option>
                                             <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
                                             <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
                                             <option value="Other" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Other') ? 'selected' : ''; ?>>Other</option>
