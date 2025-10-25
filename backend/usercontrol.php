@@ -337,7 +337,7 @@ $conn->close();
                                       <?php if ($user['status'] == 1): ?>
                                         <input type="hidden" name="user_id_status" value="<?php echo htmlspecialchars($user['id']); ?>">
                                         <input type="hidden" name="new_status" value="0">
-                                        <button type="submit" class="btn btn-danger btn-icon btn-round ps-1" title="Deactivate Account">
+                                        <button type="submit" class="btn btn-danger btn-icon btn-round" title="Deactivate Account">
                                           <i class="fa fa-ban"></i>
                                         </button>
                                       <?php else: ?>
