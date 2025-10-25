@@ -183,6 +183,9 @@ $access_rules = [
     'supplier.php' => ['Tuckshop', 'Administrator', 'Superuser'],
     'alumni_list.php' => ['Administrator', 'Superuser'],
     'adquest.php' => ['Teacher', 'Administrator', 'Superuser'],
+    'developer.php' => ['Superuser'],
+    'fetch_log.php' => ['Superuser'],
+    'download_backup.php' => ['Superuser'],
 ];
 
 /**
