@@ -271,15 +271,15 @@ $conn->close();
 
                     <form method="POST" class="row g-2">
                       <input type="hidden" name="edit_id" value="<?php echo $edit_mode ? htmlspecialchars($_GET['edit_id']) : ''; ?>">
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <input type="text" id="name" name="name" class="form-control" placeholder="Staff Name"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_name) : ''; ?>">
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <input type="text" id="username" name="username" class="form-control" placeholder="Username"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_username) : ''; ?>">
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                           value="<?php echo $edit_mode ? htmlspecialchars($edit_password) : ''; ?>">
                       </div>
