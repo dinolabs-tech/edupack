@@ -171,9 +171,6 @@ if ($stmt === false) {
   $stmt->close();
 }
 
-
-
-
 // Fetch the logged-in Staff name
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT staffname FROM login WHERE id=?");
@@ -327,32 +324,36 @@ $conn->close();
                                   ?>
                                 </td>
                                 <td>
-                                  <form method="POST" style="display:inline;">
-                                    <a href="?edit_id=<?php echo htmlspecialchars($user['id']); ?>"
-                                      class="btn btn-warning btn-icon btn-round ps-1">
-                                      <i class="fa fa-edit"></i>
-                                    </a>
+                                  <a href="?edit_id=<?php echo htmlspecialchars($user['id']); ?>"
+                                    class="btn btn-warning btn-icon btn-round ps-1">
+                                    <i class="fa fa-edit"></i>
+                                  </a>
 
-                                    <?php if ($_SESSION['role'] === 'Administrator' || $_SESSION['role'] === 'Superuser'): ?>
-                                      <?php if ($user['status'] == 1): ?>
+                                  <?php if ($_SESSION['role'] === 'Administrator' || $_SESSION['role'] === 'Superuser'): ?>
+                                    <?php if ($user['status'] == 1): ?>
+                                      <form method="POST" style="display:inline;">
                                         <input type="hidden" name="user_id_status" value="<?php echo htmlspecialchars($user['id']); ?>">
                                         <input type="hidden" name="new_status" value="0">
                                         <button type="submit" class="btn btn-danger btn-icon btn-round" title="Deactivate Account">
                                           <i class="fa fa-ban"></i>
                                         </button>
-                                      <?php else: ?>
+                                      </form>
+                                    <?php else: ?>
+                                      <form method="POST" style="display:inline;">
                                         <input type="hidden" name="user_id_status" value="<?php echo htmlspecialchars($user['id']); ?>">
                                         <input type="hidden" name="new_status" value="1">
                                         <button type="submit" class="btn btn-success btn-icon btn-round ps-1" title="Activate Account">
                                           <i class="fa fa-check"></i>
                                         </button>
-                                      <?php endif; ?>
+                                      </form>
+                                    <?php endif; ?>
+                                    <form method="POST" style="display:inline;">
                                       <input type="hidden" name="delete_id"
                                         value="<?php echo htmlspecialchars($user['id']); ?>">
                                       <button type="submit" class="btn btn-danger btn-icon btn-round ps-1" title="Delete Account"><span class="btn-label">
                                           <i class="fa fa-trash"></i></button>
-                                    <?php endif; ?>
-                                  </form>
+                                    </form>
+                                  <?php endif; ?>
                                 </td>
                               </tr>
                             <?php endforeach; ?>
