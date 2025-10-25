@@ -16,6 +16,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'fetch_log' && isset($_GET['lo
         $log_file = '../error_log.txt'; // Assuming error_log.txt is in the parent directory
     } elseif ($log_type === 'backup_log') {
         $log_file = 'backup.log'; // Assuming backup.log is in the backend directory
+    } elseif ($log_type === 'error_log_md') {
+        $log_file = 'error_log.md'; // Assuming error_log.md is in the current directory
     }
 
     if (!empty($log_file) && file_exists($log_file)) {
@@ -55,6 +57,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'clear_log' && isset($_GET['lo
         $log_file = '../error_log.txt';
     } elseif ($log_type === 'backup_log') {
         $log_file = 'backup.log';
+    } elseif ($log_type === 'error_log_md') {
+        $log_file = 'error_log.md';
     }
 
     if (!empty($log_file) && file_exists($log_file)) {
@@ -121,11 +125,16 @@ if (isset($_GET['action']) && $_GET['action'] === 'clear_log' && isset($_GET['lo
                                 </div>
                                 <div class="card-body">
                                     <button class="btn btn-primary mb-2" id="viewErrorLog">View error_log.txt</button>
+                                    <button class="btn btn-warning mb-2" id="clearErrorLog">Clear error_log.txt</button>
+                                    <br>
                                     <button class="btn btn-info mb-2" id="viewBackupLog">View backup.log</button>
+                                    <button class="btn btn-danger mb-2" id="clearBackupLog">Clear backup.log</button>
+                                    <br>
+                                    <button class="btn btn-primary mb-2" id="viewErrorLogMd">View error_log.md</button>
+                                    <button class="btn btn-warning mb-2" id="clearErrorLogMd">Clear error_log.md</button>
+                                    <br>
                                     <a href="developer.php?action=download_backup" class="btn btn-success mb-2">Download
                                         backup_dinolabs_edupack.sql</a>
-                                    <button class="btn btn-warning mb-2" id="clearErrorLog">Clear error_log.txt</button>
-                                    <button class="btn btn-danger mb-2" id="clearBackupLog">Clear backup.log</button>
                                     <div id="logContent" class="mt-3"
                                         style="white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; max-height: 500px; overflow-y: scroll;">
                                         <!-- Log content will be loaded here -->
@@ -221,6 +230,43 @@ if (isset($_GET['action']) && $_GET['action'] === 'clear_log' && isset($_GET['lo
                         },
                         error: function() {
                             alert('Error clearing backup.log');
+                        }
+                    });
+                }
+            });
+
+            $('#viewErrorLogMd').click(function() {
+                $.ajax({
+                    url: 'developer.php',
+                    type: 'GET',
+                    data: {
+                        action: 'fetch_log',
+                        log_type: 'error_log_md'
+                    },
+                    success: function(response) {
+                        $('#logContent').text(response);
+                    },
+                    error: function() {
+                        $('#logContent').text('Error fetching error_log.md');
+                    }
+                });
+            });
+
+            $('#clearErrorLogMd').click(function() {
+                if (confirm('Are you sure you want to clear error_log.md? This action cannot be undone.')) {
+                    $.ajax({
+                        url: 'developer.php',
+                        type: 'GET',
+                        data: {
+                            action: 'clear_log',
+                            log_type: 'error_log_md'
+                        },
+                        success: function(response) {
+                            alert(response);
+                            $('#logContent').text(''); // Clear displayed content
+                        },
+                        error: function() {
+                            alert('Error clearing error_log.md');
                         }
                     });
                 }
