@@ -167,8 +167,25 @@ if (isset($_POST['expirydate_submit'])) {
               </div>
             </div>
 
-            
-
+              <div class="col-sm-6 col-md-3">
+              <a href="developer.php" class="card card-stats card-danger card-round">
+                <div class="card-body skew-shadow">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-dark bubble-shadow-small">
+                        <i class="fas fa-code"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Developer Page</p>
+                        <h4 class="card-title">Access Tools</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
 
           </div>
 
@@ -260,23 +277,9 @@ if (isset($_POST['expirydate_submit'])) {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-3">
-              <div class="card card-stats card-dark card-round">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col col-stats ms-3 ms-sm-0">
-                      <div class="numbers">
-                        <p class="card-category">Developer Tools</p>
-                        <a href="developer.php" class="btn btn-primary btn-block"><i class="fas fa-code"></i> Go to Developer Page</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
 
+          
           <!-- ===================== ADMIN WIDGETS PANEL ENDS HERE ======================= -->
 
 
