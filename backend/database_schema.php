@@ -1128,6 +1128,7 @@ $tables = [
                 `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ",
+
     // Table: admission_transactions
     "admission_transactions" => "
         CREATE TABLE IF NOT EXISTS `admission_transactions` (
@@ -1157,7 +1158,7 @@ $tables = [
             PRIMARY KEY (`exam_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",
-    
+
 
     // Table: entrance_exams
     "student_applications" => "
