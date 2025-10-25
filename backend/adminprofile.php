@@ -198,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <option value="Other" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Other') ? 'selected' : ''; ?>>Other</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-md-12 text-center">
                                         <button class="btn btn-primary btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span></button>
                                     </div>
                                 </form>
