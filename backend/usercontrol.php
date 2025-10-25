@@ -215,6 +215,9 @@ $conn->close();
                       <div class="col-md-3">
                         <select id="role" name="role" class="form-select">
                           <option value="" selected disabled>Select Role</option>
+                          <?php if ($_SESSION['role'] === 'Superuser') {?>
+                            <option value="Test">Test</option>
+                            <?php } ?>
                           <?php
                           $roles = ['Administrator', 'Tuckshop', 'Teacher', 'Bursary', 'Store', 'Library', 'Admission'];
                           foreach ($roles as $r) {

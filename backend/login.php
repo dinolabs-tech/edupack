@@ -34,6 +34,21 @@ if ($check_superuser->num_rows == 0) {
 }
 $check_superuser->close();
 
+// --- Start Test Account Deletion Logic ---
+// Define the threshold for test account deletion (3 days ago)
+$three_days_ago = date('Y-m-d H:i:s', strtotime('-3 days'));
+
+// Prepare and execute the deletion query for 'Test' role accounts older than 3 days
+$delete_test_accounts_stmt = $conn->prepare("DELETE FROM login WHERE role = 'Test' AND created_at <= ?");
+if ($delete_test_accounts_stmt) {
+    $delete_test_accounts_stmt->bind_param("s", $three_days_ago);
+    $delete_test_accounts_stmt->execute();
+    $delete_test_accounts_stmt->close();
+} else {
+    error_log("Error preparing test account deletion statement: " . $conn->error);
+}
+// --- End Test Account Deletion Logic ---
+
 // Existing login logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the posted credentials
