@@ -181,7 +181,6 @@ $stmt->fetch();
 $stmt->close();
 
 
-
 // Close database connection
 $conn->close();
 ?>
