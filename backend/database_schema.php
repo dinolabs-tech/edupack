@@ -325,6 +325,13 @@ $tables = [
             `username` varchar(222) NOT NULL,
             `password` varchar(222) NOT NULL,
             `role` varchar(222) NOT NULL,
+            `mobile` varchar(20) DEFAULT NULL,
+            `email` varchar(255) DEFAULT NULL,
+            `address` text DEFAULT NULL,
+            `date_of_birth` DATE DEFAULT NULL,
+            `gender` varchar(10) DEFAULT NULL,
+            `profile_picture` varchar(255) DEFAULT NULL,
+            `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
             PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ",

@@ -2,15 +2,16 @@
 /**
  * adminprofile.php
  *
- * This file provides an interface for administrators to change their password.
- * It includes form validation for new passwords and updates the password in the database.
+ * This file provides an interface for administrators to manage their profile,
+ * including changing password, updating personal details, and uploading a profile picture.
  *
  * Key functionalities include:
  * - User authentication and session management (via admin_logic.php).
  * - Database connection.
- * - Handling POST requests for password change.
- * - Validating new password and confirmation.
- * - Updating the password in the 'login' table for the logged-in user.
+ * - Handling POST requests for profile updates and password changes.
+ * - Validating input fields.
+ * - Uploading and managing profile pictures.
+ * - Updating the 'login' table with new profile information.
  * - Displaying success or error messages to the user.
  * - Includes various UI components like navigation, header, and footer.
  */
@@ -18,37 +19,101 @@
 // Include the administrative logic file, which likely handles session checks and other admin-specific functions.
 include('components/admin_logic.php');
 
-// Initialize a message variable to store feedback for the user (e.g., success or error messages).
+// Initialize message variables to store feedback for the user.
 $message = '';
+$profile_message = '';
 
-// Check if the request method is POST, indicating a form submission for changing password.
+// Fetch current user data from the database
+$user_id = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user_data = $result->fetch_assoc();
+$stmt->close();
+
+// Handle POST requests for profile updates
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve new password and confirmation from the POST request.
-    $new_password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+    // Handle password change
+    if (isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+        $new_password = $_POST['new_password'];
+        $confirm_password = $_POST['confirm_password'];
 
-    // Validate: Check if the new password and confirm password fields match.
-    if ($new_password !== $confirm_password) {
-        $message = "New passwords do not match.";
-    } else {
-        // If passwords match, proceed to update the password in the database.
-        // Get the user ID from the session to identify the logged-in user.
-        $user_id = $_SESSION['user_id'];
-        // Prepare a SQL UPDATE statement to change the password for the specific user.
-        // Using prepared statements to prevent SQL injection.
-        $stmt = $conn->prepare("UPDATE login SET password=? WHERE username=?");
-        // Bind the new password and user ID parameters as strings.
-        $stmt->bind_param("ss", $new_password, $user_id);
-
-        // Execute the update statement.
-        if ($stmt->execute()) {
-            $message = "Password changed successfully!";
+        if ($new_password !== $confirm_password) {
+            $message = "New passwords do not match.";
         } else {
-            // If execution fails, set an error message.
-            $message = "Error changing password: " . $stmt->error;
+            $stmt = $conn->prepare("UPDATE login SET password=? WHERE username=?");
+            $stmt->bind_param("ss", $new_password, $user_id);
+            if ($stmt->execute()) {
+                $message = "Password changed successfully!";
+            } else {
+                $message = "Error changing password: " . $stmt->error;
+            }
+            $stmt->close();
+        }
+    }
+
+    // Handle profile details update
+    if (isset($_POST['staffname']) || isset($_POST['mobile']) || isset($_POST['email']) || isset($_POST['address']) || isset($_POST['date_of_birth']) || isset($_POST['gender']) || isset($_FILES['profile_picture'])) {
+        $staffname = $_POST['staffname'] ?? $user_data['staffname'];
+        $mobile = $_POST['mobile'] ?? $user_data['mobile'];
+        $email = $_POST['email'] ?? $user_data['email'];
+        $address = $_POST['address'] ?? $user_data['address'];
+        $date_of_birth = $_POST['date_of_birth'] ?? $user_data['date_of_birth'];
+        $gender = $_POST['gender'] ?? $user_data['gender'];
+        $profile_picture = $user_data['profile_picture']; // Keep existing picture by default
+
+        // Handle profile picture upload
+        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
+            $target_dir = "staffimg/";
+            $file_extension = pathinfo($_FILES["profile_picture"]["name"], PATHINFO_EXTENSION);
+            $new_file_name = $user_id . "_profile." . $file_extension;
+            $target_file = $target_dir . $new_file_name;
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            // Check if image file is a actual image or fake image
+            $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
+            if ($check !== false) {
+                // Allow certain file formats
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                    $profile_message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for profile picture.";
+                    $uploadOk = 0;
+                }
+            } else {
+                $profile_message = "File is not an image.";
+                $uploadOk = 0;
+            }
+
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                // If everything is ok, try to upload file
+            } else {
+                if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
+                    $profile_picture = $target_file;
+                } else {
+                    $profile_message = "Sorry, there was an error uploading your profile picture.";
+                }
+            }
         }
 
-        $stmt->close(); // Close the prepared statement.
+        // Update profile details in the database
+        $stmt = $conn->prepare("UPDATE login SET staffname=?, mobile=?, email=?, address=?, date_of_birth=?, gender=?, profile_picture=? WHERE username=?");
+        $stmt->bind_param("ssssssss", $staffname, $mobile, $email, $address, $date_of_birth, $gender, $profile_picture, $user_id);
+
+        if ($stmt->execute()) {
+            $profile_message = "Profile updated successfully!";
+            // Re-fetch user data to display updated information
+            $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+            $stmt_fetch->bind_param("s", $user_id);
+            $stmt_fetch->execute();
+            $result_fetch = $stmt_fetch->get_result();
+            $user_data = $result_fetch->fetch_assoc();
+            $stmt_fetch->close();
+        } else {
+            $profile_message = "Error updating profile: " . $stmt->error;
+        }
+        $stmt->close();
     }
 }
 
@@ -81,61 +146,112 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Change Password</h3>
+                <h3 class="fw-bold mb-3">My Profile</h3>
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item active">Home</li>
                   <li class="breadcrumb-item active">My Profile</li>
-                  <li class="breadcrumb-item active">Change Password</li>
               </ol>
               </div>
 
             </div>
 
-            <!-- Change Password Form Section -->
             <div class="row">
-
-             <div class="col-md-12">
-               <div class="card card-round">
-                 <div class="card-header">
-                   <div class="card-head-row">
-                     <div class="card-title">Change Password</div>
-                   </div>
-                 </div>
-                 <div class="card-body pb-0">
-                   <div class="mb-4 mt-2">
-
-                   <!-- Form for changing password. Submits data via POST to this same page. -->
-                   <form method="POST" action="">
-                    <div class="form-group">
-                    <input class="form-control" type="password" id="new_password" name="new_password" placeholder="Enter New Password" required>
+                <div class="col-md-6">
+                    <div class="card card-round">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">Profile Information</div>
+                            </div>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="mb-4 mt-2">
+                                <form method="POST" action="" enctype="multipart/form-data">
+                                    <div class="form-group text-center">
+                                        <?php if (!empty($user_data['profile_picture'])): ?>
+                                            <img src="<?php echo htmlspecialchars($user_data['profile_picture']); ?>" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                        <?php else: ?>
+                                            <img src="assets/img/default-avatar.png" alt="Default Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                        <?php endif; ?>
+                                        <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+                                        <small class="form-text text-muted">Upload a new profile picture (JPG, PNG, GIF)</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="staffname">Full Name</label>
+                                        <input class="form-control" type="text" id="staffname" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mobile">Mobile</label>
+                                        <input class="form-control" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input class="form-control" type="email" id="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <textarea class="form-control" id="address" name="address"><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="date_of_birth">Date of Birth</label>
+                                        <input class="form-control" type="date" id="date_of_birth" name="date_of_birth" value="<?php echo htmlspecialchars($user_data['date_of_birth'] ?? ''); ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gender">Gender</label>
+                                        <select class="form-control" id="gender" name="gender">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                            <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                            <option value="Other" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span> Update Profile</button>
+                                    </div>
+                                </form>
+                                <div class="message mt-3">
+                                    <?php
+                                    if (!empty($profile_message)) {
+                                        echo '<div class="alert alert-info">' . htmlspecialchars($profile_message) . '</div>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                    <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm New Password"required>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-round">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">Change Password</div>
+                            </div>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="mb-4 mt-2">
+                                <form method="POST" action="">
+                                    <div class="form-group">
+                                        <input class="form-control" type="password" id="new_password" name="new_password" placeholder="Enter New Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm New Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success btn-icon btn-round ps-1" type="submit"><span class="btn-label"><i class="fa fa-save"></i></span> Change Password</button>
+                                    </div>
+                                </form>
+                                <div class="message mt-3">
+                                    <?php
+                                    if (!empty($message)) {
+                                        echo '<div class="alert alert-info">' . htmlspecialchars($message) . '</div>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                    <button class="btn btn-success btn-icon btn-round ps-1" type="submit"><span class="btn-label">
-                    <i class="fa fa-save"></i></button>
-                    </div>
-                    </form>
-                    <div class="message">
-                    <?php
-                      // Display any success or error messages related to the password change.
-                      if (!empty($message)) {
-                          echo '<div class="alert alert-info">' . htmlspecialchars($message) . '</div>';
-                      }
-                      ?>
-                    </div>
-
-                                        <!-- End Change Password Form -->
-
-                   </div>
-                 </div>
-               </div>
-             </div>
-
-           </div>
-
-
+                </div>
+            </div>
           </div>
         </div>
 
