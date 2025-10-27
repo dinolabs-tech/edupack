@@ -152,6 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <div class="form-group col-md-12">
                                         <input class="form-control" placeholder="Full Name" type="text" id="" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
+                                        <input class="form-control" placeholder="Email" type="text" id="" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input class="form-control" placeholder="Mobile" type="text" id="" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
