@@ -252,7 +252,7 @@ $stmt->close();
 
           <div class="col-lg-4">
             <div class="sidebar">
-              <div class="sidebar-item" data-aos="fade-up" data-aos-delay="100">
+              <!-- <div class="sidebar-item" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="sidebar-title">Upcoming Events</h3>
                 <div class="event-calendar">
                   <div class="calendar-header">
@@ -307,7 +307,7 @@ $stmt->close();
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
 
