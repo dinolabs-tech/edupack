@@ -239,10 +239,10 @@ $messages = [
 
 // Fetch the logged-in Staff name
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT staffname FROM login WHERE id=?");
+$stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
-$stmt->bind_result($student_name);
+$stmt->bind_result($student_name, $username, $mobile, $email, $address, $date_of_birth, $gender, $profile_picture);
 $stmt->fetch();
 $stmt->close();
 
