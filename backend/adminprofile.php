@@ -53,124 +53,135 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Handle profile details update
-    if (isset($_POST['staffname']) || isset($_POST['mobile']) || isset($_POST['email']) || isset($_POST['address']) || isset($_POST['date_of_birth']) || isset($_POST['gender']) || isset($_FILES['profile_picture'])) {
-        $staffname = $_POST['staffname'] ?? $user_data['staffname'];
-        $mobile = $_POST['mobile'] ?? $user_data['mobile'];
-        $email = $_POST['email'] ?? $user_data['email'];
-        $address = $_POST['address'] ?? $user_data['address'];
-        $date_of_birth = $_POST['date_of_birth'] ?? $user_data['date_of_birth'];
-        $gender = $_POST['gender'] ?? $user_data['gender'];
-        $profile_picture = $user_data['profile_picture']; // Keep existing picture by default
-        $new_profile_picture_uploaded = false;
+    $new_profile_picture_uploaded = false;
+    $other_details_changed = false;
 
-        // Handle profile picture upload
-        if (isset($_FILES['profile_picture']) && is_array($_FILES['profile_picture']) && isset($_FILES['profile_picture']['error']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK && isset($_FILES['profile_picture']['name']) && isset($_FILES['profile_picture']['tmp_name']) && !empty($_FILES['profile_picture']['name'])) {
-            $target_dir = "staffimg/";
-            // Ensure the target directory exists and is writable
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0755, true); // Create directory with 0755 permissions, recursive
-            }
-            $file_extension = pathinfo($_FILES["profile_picture"]["name"], PATHINFO_EXTENSION);
-            $new_file_name = $user_id . "_profile." . $file_extension;
-            $target_file = $target_dir . $new_file_name;
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    // --- Start: Handle Profile Picture Upload ---
+    if (isset($_FILES['profile_picture']) && is_array($_FILES['profile_picture']) &&
+        isset($_FILES['profile_picture']['error']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK &&
+        isset($_FILES['profile_picture']['name']) && isset($_FILES['profile_picture']['tmp_name']) &&
+        !empty($_FILES['profile_picture']['name']) && is_uploaded_file($_FILES['profile_picture']['tmp_name'])) {
 
-            // Check if image file is a actual image or fake image
-            $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-            if ($check !== false) {
-                // Allow certain file formats
-                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                    $profile_message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for profile picture.";
-                    $uploadOk = 0;
-                }
-            } else {
-                $profile_message = "File is not an image.";
+        $target_dir = "staffimg/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0755, true);
+        }
+        $file_extension = pathinfo($_FILES["profile_picture"]["name"], PATHINFO_EXTENSION);
+        $new_file_name = $user_id . "_profile." . $file_extension;
+        $target_file = $target_dir . $new_file_name;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
+        if ($check !== false) {
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                $profile_message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for profile picture.";
                 $uploadOk = 0;
             }
+        } else {
+            $profile_message = "File is not an image.";
+            $uploadOk = 0;
+        }
 
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                // If everything is ok, try to upload file
-            } else {
-                if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-                    $profile_picture = $target_file; // Update the variable
-                    $new_profile_picture_uploaded = true;
+        if ($uploadOk == 1) {
+            if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
+                $profile_picture_path_to_save = $target_file;
+                $new_profile_picture_uploaded = true;
 
-                    // Perform a dedicated update for the profile picture
-                    $stmt_pic = $conn->prepare("UPDATE login SET profile_picture=? WHERE username=?");
-                    $stmt_pic->bind_param("ss", $profile_picture, $user_id);
-                    if ($stmt_pic->execute()) {
-                        if ($stmt_pic->affected_rows > 0) {
-                            $profile_message = "Profile picture updated successfully! Path: " . htmlspecialchars($profile_picture);
-                            // Re-fetch user data to display updated information
-                            $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
-                            $stmt_fetch->bind_param("s", $user_id);
-                            $stmt_fetch->execute();
-                            $result_fetch = $stmt_fetch->get_result();
-                            $user_data = $result_fetch->fetch_assoc();
-                            $stmt_fetch->close();
-                        } else {
-                            $profile_message = "Profile picture update executed, but no rows were affected. Path: " . htmlspecialchars($profile_picture);
-                        }
+                $stmt_pic = $conn->prepare("UPDATE login SET profile_picture=? WHERE username=?");
+                $stmt_pic->bind_param("ss", $profile_picture_path_to_save, $user_id);
+                if ($stmt_pic->execute()) {
+                    if ($stmt_pic->affected_rows > 0) {
+                        $profile_message = "Profile picture updated successfully! Path: " . htmlspecialchars($profile_picture_path_to_save);
                     } else {
-                        $profile_message = "Error updating profile picture: " . $stmt_pic->error;
+                        $profile_message = "Profile picture update executed, but no rows were affected. Path: " . htmlspecialchars($profile_picture_path_to_save);
                     }
-                    $stmt_pic->close();
                 } else {
-                    $profile_message = "Sorry, there was an error uploading your profile picture.";
+                    $profile_message = "Error updating profile picture: " . $stmt_pic->error;
                 }
+                $stmt_pic->close();
+            } else {
+                $profile_message = "Sorry, there was an error uploading your profile picture.";
             }
         }
+    }
+    // --- End: Handle Profile Picture Upload ---
 
-        // Now handle other profile details. This block should only run if other details are being updated.
-        $other_details_changed = false;
-        $temp_staffname = $_POST['staffname'] ?? $user_data['staffname'];
-        $temp_mobile = $_POST['mobile'] ?? $user_data['mobile'];
-        $temp_email = $_POST['email'] ?? $user_data['email'];
-        $temp_address = $_POST['address'] ?? $user_data['address'];
-        $temp_date_of_birth = $_POST['date_of_birth'] ?? $user_data['date_of_birth'];
-        $temp_gender = $_POST['gender'] ?? $user_data['gender'];
+    // --- Start: Handle Other Profile Details Update ---
+    $update_fields = [];
+    $update_params = [];
+    $param_types = "";
 
-        if ($temp_staffname !== $user_data['staffname'] ||
-            $temp_mobile !== $user_data['mobile'] ||
-            $temp_email !== $user_data['email'] ||
-            $temp_address !== $user_data['address'] ||
-            $temp_date_of_birth !== $user_data['date_of_birth'] ||
-            $temp_gender !== $user_data['gender']) {
-            $other_details_changed = true;
-        }
+    // Check if each field is set in POST and if its value is different from current user_data
+    if (isset($_POST['staffname']) && $_POST['staffname'] !== ($user_data['staffname'] ?? '')) {
+        $update_fields[] = "staffname=?";
+        $update_params[] = $_POST['staffname'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['mobile']) && $_POST['mobile'] !== ($user_data['mobile'] ?? '')) {
+        $update_fields[] = "mobile=?";
+        $update_params[] = $_POST['mobile'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['email']) && $_POST['email'] !== ($user_data['email'] ?? '')) {
+        $update_fields[] = "email=?";
+        $update_params[] = $_POST['email'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['address']) && $_POST['address'] !== ($user_data['address'] ?? '')) {
+        $update_fields[] = "address=?";
+        $update_params[] = $_POST['address'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['date_of_birth']) && $_POST['date_of_birth'] !== ($user_data['date_of_birth'] ?? '')) {
+        $update_fields[] = "date_of_birth=?";
+        $update_params[] = $_POST['date_of_birth'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['gender']) && $_POST['gender'] !== ($user_data['gender'] ?? '')) {
+        $update_fields[] = "gender=?";
+        $update_params[] = $_POST['gender'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
 
-        if ($other_details_changed) {
-            $staffname = $temp_staffname;
-            $mobile = $temp_mobile;
-            $email = $temp_email;
-            $address = $temp_address;
-            $date_of_birth = $temp_date_of_birth;
-            $gender = $temp_gender;
+    if ($other_details_changed) {
+        $update_query = "UPDATE login SET " . implode(", ", $update_fields) . " WHERE username=?";
+        $update_params[] = $user_id;
+        $param_types .= "s";
 
-            $stmt = $conn->prepare("UPDATE login SET staffname=?, mobile=?, email=?, address=?, date_of_birth=?, gender=? WHERE username=?");
-            $stmt->bind_param("sssssss", $staffname, $mobile, $email, $address, $date_of_birth, $gender, $user_id);
-
+        $stmt = $conn->prepare($update_query);
+        if ($stmt) {
+            $stmt->bind_param($param_types, ...$update_params);
             if ($stmt->execute()) {
                 if ($stmt->affected_rows > 0) {
                     $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details updated successfully!";
-                    // Re-fetch user data to display updated information
-                    $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
-                    $stmt_fetch->bind_param("s", $user_id);
-                    $stmt_fetch->execute();
-                    $result_fetch = $stmt_fetch->get_result();
-                    $user_data = $result_fetch->fetch_assoc();
-                    $stmt_fetch->close();
                 } else {
-                    $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details update executed, but no rows were affected.";
+                    $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details update executed, but no rows were affected (data might be the same).";
                 }
             } else {
                 $profile_message .= (!empty($profile_message) ? " And " : "") . "Error updating other profile details: " . $stmt->error;
             }
             $stmt->close();
+        } else {
+            $profile_message .= (!empty($profile_message) ? " And " : "") . "Error preparing statement for other profile details: " . $conn->error;
         }
+    }
+    // --- End: Handle Other Profile Details Update ---
+
+    // Re-fetch user data if any update occurred to ensure the form displays the latest information
+    if ($new_profile_picture_uploaded || $other_details_changed) {
+        $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+        $stmt_fetch->bind_param("s", $user_id);
+        $stmt_fetch->execute();
+        $result_fetch = $stmt_fetch->get_result();
+        $user_data = $result_fetch->fetch_assoc();
+        $stmt_fetch->close();
     }
 }
 
