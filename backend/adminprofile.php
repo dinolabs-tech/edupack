@@ -32,6 +32,22 @@ $result = $stmt->get_result();
 $user_data = $result->fetch_assoc();
 $stmt->close();
 
+// Debugging: Display user_id and fetched user_data
+echo "<!-- Debugging Info: -->\n";
+echo "<!-- User ID: " . htmlspecialchars($user_id) . " -->\n";
+echo "<!-- User Data: " . htmlspecialchars(json_encode($user_data)) . " -->\n";
+echo "<!-- End Debugging Info -->\n";
+
+// PHP Debugging: Output values of specific fields before HTML rendering
+echo "<script>\n";
+echo "console.log('PHP Debug - staffname:', '" . htmlspecialchars($user_data['staffname'] ?? '') . "');\n";
+echo "console.log('PHP Debug - mobile:', '" . htmlspecialchars($user_data['mobile'] ?? '') . "');\n";
+echo "console.log('PHP Debug - email:', '" . htmlspecialchars($user_data['email'] ?? '') . "');\n";
+echo "console.log('PHP Debug - address:', '" . htmlspecialchars($user_data['address'] ?? '') . "');\n";
+echo "console.log('PHP Debug - date_of_birth:', '" . htmlspecialchars($user_data['date_of_birth'] ?? '') . "');\n";
+echo "console.log('PHP Debug - gender:', '" . htmlspecialchars($user_data['gender'] ?? '') . "');\n";
+echo "</script>\n";
+
 // Handle POST requests for profile updates
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle password change
@@ -53,67 +69,140 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Handle profile details update
-    if (isset($_POST['staffname']) || isset($_POST['mobile']) || isset($_POST['email']) || isset($_POST['address']) || isset($_POST['date_of_birth']) || isset($_POST['gender']) || isset($_FILES['profile_picture'])) {
-        $staffname = $_POST['staffname'] ?? $user_data['staffname'];
-        $mobile = $_POST['mobile'] ?? $user_data['mobile'];
-        $email = $_POST['email'] ?? $user_data['email'];
-        $address = $_POST['address'] ?? $user_data['address'];
-        $date_of_birth = $_POST['date_of_birth'] ?? $user_data['date_of_birth'];
-        $gender = $_POST['gender'] ?? $user_data['gender'];
-        $profile_picture = $user_data['profile_picture']; // Keep existing picture by default
+    $new_profile_picture_uploaded = false;
+    $other_details_changed = false;
 
-        // Handle profile picture upload
-        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
-            $target_dir = "staffimg/";
-            $file_extension = pathinfo($_FILES["profile_picture"]["name"], PATHINFO_EXTENSION);
-            $new_file_name = $user_id . "_profile." . $file_extension;
-            $target_file = $target_dir . $new_file_name;
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    // --- Start: Handle Profile Picture Upload ---
+    if (isset($_FILES['profile_picture']) && is_array($_FILES['profile_picture']) &&
+        isset($_FILES['profile_picture']['error']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK &&
+        isset($_FILES['profile_picture']['name']) && isset($_FILES['profile_picture']['tmp_name']) &&
+        !empty($_FILES['profile_picture']['name']) && is_uploaded_file($_FILES['profile_picture']['tmp_name'])) {
 
-            // Check if image file is a actual image or fake image
-            $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-            if ($check !== false) {
-                // Allow certain file formats
-                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                    $profile_message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for profile picture.";
-                    $uploadOk = 0;
-                }
-            } else {
-                $profile_message = "File is not an image.";
+        $target_dir = "staffimg/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0755, true);
+        }
+        $file_extension = pathinfo($_FILES["profile_picture"]["name"], PATHINFO_EXTENSION);
+        $new_file_name = $user_id . "_profile." . $file_extension;
+        $target_file = $target_dir . $new_file_name;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
+        if ($check !== false) {
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                $profile_message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for profile picture.";
                 $uploadOk = 0;
             }
+        } else {
+            $profile_message = "File is not an image.";
+            $uploadOk = 0;
+        }
 
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                // If everything is ok, try to upload file
-            } else {
-                if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-                    $profile_picture = $target_file;
+        if ($uploadOk == 1) {
+            // Delete old profile picture if it exists and is not the default
+            if (!empty($user_data['profile_picture']) && $user_data['profile_picture'] !== 'assets/img/profile-img.jpg' && file_exists($user_data['profile_picture'])) {
+                unlink($user_data['profile_picture']);
+            }
+
+            if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
+                $profile_picture_path_to_save = $target_file;
+                $new_profile_picture_uploaded = true;
+
+                $stmt_pic = $conn->prepare("UPDATE login SET profile_picture=? WHERE id=?");
+                $stmt_pic->bind_param("ss", $profile_picture_path_to_save, $user_id);
+                if ($stmt_pic->execute()) {
+                    if ($stmt_pic->affected_rows > 0) {
+                        $profile_message = "Profile picture updated successfully! Path: " . htmlspecialchars($profile_picture_path_to_save);
+                    } else {
+                        $profile_message = "Profile picture update executed, but no rows were affected. Path: " . htmlspecialchars($profile_picture_path_to_save);
+                    }
                 } else {
-                    $profile_message = "Sorry, there was an error uploading your profile picture.";
+                    $profile_message = "Error updating profile picture: " . $stmt_pic->error;
                 }
+                $stmt_pic->close();
+            } else {
+                $profile_message = "Sorry, there was an error uploading your profile picture.";
             }
         }
+    }
+    // --- End: Handle Profile Picture Upload ---
 
-        // Update profile details in the database
-        $stmt = $conn->prepare("UPDATE login SET staffname=?, mobile=?, email=?, address=?, date_of_birth=?, gender=?, profile_picture=? WHERE id=?");
-        $stmt->bind_param("ssssssss", $staffname, $mobile, $email, $address, $date_of_birth, $gender, $profile_picture, $user_id);
+    // --- Start: Handle Other Profile Details Update ---
+    $update_fields = [];
+    $update_params = [];
+    $param_types = "";
 
-        if ($stmt->execute()) {
-            $profile_message = "Profile updated successfully!";
-            // Re-fetch user data to display updated information
-            $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id = ?");
-            $stmt_fetch->bind_param("s", $user_id);
-            $stmt_fetch->execute();
-            $result_fetch = $stmt_fetch->get_result();
-            $user_data = $result_fetch->fetch_assoc();
-            $stmt_fetch->close();
+    // Check if each field is set in POST and if its value is different from current user_data
+    if (isset($_POST['staffname']) && $_POST['staffname'] !== ($user_data['staffname'] ?? '')) {
+        $update_fields[] = "staffname=?";
+        $update_params[] = $_POST['staffname'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['mobile']) && $_POST['mobile'] !== ($user_data['mobile'] ?? '')) {
+        $update_fields[] = "mobile=?";
+        $update_params[] = $_POST['mobile'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['email']) && $_POST['email'] !== ($user_data['email'] ?? '')) {
+        $update_fields[] = "email=?";
+        $update_params[] = $_POST['email'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['address']) && $_POST['address'] !== ($user_data['address'] ?? '')) {
+        $update_fields[] = "address=?";
+        $update_params[] = $_POST['address'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['date_of_birth']) && $_POST['date_of_birth'] !== ($user_data['date_of_birth'] ?? '')) {
+        $update_fields[] = "date_of_birth=?";
+        $update_params[] = $_POST['date_of_birth'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+    if (isset($_POST['gender']) && $_POST['gender'] !== ($user_data['gender'] ?? '')) {
+        $update_fields[] = "gender=?";
+        $update_params[] = $_POST['gender'];
+        $param_types .= "s";
+        $other_details_changed = true;
+    }
+
+    if ($other_details_changed) {
+        $update_query = "UPDATE login SET " . implode(", ", $update_fields) . " WHERE id=?";
+        $update_params[] = $user_id;
+        $param_types .= "s";
+
+        $stmt = $conn->prepare($update_query);
+        if ($stmt) {
+            $stmt->bind_param($param_types, ...$update_params);
+            if ($stmt->execute()) {
+                if ($stmt->affected_rows > 0) {
+                    $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details updated successfully!";
+                } else {
+                    $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details update executed, but no rows were affected (data might be the same).";
+                }
+            } else {
+                $profile_message .= (!empty($profile_message) ? " And " : "") . "Error updating other profile details: " . $stmt->error;
+            }
+            $stmt->close();
         } else {
-            $profile_message = "Error updating profile: " . $stmt->error;
+            $profile_message .= (!empty($profile_message) ? " And " : "") . "Error preparing statement for other profile details: " . $conn->error;
         }
-        $stmt->close();
+    }
+    // --- End: Handle Other Profile Details Update ---
+
+    // Re-fetch user data if any update occurred to ensure the form displays the latest information
+    if ($new_profile_picture_uploaded || $other_details_changed) {
+        $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id = ?");
+        $stmt_fetch->bind_param("s", $user_id);
+        $stmt_fetch->execute();
+        $result_fetch = $stmt_fetch->get_result();
+        $user_data = $result_fetch->fetch_assoc();
+        $stmt_fetch->close();
     }
 }
 
@@ -163,6 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="card-title">Profile Information</div>
                             </div>
                         </div>
+                        
                         <div class="card-body pb-0">
                             <div class="mb-4 mt-2">
                                 <form method="POST" action="" enctype="multipart/form-data" class="row">
