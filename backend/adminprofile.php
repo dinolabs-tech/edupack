@@ -13,6 +13,16 @@ $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 
+// Ensure user_data is available on initial load
+if (empty($user_data)) {
+    $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $user_data = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ✅ Change Password
@@ -160,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <input class="form-control" placeholder="Email" type="email" id="" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <textarea class="form-control" id="address" name="" placeholder="Address"><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
+                                        <textarea class="form-control" id="address" name="address" placeholder="Address"><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input class="form-control" type="date" id="" name="date_of_birth" value="<?php echo htmlspecialchars($user_data['date_of_birth'] ?? ''); ?>">
