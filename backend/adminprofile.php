@@ -1,33 +1,20 @@
 <?php
 include('components/admin_logic.php');
-session_start();
 
 $message = '';
 $profile_message = '';
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-
 $user_id = $_SESSION['user_id'];
 
-/* ✅ Load user data on page load */
-function loadUser($conn, $user_id) {
-    $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture 
-                            FROM login WHERE id=? LIMIT 1");
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-    $data = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-    return $data;
-}
-
-$user_data = loadUser($conn, $user_id);
+$stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$user_data = $stmt->get_result()->fetch_assoc();
+$stmt->close();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    /* ✅ Update Password */
+    // ✅ Change Password
     if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
         if ($_POST['new_password'] === $_POST['confirm_password']) {
             $stmt = $conn->prepare("UPDATE login SET password=? WHERE id=?");
@@ -36,22 +23,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
             $message = "Password updated successfully!";
         } else {
-            $message = "Passwords do not match!";
+            $message = "Passwords do not match.";
         }
     }
 
-    /* ✅ Update Profile Picture */
+    // ✅ Update Profile Picture
     if (!empty($_FILES['profile_picture']['name'])) {
-        $allowed_ext = ['jpg','jpeg','png','gif'];
+        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $ext = strtolower(pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION));
 
-        if (in_array($ext, $allowed_ext)) {
+        if (in_array($ext, $allowed)) {
             $target_dir = "staffimg/";
             if (!is_dir($target_dir)) mkdir($target_dir, 0755, true);
 
             $new_path = $target_dir . $user_id . "_profile." . $ext;
 
-            if (!empty($user_data['profile_picture']) && file_exists($user_data['profile_picture'])) {
+            // Remove old picture except default
+            if (!empty($user_data['profile_picture']) && 
+                $user_data['profile_picture'] !== 'assets/img/profile-img.jpg' && 
+                file_exists($user_data['profile_picture'])) {
                 unlink($user_data['profile_picture']);
             }
 
@@ -63,42 +53,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $profile_message = "Profile picture updated!";
             }
         } else {
-            $profile_message = "Invalid image type!";
+            $profile_message = "Invalid image file.";
         }
     }
 
-    /* ✅ Update Profile Fields */
+    // ✅ Update Other Profile Fields
     $fields = ['staffname', 'mobile', 'email', 'address', 'date_of_birth', 'gender'];
-    $update_list = [];
+    $updates = [];
     $params = [];
     $types = '';
 
     foreach ($fields as $field) {
-        if (isset($_POST[$field])) {
-            $update_list[] = "$field=?";
+        if (isset($_POST[$field]) && $_POST[$field] !== $user_data[$field]) {
+            $updates[] = "$field=?";
             $params[] = $_POST[$field];
             $types .= 's';
         }
     }
 
-    if (!empty($update_list)) {
-        $query = "UPDATE login SET ".implode(", ", $update_list)." WHERE id=?";
+    if (!empty($updates)) {
+        $query = "UPDATE login SET " . implode(", ", $updates) . " WHERE id=?";
         $params[] = $user_id;
-        $types .= 's';
-
+        $types .= "s";
         $stmt = $conn->prepare($query);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
         $stmt->close();
-
-        $profile_message .= (empty($profile_message) ? "" : " & ") . "Profile updated successfully!";
+        $profile_message .= (empty($profile_message) ? "" : " & ") . "Profile details updated!";
     }
 
-    /* ✅ Reload updated data */
-    $user_data = loadUser($conn, $user_id);
+    // ✅ Refresh Data for Display
+    $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $user_data = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -162,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <input class="form-control" placeholder="Full Name" type="text" id="staffname" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" placeholder="Mobile" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
+                                        <input class="form-control" placeholder="Mobile" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input class="form-control" placeholder="Email" type="email" id="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
