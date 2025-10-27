@@ -7,7 +7,7 @@ $profile_message = '';
 $user_id = $_SESSION['user_id'];
 
 $stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("s", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
