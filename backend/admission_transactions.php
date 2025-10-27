@@ -122,7 +122,7 @@ $stmt->close();
                                 <tr>
                                     <th>ID</th>
                                     <th>Application ID</th>
-                                    <th>Student ID</th>
+                                    <th class="d-none">Student ID</th>
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>Method</th>
@@ -135,7 +135,7 @@ $stmt->close();
                                     <tr>
                                         <td><?php echo htmlspecialchars($transaction['transaction_id']); ?></td>
                                         <td><?php echo htmlspecialchars($transaction['application_id']); ?></td>
-                                        <td><?php echo htmlspecialchars($transaction['student_id'] ?? 'N/A'); ?></td>
+                                        <td class="d-none"><?php echo htmlspecialchars($transaction['student_id'] ?? 'N/A'); ?></td>
                                         <td><?php echo htmlspecialchars(number_format($transaction['amount'], 2)); ?></td>
                                         <td><?php echo htmlspecialchars($transaction['transaction_date']); ?></td>
                                         <td><?php echo htmlspecialchars($transaction['payment_method']); ?></td>
