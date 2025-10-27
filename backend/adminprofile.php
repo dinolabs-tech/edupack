@@ -12,6 +12,10 @@ $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
+// TEMPORARY DEBUGGING LINE
+echo '<pre>'; var_dump($user_data); echo '</pre>';
+// END TEMPORARY DEBUGGING LINE
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ✅ Change Password
@@ -153,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <input class="form-control" placeholder="Full Name" type="text" id="staffname" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" placeholder="Mobile" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>">
+                                        <input class="form-control" placeholder="Mobile" type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input class="form-control" placeholder="Email" type="email" id="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
