@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <small class="form-text text-muted">Upload a new profile picture (JPG, PNG, GIF)</small>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <input class="form-control" placeholder="Full Name" type="text" id="staffname" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
+                                        <input class="form-control" placeholder="Full Name" type="text" id="" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input class="form-control" placeholder="Mobile" type="text" id="" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
