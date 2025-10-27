@@ -1,15 +1,5 @@
 <?php
-// include('components/admin_logic.php');
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Start the session to maintain user state
-session_start();
-
-
-// Database connection
-include 'db_connection.php';
+include('components/admin_logic.php');
 
 $message = '';
 $profile_message = '';
