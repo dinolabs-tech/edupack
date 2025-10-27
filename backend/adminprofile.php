@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($other_details_changed) {
-        $update_query = "UPDATE login SET " . implode(", ", $update_fields) . " WHERE username=?";
+        $update_query = "UPDATE login SET " . implode(", ", $update_fields) . " WHERE id=?";
         $update_params[] = $user_id;
         $param_types .= "s";
 
