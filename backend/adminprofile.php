@@ -231,6 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="card-title">Profile Information</div>
                             </div>
                         </div>
+                        
                         <div class="card-body pb-0">
                             <div class="mb-4 mt-2">
                                 <form method="POST" action="" enctype="multipart/form-data" class="row">
