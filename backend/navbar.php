@@ -23,27 +23,23 @@ $profile_image_path = 'assets/img/profile-img.jpg'; // Default profile picture
 
 // Fetch user data based on role
 if ($role === 'Student' || $role === 'Alumni') {
-    $stmt = $conn->prepare("SELECT name, profile_picture FROM students WHERE studentid = ?");
+    $stmt = $conn->prepare("SELECT name FROM students WHERE studentid = ?");
     $stmt->bind_param("s", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($user_data = $result->fetch_assoc()) {
         $display_name = $user_data['name'];
-        if (!empty($user_data['profile_picture'])) {
-            $profile_image_path = $user_data['profile_picture'];
-        }
+        
     }
     $stmt->close();
 } elseif ($role === 'Parent') {
-    $stmt = $conn->prepare("SELECT name, profile_picture FROM parents WHERE parentid = ?");
+    $stmt = $conn->prepare("SELECT name FROM parents WHERE parentid = ?");
     $stmt->bind_param("s", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($user_data = $result->fetch_assoc()) {
         $display_name = $user_data['name'];
-        if (!empty($user_data['profile_picture'])) {
-            $profile_image_path = $user_data['profile_picture'];
-        }
+       
     }
     $stmt->close();
 } else { // Administrator, Superuser, Teacher, Bursary, Tuckshop, Admission
