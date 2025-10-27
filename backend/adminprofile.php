@@ -32,28 +32,6 @@ $result = $stmt->get_result();
 $user_data = $result->fetch_assoc();
 $stmt->close();
 
-// Debugging: Display user_id and fetched user_data
-echo "<!-- Debugging Info: -->\n";
-echo "<!-- User ID: " . htmlspecialchars($user_id) . " -->\n";
-echo "<!-- User Data: " . htmlspecialchars(json_encode($user_data)) . " -->\n";
-echo "<!-- End Debugging Info -->\n";
-
-// Debugging: Display user_id and fetched user_data
-echo "<!-- Debugging Info: -->\n";
-echo "<!-- User ID: " . htmlspecialchars($user_id) . " -->\n";
-echo "<!-- User Data: " . htmlspecialchars(json_encode($user_data)) . " -->\n";
-echo "<!-- End Debugging Info -->\n";
-
-// PHP Debugging: Output values of specific fields before HTML rendering (after potential re-fetch)
-echo "<script>\n";
-echo "console.log('PHP Debug (After POST) - staffname:', '" . htmlspecialchars($user_data['staffname'] ?? '') . "');\n";
-echo "console.log('PHP Debug (After POST) - mobile:', '" . htmlspecialchars($user_data['mobile'] ?? '') . "');\n";
-echo "console.log('PHP Debug (After POST) - email:', '" . htmlspecialchars($user_data['email'] ?? '') . "');\n";
-echo "console.log('PHP Debug (After POST) - address:', '" . htmlspecialchars($user_data['address'] ?? '') . "');\n";
-echo "console.log('PHP Debug (After POST) - date_of_birth:', '" . htmlspecialchars($user_data['date_of_birth'] ?? '') . "');\n";
-echo "console.log('PHP Debug (After POST) - gender:', '" . htmlspecialchars($user_data['gender'] ?? '') . "');\n";
-echo "</script>\n";
-
 // Handle POST requests for profile updates
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle password change
@@ -352,18 +330,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php include('cust-color.php');?> <!-- Includes custom color settings or scripts -->
       <!-- End Custom template -->
     </div>
-   <?php include('scripts.php');?> <!-- Includes general JavaScript scripts for the page -->
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Client-side Debug - staffname:', document.getElementById('staffname')?.value);
-            console.log('Client-side Debug - mobile:', document.getElementById('mobile')?.value);
-            console.log('Client-side Debug - email:', document.getElementById('email')?.value);
-            console.log('Client-side Debug - address:', document.getElementById('address')?.value);
-            console.log('Client-side Debug - date_of_birth:', document.getElementById('date_of_birth')?.value);
-            console.log('Client-side Debug - gender:', document.getElementById('gender')?.value);
-        });
-    </script>
+   <!-- <?php include('scripts.php');?> --> <!-- Includes general JavaScript scripts for the page -->
 
   </body>
 </html>
