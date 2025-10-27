@@ -32,6 +32,12 @@ $result = $stmt->get_result();
 $user_data = $result->fetch_assoc();
 $stmt->close();
 
+// Debugging: Display user_id and fetched user_data
+echo "<!-- Debugging Info: -->";
+echo "<!-- User ID: " . htmlspecialchars($user_id) . " -->";
+echo "<!-- User Data: " . htmlspecialchars(json_encode($user_data)) . " -->";
+echo "<!-- End Debugging Info -->";
+
 // Handle POST requests for profile updates
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle password change
