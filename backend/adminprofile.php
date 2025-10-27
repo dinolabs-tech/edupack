@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $profile_picture = $user_data['profile_picture']; // Keep existing picture by default
 
         // Handle profile picture upload
-        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK && !empty($_FILES['profile_picture']['name'])) {
+        if (isset($_FILES['profile_picture']) && is_array($_FILES['profile_picture']) && isset($_FILES['profile_picture']['error']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK && isset($_FILES['profile_picture']['name']) && isset($_FILES['profile_picture']['tmp_name']) && !empty($_FILES['profile_picture']['name'])) {
             $target_dir = "staffimg/";
             // Ensure the target directory exists and is writable
             if (!is_dir($target_dir)) {
