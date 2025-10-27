@@ -61,11 +61,10 @@
     <li><a href="backend/login.php">School Calendar</a></li>
     <li><a href="backend/login.php">Computer Based Test</a></li>
     <li><a href="students-life.php">Clubs & Societies</a></li>
-    
       <?php if (isset($_SESSION["user_id"])) { ?>
-            <li><a href="portal/logout.php">Logout</a></li>
+            <li><a href="backend/logout.php">Logout</a></li>
           <?php } else { ?>
-            <li><a href="portal/login.php">Login</a></li>
+            <li><a href="backend/login.php">Login</a></li>
           <?php } ?>
   </ul>
 </div>
