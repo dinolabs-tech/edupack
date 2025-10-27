@@ -1,6 +1,7 @@
 <?php
-include('components/admin_logic.php');
-
+// include('components/admin_logic.php');
+session_start();
+include('dbconnection.php');
 $message = '';
 $profile_message = '';
 
