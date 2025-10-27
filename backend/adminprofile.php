@@ -25,7 +25,7 @@ $profile_message = '';
 
 // Fetch current user data from the database
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+$stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id = ?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($new_password !== $confirm_password) {
             $message = "New passwords do not match.";
         } else {
-            $stmt = $conn->prepare("UPDATE login SET password=? WHERE username=?");
+            $stmt = $conn->prepare("UPDATE login SET password=? WHERE id=?");
             $stmt->bind_param("ss", $new_password, $user_id);
             if ($stmt->execute()) {
                 $message = "Password changed successfully!";
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $profile_picture_path_to_save = $target_file;
                 $new_profile_picture_uploaded = true;
 
-                $stmt_pic = $conn->prepare("UPDATE login SET profile_picture=? WHERE username=?");
+                $stmt_pic = $conn->prepare("UPDATE login SET profile_picture=? WHERE id=?");
                 $stmt_pic->bind_param("ss", $profile_picture_path_to_save, $user_id);
                 if ($stmt_pic->execute()) {
                     if ($stmt_pic->affected_rows > 0) {
@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Re-fetch user data if any update occurred to ensure the form displays the latest information
     if ($new_profile_picture_uploaded || $other_details_changed) {
-        $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+        $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id = ?");
         $stmt_fetch->bind_param("s", $user_id);
         $stmt_fetch->execute();
         $result_fetch = $stmt_fetch->get_result();
