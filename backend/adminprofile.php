@@ -12,6 +12,7 @@ $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
+echo $user_data['email'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
