@@ -12,9 +12,6 @@ $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-// TEMPORARY DEBUGGING LINE
-echo '<pre>'; var_dump($user_data); echo '</pre>';
-// END TEMPORARY DEBUGGING LINE
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
