@@ -127,7 +127,7 @@ $stmt->close();
                                     <th>Date</th>
                                     <th>Method</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+                                    <th class="d-none">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,7 +140,7 @@ $stmt->close();
                                         <td><?php echo htmlspecialchars($transaction['transaction_date']); ?></td>
                                         <td><?php echo htmlspecialchars($transaction['payment_method']); ?></td>
                                         <td><?php echo htmlspecialchars($transaction['status']); ?></td>
-                                        <td>
+                                        <td class="d-none">
                                             <a href="admission_transactions.php?delete_id=<?php echo $transaction['transaction_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this transaction?');">Delete</a>
                                         </td>
                                     </tr>
