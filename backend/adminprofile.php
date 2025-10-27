@@ -6,7 +6,7 @@ $profile_message = '';
 
 $user_id = $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
+$stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
@@ -83,12 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $profile_message .= (empty($profile_message) ? "" : " & ") . "Profile details updated!";
     }
 
-    // // ✅ Refresh Data for Display
-    // $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
-    // $stmt->bind_param("s", $user_id);
-    // $stmt->execute();
-    // $user_data = $stmt->get_result()->fetch_assoc();
-    // $stmt->close();
+    // ✅ Refresh Data for Display
+    $stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $user_data = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
 }
 ?>
 
@@ -152,7 +152,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <div class="form-group col-md-12">
                                         <input class="form-control" placeholder="Full Name" type="text" id="" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
-                                        <input class="form-control" placeholder="Email" type="text" id="" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input class="form-control" placeholder="Mobile" type="text" id="" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
