@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $date_of_birth = $_POST['date_of_birth'] ?? $user_data['date_of_birth'];
         $gender = $_POST['gender'] ?? $user_data['gender'];
         $profile_picture = $user_data['profile_picture']; // Keep existing picture by default
+        $new_profile_picture_uploaded = false;
 
         // Handle profile picture upload
         if (isset($_FILES['profile_picture']) && is_array($_FILES['profile_picture']) && isset($_FILES['profile_picture']['error']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK && isset($_FILES['profile_picture']['name']) && isset($_FILES['profile_picture']['tmp_name']) && !empty($_FILES['profile_picture']['name'])) {
@@ -94,30 +95,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // If everything is ok, try to upload file
             } else {
                 if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-                    $profile_picture = $target_file;
+                    $profile_picture = $target_file; // Update the variable
+                    $new_profile_picture_uploaded = true;
+
+                    // Perform a dedicated update for the profile picture
+                    $stmt_pic = $conn->prepare("UPDATE login SET profile_picture=? WHERE username=?");
+                    $stmt_pic->bind_param("ss", $profile_picture, $user_id);
+                    if ($stmt_pic->execute()) {
+                        if ($stmt_pic->affected_rows > 0) {
+                            $profile_message = "Profile picture updated successfully! Path: " . htmlspecialchars($profile_picture);
+                            // Re-fetch user data to display updated information
+                            $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+                            $stmt_fetch->bind_param("s", $user_id);
+                            $stmt_fetch->execute();
+                            $result_fetch = $stmt_fetch->get_result();
+                            $user_data = $result_fetch->fetch_assoc();
+                            $stmt_fetch->close();
+                        } else {
+                            $profile_message = "Profile picture update executed, but no rows were affected. Path: " . htmlspecialchars($profile_picture);
+                        }
+                    } else {
+                        $profile_message = "Error updating profile picture: " . $stmt_pic->error;
+                    }
+                    $stmt_pic->close();
                 } else {
                     $profile_message = "Sorry, there was an error uploading your profile picture.";
                 }
             }
         }
 
-        // Update profile details in the database
-        $stmt = $conn->prepare("UPDATE login SET staffname=?, mobile=?, email=?, address=?, date_of_birth=?, gender=?, profile_picture=? WHERE username=?");
-        $stmt->bind_param("ssssssss", $staffname, $mobile, $email, $address, $date_of_birth, $gender, $profile_picture, $user_id);
+        // Now handle other profile details. This block should only run if other details are being updated.
+        $other_details_changed = false;
+        $temp_staffname = $_POST['staffname'] ?? $user_data['staffname'];
+        $temp_mobile = $_POST['mobile'] ?? $user_data['mobile'];
+        $temp_email = $_POST['email'] ?? $user_data['email'];
+        $temp_address = $_POST['address'] ?? $user_data['address'];
+        $temp_date_of_birth = $_POST['date_of_birth'] ?? $user_data['date_of_birth'];
+        $temp_gender = $_POST['gender'] ?? $user_data['gender'];
 
-        if ($stmt->execute()) {
-            $profile_message = "Profile updated successfully!";
-            // Re-fetch user data to display updated information
-            $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
-            $stmt_fetch->bind_param("s", $user_id);
-            $stmt_fetch->execute();
-            $result_fetch = $stmt_fetch->get_result();
-            $user_data = $result_fetch->fetch_assoc();
-            $stmt_fetch->close();
-        } else {
-            $profile_message = "Error updating profile: " . $stmt->error;
+        if ($temp_staffname !== $user_data['staffname'] ||
+            $temp_mobile !== $user_data['mobile'] ||
+            $temp_email !== $user_data['email'] ||
+            $temp_address !== $user_data['address'] ||
+            $temp_date_of_birth !== $user_data['date_of_birth'] ||
+            $temp_gender !== $user_data['gender']) {
+            $other_details_changed = true;
         }
-        $stmt->close();
+
+        if ($other_details_changed) {
+            $staffname = $temp_staffname;
+            $mobile = $temp_mobile;
+            $email = $temp_email;
+            $address = $temp_address;
+            $date_of_birth = $temp_date_of_birth;
+            $gender = $temp_gender;
+
+            $stmt = $conn->prepare("UPDATE login SET staffname=?, mobile=?, email=?, address=?, date_of_birth=?, gender=? WHERE username=?");
+            $stmt->bind_param("sssssss", $staffname, $mobile, $email, $address, $date_of_birth, $gender, $user_id);
+
+            if ($stmt->execute()) {
+                if ($stmt->affected_rows > 0) {
+                    $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details updated successfully!";
+                    // Re-fetch user data to display updated information
+                    $stmt_fetch = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE username = ?");
+                    $stmt_fetch->bind_param("s", $user_id);
+                    $stmt_fetch->execute();
+                    $result_fetch = $stmt_fetch->get_result();
+                    $user_data = $result_fetch->fetch_assoc();
+                    $stmt_fetch->close();
+                } else {
+                    $profile_message .= (!empty($profile_message) ? " And " : "") . "Other profile details update executed, but no rows were affected.";
+                }
+            } else {
+                $profile_message .= (!empty($profile_message) ? " And " : "") . "Error updating other profile details: " . $stmt->error;
+            }
+            $stmt->close();
+        }
     }
 }
 
