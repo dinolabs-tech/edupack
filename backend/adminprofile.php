@@ -13,16 +13,6 @@ $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 
-// Ensure user_data is available on initial load
-if (empty($user_data)) {
-    $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-    $user_data = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-}
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ✅ Change Password
@@ -93,12 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $profile_message .= (empty($profile_message) ? "" : " & ") . "Profile details updated!";
     }
 
-    // ✅ Refresh Data for Display
-    $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-    $user_data = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
+    // // ✅ Refresh Data for Display
+    // $stmt = $conn->prepare("SELECT staffname, username, mobile, email, address, date_of_birth, gender, profile_picture FROM login WHERE id=?");
+    // $stmt->bind_param("s", $user_id);
+    // $stmt->execute();
+    // $user_data = $stmt->get_result()->fetch_assoc();
+    // $stmt->close();
 }
 ?>
 
