@@ -917,7 +917,7 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
                 customizations: {
                     title: "Tuckshop Account Funding",
                     description: "Funding for " + studentName + "'s Tuckshop Account",
-                    logo: "https://your-school-logo.com/logo.png"
+                    logo: "../assets/img/logodark.ico"
                 }
             });
         });

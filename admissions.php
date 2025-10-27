@@ -523,7 +523,7 @@ if ($flutterwave_public_key === null) {
                     customizations: {
                         title: "Admission Form Payment",
                         description: "Payment for " + name + "'s Admission Form",
-                        logo: "https://your-school-logo.com/logo.png" // Replace with your school logo
+                        logo: "../assets/img/logodark.ico" // Replace with your school logo
                     }
                 });
             });
