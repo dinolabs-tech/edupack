@@ -7,12 +7,12 @@ $profile_message = '';
 $user_id = $_SESSION['user_id'];
 
 $stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
-$stmt->bind_param("s", $user_id);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-echo $user_data['email'];
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">My Profile</h3>
+                <h3 class="fw-bold mb-3">My Profile <?= htmlspecialchars($user_data['email'] ?? '') ?></h3>
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item active">Home</li>
                   <li class="breadcrumb-item active">My Profile</li>
