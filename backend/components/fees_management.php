@@ -30,7 +30,7 @@ function getFeeDefinitionById($conn, $fee_id)
 function updateFeeDefinition($conn, $id, $class, $arm, $term, $service, $price, $hostel, $session)
 {
     $stmt = $conn->prepare("UPDATE fee SET class = ?, arm = ?, term = ?, service = ?, price = ?, hostel = ?, session = ? WHERE id = ?");
-    $stmt->bind_param("sssdsss", $class, $arm, $term, $service, $price, $hostel, $session, $id);
+    $stmt->bind_param("ssssdsss", $class, $arm, $term, $service, $price, $hostel, $session, $id);
     return $stmt->execute();
 }
 
