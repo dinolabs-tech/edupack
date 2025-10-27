@@ -73,7 +73,8 @@
                 </a>
               </li>
               <li>
-                <a href="result.php">
+                <!-- <a href="result.php"> -->
+                <a href="#" data-bs-toggle="collapse" onclick="showcbtPopup()">
                   <span class="sub-item">CBT Result</span>
                 </a>
               </li>
@@ -189,7 +190,87 @@
           }
         </script>
 
+   <!-- CBT result popup overlay -->
+        <div id="cbt_overlay" class="overlay" onclick="closecbtPopup()"></div>
 
+        <!-- Popup Form -->
+        <div id="cbt_popup" class="popup">
+          <span class="close" onclick="closecbtPopup()">&times;</span>
+          <form id="filtercbtForm">
+            <p></p>
+            <p></p>
+            <select id="cbt_session" name="cbt_session">
+              <option value="" selected disabled>Select Session</option>
+              <!-- Options will be added dynamically -->
+            </select>
+
+            <select id="cbt_term" name="cbt_term">
+              <option value="" selected disabled>Select Term</option>
+              <!-- Options will be added dynamically -->
+            </select>
+
+            <button type="button" onclick="checkcbtResult()">Check CBT Result</button>
+          </form>
+        </div>
+
+        <script>
+          // JavaScript to handle the CBT popup
+          function showcbtPopup() {
+            document.getElementById('cbt_popup').style.display = 'block';
+            document.getElementById('cbt_overlay').style.display = 'block';
+            loadCbtOptions(); // Load options for session and term
+          }
+
+          function closecbtPopup() {
+            document.getElementById('cbt_popup').style.display = 'none';
+            document.getElementById('cbt_overlay').style.display = 'none';
+          }
+
+          function loadCbtOptions() {
+            const sessionSelect = document.getElementById('cbt_session');
+            const termSelect = document.getElementById('cbt_term');
+
+            // Clear existing options
+            sessionSelect.innerHTML = '<option value="" selected disabled>Select Session</option>';
+            termSelect.innerHTML = '<option value="" selected disabled>Select Term</option>';
+
+            // Fetch session and term values from the server using AJAX
+            fetch('get_cbt_sessions.php')
+              .then(response => response.json())
+              .then(data => {
+                // Assuming data.sessions and data.terms are arrays
+                data.sessions.forEach(session => {
+                  const option = document.createElement('option');
+                  option.value = session;
+                  option.textContent = session;
+                  sessionSelect.appendChild(option);
+                });
+                data.terms.forEach(term => {
+                  const option = document.createElement('option');
+                  option.value = term;
+                  option.textContent = term;
+                  termSelect.appendChild(option);
+                });
+              })
+              .catch(error => {
+                console.error('Error fetching CBT sessions and terms:', error);
+              });
+          }
+
+
+          function checkcbtResult() {
+            const session = document.getElementById('cbt_session').value;
+            const term = document.getElementById('cbt_term').value;
+
+            if (session && term) {
+              window.location.href = `result.php?session=${encodeURIComponent(session)}&term=${encodeURIComponent(term)}&cbt=true`;
+            } else {
+              alert('Please select both session and term.');
+            }
+          }
+        </script>
+
+        
         <li class="nav-item">
           <a href="viewtimetable.php">
             <i class="fas fa-th-list"></i>
