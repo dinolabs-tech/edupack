@@ -18,7 +18,7 @@ class AdmissionSettings {
         )";
         if ($this->conn->query($sql) === TRUE) {
             // Check if 'registration_cost' setting exists, if not, insert a default value
-            $this->insertDefaultSetting('registration_cost', '0.00', 'd');
+            $this->insertDefaultSetting('registration_cost', '0.00', 's');
             $this->insertDefaultSetting('flutterwave_public_key', '', 's');
             $this->insertDefaultSetting('flutterwave_secret_key', '', 's');
         } else {
