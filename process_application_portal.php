@@ -6,7 +6,7 @@ session_start();
 include('backend/db_connection.php');
 require_once('classes/OnlineApplicationPortalClass.php'); // Include the class file
 require_once('classes/AdmissionSettingsClass.php'); // Include the AdmissionSettingsClass
-require_once('../includes/mail_sender.php'); // Include the new mail sender function
+require_once('includes/mail_sender.php'); // Include the new mail sender function
 
 $appPortal = new OnlineApplicationPortal($conn);
 $admissionSettings = new AdmissionSettings($conn);
