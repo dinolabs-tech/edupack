@@ -10,7 +10,7 @@ class OnlineApplicationPortal {
     }
 
     public function createApplication($applicant_data) {
-        $stmt = $this->db->prepare("INSERT INTO student_applications (id, name, gender, dob, placeob, address, studentmobile, email, religion, state, lga, class, arm, session, term, schoolname, schooladdress, hobbies, lastclass, sickle, challenge, emergency, familydoc, docaddress, docmobile, polio, tuberculosis, measles, tetanus, whooping, gname, mobile, goccupation, gaddress, grelationship, hostel, bloodtype, bloodgroup, height, weight, photo, status, password, result, passport_path, transcript_path, admission_status, entrance_exam_scheduled, entrance_exam_date, entrance_exam_time, entrance_exam_location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->db->prepare("INSERT INTO student_applications (id, name, gender, dob, placeob, address, studentmobile, email, religion, state, lga, class, arm, session, term, schoolname, schooladdress, hobbies, lastclass, sickle, challenge, emergency, familydoc, docaddress, docmobile, polio, tuberculosis, measles, tetanus, whooping, gname, mobile, goccupation, gaddress, grelationship, hostel, bloodtype, bloodgroup, height, weight, photo, status, password, result, passport_path, transcript_path, admission_status, assigned_student_id, assigned_class, assigned_arm, assigned_hostel, entrance_exam_scheduled, entrance_exam_date, entrance_exam_time, entrance_exam_location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $id = $applicant_data['id'];
         $name = $applicant_data['name'];
@@ -59,19 +59,24 @@ class OnlineApplicationPortal {
         $passport_path = $applicant_data['passport_path'];
         $transcript_path = $applicant_data['transcript_path'];
         $admission_status = $applicant_data['admission_status'];
+        $assigned_student_id = null; // Default to null
+        $assigned_class = null; // Default to null
+        $assigned_arm = null; // Default to null
+        $assigned_hostel = null; // Default to null
         $entrance_exam_scheduled = $applicant_data['entrance_exam_scheduled'];
         $entrance_exam_date = $applicant_data['entrance_exam_date'];
         $entrance_exam_time = $applicant_data['entrance_exam_time'];
         $entrance_exam_location = $applicant_data['entrance_exam_location'];
 
-        $stmt->bind_param("sssssssssssssssssssssssssssssssssssssssssisssssisss",
+        $stmt->bind_param("sssssssssssssssssssssssssssssssssssssssssisssssssssisss",
             $id, $name, $gender, $dob, $placeob, $address, $studentmobile, $email, $religion, $state, $lga,
             $class, $arm, $session, $term, $schoolname, $schooladdress, $hobbies, $lastclass, $sickle,
             $challenge, $emergency, $familydoc, $docaddress, $docmobile, $polio, $tuberculosis, $measles,
             $tetanus, $whooping, $gname, $mobile, $goccupation, $gaddress, $grelationship, $hostel,
             $bloodtype, $bloodgroup, $height, $weight, $photo, $status, $password, $result,
-            $passport_path, $transcript_path, $admission_status, $entrance_exam_scheduled,
-            $entrance_exam_date, $entrance_exam_time, $entrance_exam_location
+            $passport_path, $transcript_path, $admission_status, $assigned_student_id, $assigned_class,
+            $assigned_arm, $assigned_hostel, $entrance_exam_scheduled, $entrance_exam_date,
+            $entrance_exam_time, $entrance_exam_location
         );
 
         if ($stmt->execute()) {

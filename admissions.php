@@ -210,6 +210,7 @@ if ($flutterwave_public_key === null) {
                 </li>
               </ul>
               <form action="process_application_portal.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="submit_application">
                 <div class="tab-content" id="applicationTabsContent">
                   <!-- Tab 1: Personal Information -->
                   <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">

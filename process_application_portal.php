@@ -3,7 +3,7 @@ session_start();
 include('backend/db_connection.php');
 require_once('classes/OnlineApplicationPortalClass.php'); // Include the class file
 require_once('classes/AdmissionSettingsClass.php'); // Include the AdmissionSettingsClass
-require_once('includes/mail_sender.php'); // Include the new mail sender function
+require_once('../includes/mail_sender.php'); // Include the new mail sender function
 
 $appPortal = new OnlineApplicationPortal($conn);
 $admissionSettings = new AdmissionSettings($conn);
@@ -13,7 +13,11 @@ if ($registration_cost === null) {
 }
 $flutterwave_secret_key = $admissionSettings->getSetting('flutterwave_secret_key');
 if ($flutterwave_secret_key === null) {
-    $flutterwave_secret_key = "FLWSECK_TEST-d2121212121212121212121212121212-X"; // Default test key
+    // If the secret key is not set, terminate with an error.
+    // It's crucial that a live key is configured in the settings.
+    $_SESSION['error_message'] = "Flutterwave secret key is not configured. Please contact administrator.";
+    header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,18 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 $response = curl_exec($ch);
                 curl_close($ch);
+                
                 $res = json_decode($response);
 
                 if ($res && $res->status === 'success' && $res->data->amount >= $registration_cost && $res->data->currency === 'NGN' && $res->data->tx_ref === $flw_tx_ref) {
                     $payment_successful = true;
                 } else {
                     $_SESSION['error_message'] = "Payment verification failed. Please try again or contact support.";
-                    header("Location: admissions.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+                    header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
                     exit();
                 }
             } else {
                 $_SESSION['error_message'] = "Payment details missing or payment not successful.";
-                header("Location: admissions.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+                header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
                 exit();
             }
         } else {
@@ -59,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$payment_successful) {
             $_SESSION['error_message'] = "Payment required but not successful.";
-            header("Location: admissions.php?status=failed&message=" . urlencode($_SESSION['error_message']));
+            header("Location: online_application_portal.php?status=failed&message=" . urlencode($_SESSION['error_message']));
             exit();
         }
 
@@ -120,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Basic validation for required fields
         if (empty($applicant_data['name']) || empty($applicant_data['email']) || empty($applicant_data['dob']) || empty($applicant_data['gender']) || empty($applicant_data['placeob'])) {
             $_SESSION['error_message'] = "Please fill in all required personal information fields.";
-            header("Location: admissions.php");
+            header("Location: online_application_portal.php");
             exit();
         }
 
@@ -138,12 +143,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $applicant_data['passport_path'] = $passport_target_file;
             } else {
                 $_SESSION['error_message'] = "Failed to upload passport photo.";
-                header("Location: admissions.php");
+                header("Location: online_application_portal.php");
                 exit();
             }
         } else {
             $_SESSION['error_message'] = "Passport photo is required.";
-            header("Location: admissions.php");
+            header("Location: online_application_portal.php");
             exit();
         }
 
@@ -161,17 +166,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $applicant_data['transcript_path'] = $transcript_target_file;
             } else {
                 $_SESSION['error_message'] = "Failed to upload transcript.";
-                header("Location: admissions.php");
+                header("Location: online_application_portal.php");
                 exit();
             }
         } else {
             $_SESSION['error_message'] = "Transcripts are required.";
-            header("Location: admissions.php");
+            header("Location: online_application_portal.php");
             exit();
         }
 
         // Create the application in the database
-        if ($appPortal->createApplication($applicant_data)) {
+        if ($payment_successful && $appPortal->createApplication($applicant_data)) {
             $_SESSION['success_message'] = "Application submitted successfully with ID: " . $application_id;
 
             // Send confirmation email to applicant
@@ -197,23 +202,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             sendEmail($admin_email, 'Admissions Admin', $admin_subject, $admin_body);
 
             // Record the transaction if payment was required and successful
-            if ($registration_cost > 0 && $payment_successful) {
+            if ($registration_cost > 0) {
                 $payment_method = 'Online Payment (Flutterwave)'; // Or extract from Flutterwave response if available
                 $notes = "Flutterwave Transaction Ref: " . ($flw_tx_ref ?? 'N/A');
                 $appPortal->recordAdmissionTransaction($application_id, $registration_cost, $payment_method, 'Completed', $notes);
             }
 
         } else {
-            $_SESSION['error_message'] = "Failed to submit application.";
+            $_SESSION['error_message'] = "Failed to submit application. Please try again or contact support.";
         }
 
-        header("Location: admissions.php");
+        header("Location: online_application_portal.php");
         exit();
     } elseif (isset($_GET['action']) && $_GET['action'] === 'update_status' && isset($_GET['id']) && isset($_GET['status'])) {
         // Admin action to update application status
         if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'Administrator' && $_SESSION['role'] !== 'Superuser')) {
             $_SESSION['error_message'] = "Unauthorized access.";
-            header("Location: admissions.php");
+            header("Location: online_application_portal.php");
             exit();
         }
 
@@ -224,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $valid_statuses = ['pending', 'exam_scheduled', 'approved', 'rejected'];
         if (!in_array($new_status, $valid_statuses)) {
             $_SESSION['error_message'] = "Invalid status provided.";
-            header("Location: admissions.php");
+            header("Location: online_application_portal.php");
             exit();
         }
 
@@ -249,15 +254,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['error_message'] = "Failed to update application ID {$application_id} status.";
         }
-        header("Location: admissions.php");
+        header("Location: online_application_portal.php");
         exit();
     }
 
-    header("Location: admissions.php");
+    header("Location: online_application_portal.php");
     exit();
 } else {
     // For GET requests, simply redirect to the portal
-    header("Location: admissions.php");
+    header("Location: online_application_portal.php");
     exit();
 }
 ?>
