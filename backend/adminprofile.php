@@ -38,16 +38,6 @@ echo "<!-- User ID: " . htmlspecialchars($user_id) . " -->\n";
 echo "<!-- User Data: " . htmlspecialchars(json_encode($user_data)) . " -->\n";
 echo "<!-- End Debugging Info -->\n";
 
-// PHP Debugging: Output values of specific fields before HTML rendering
-echo "<script>\n";
-echo "console.log('PHP Debug - staffname:', '" . htmlspecialchars($user_data['staffname'] ?? '') . "');\n";
-echo "console.log('PHP Debug - mobile:', '" . htmlspecialchars($user_data['mobile'] ?? '') . "');\n";
-echo "console.log('PHP Debug - email:', '" . htmlspecialchars($user_data['email'] ?? '') . "');\n";
-echo "console.log('PHP Debug - address:', '" . htmlspecialchars($user_data['address'] ?? '') . "');\n";
-echo "console.log('PHP Debug - date_of_birth:', '" . htmlspecialchars($user_data['date_of_birth'] ?? '') . "');\n";
-echo "console.log('PHP Debug - gender:', '" . htmlspecialchars($user_data['gender'] ?? '') . "');\n";
-echo "</script>\n";
-
 // Handle POST requests for profile updates
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle password change
