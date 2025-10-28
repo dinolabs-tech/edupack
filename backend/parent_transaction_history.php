@@ -4,11 +4,11 @@
 
 // Function to get tuckshop recharge history
 
-$stmt = $conn->prepare("SELECT ft.*
-                            FROM fee_transactions ft
+$stmt = $conn->prepare("SELECT ft.* FROM fee_transactions ft
                             INNER JOIN parent_student ps ON ft.student_id = ps.student_id
                             WHERE ft.payment_method = 'Flutterwave (Parent Tuckshop)' 
                             OR ft.payment_method = 'Flutterwave (Parent Fees)'
+                            OR ft.recorded_by = 'Parent'
                             AND ft.student_id = ps.student_id
                             ORDER BY payment_date DESC");
 $stmt->execute();
