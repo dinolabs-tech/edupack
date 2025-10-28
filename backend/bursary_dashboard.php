@@ -1,7 +1,106 @@
-<?php include('components/admin_logic.php');
-
+<?php
+include('components/admin_logic.php');
 include('components/fees_management.php');
 
+// --- Fetch Filter Options ---
+$classes = [];
+$arms = [];
+
+// Fetch unique classes
+$sql_classes = "SELECT DISTINCT class FROM students ORDER BY class";
+$result_classes = $conn->query($sql_classes);
+if ($result_classes && $result_classes->num_rows > 0) {
+    while ($row = $result_classes->fetch_assoc()) {
+        $classes[] = $row['class'];
+    }
+}
+
+// Fetch unique arms
+$sql_arms = "SELECT DISTINCT arm FROM students ORDER BY arm";
+$result_arms = $conn->query($sql_arms);
+if ($result_arms && $result_arms->num_rows > 0) {
+    while ($row = $result_arms->fetch_assoc()) {
+        $arms[] = $row['arm'];
+    }
+}
+
+// --- Data for Dashboard ---
+$classFilter = isset($_GET['class']) ? $_GET['class'] : 'all';
+$armFilter = isset($_GET['arm']) ? $_GET['arm'] : 'all';
+
+$response = [
+    'owing_count' => 0,
+    'paid_count' => 0,
+    'total_outstanding' => 0.00,
+    'owing_students' => [],
+    'paid_students' => []
+];
+
+// Build WHERE clause for filtering
+$where_clause = "WHERE 1=1";
+if ($classFilter !== 'all') {
+    $where_clause .= " AND s.class = '" . $conn->real_escape_string($classFilter) . "'";
+}
+if ($armFilter !== 'all') {
+    $where_clause .= " AND s.arm = '" . $conn->real_escape_string($armFilter) . "'";
+}
+
+// Query for Students Owing
+$sql_owing = "
+    SELECT
+        s.id AS student_id,
+        s.name AS student_name,
+        s.class,
+        s.arm,
+        b.outstanding AS amount_owing
+    FROM
+        students s
+    LEFT JOIN
+        bursary b ON s.id = b.id
+    " . $where_clause . "
+    AND (b.outstanding > 0 OR b.id IS NULL)
+    ORDER BY
+        b.outstanding DESC;
+";
+
+$result_owing = $conn->query($sql_owing);
+if ($result_owing) {
+    $response['owing_count'] = $result_owing->num_rows;
+    while ($row = $result_owing->fetch_assoc()) {
+        $response['owing_students'][] = $row;
+        $response['total_outstanding'] += $row['amount_owing'];
+    }
+} else {
+    error_log("Error fetching owing students: " . $conn->error);
+}
+
+// Query for Students Paid in Full
+$sql_paid = "
+    SELECT
+        s.id AS student_id,
+        s.name AS student_name,
+        s.class,
+        s.arm,
+        b.fee AS amount_paid
+    FROM
+        students s
+    LEFT JOIN
+        bursary b ON s.id = b.id
+    " . $where_clause . "
+    AND b.outstanding <= 0 AND b.id IS NOT NULL
+    ORDER BY
+        s.name ASC;
+";
+
+$result_paid = $conn->query($sql_paid);
+if ($result_paid) {
+    $response['paid_count'] = $result_paid->num_rows;
+    while ($row = $result_paid->fetch_assoc()) {
+        $response['paid_students'][] = $row;
+    }
+} else {
+    error_log("Error fetching paid students: " . $conn->error);
+}
 
 // Close database connection
 $conn->close();
@@ -40,113 +139,119 @@ $conn->close();
                                 <li class="breadcrumb-item active">Bursary Dashboard</li>
                             </ol>
                         </div>
-
                     </div>
 
-                    <!-- BULK UPLOAD ============================ -->
                     <div class="row">
-
                         <div class="col-md-12">
                             <div class="card card-round">
                                 <div class="card-header">
                                     <div class="card-head-row">
-                                        <div class="card-title">Add New Fee</div>
+                                        <div class="card-title">Dashboard Filters</div>
                                     </div>
                                 </div>
-                                <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <p>
-
+                                <div class="card-body">
+                                    <form method="GET" action="">
                                         <div class="row mb-4">
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label for="classFilter">Filter by Class:</label>
-                                                    <select class="form-control form-select" id="classFilter">
+                                                    <select class="form-control form-select" id="classFilter" name="class">
                                                         <option value="all">All Classes</option>
-                                                        <!-- Options will be loaded dynamically -->
+                                                        <?php foreach ($classes as $class) : ?>
+                                                            <option value="<?php echo htmlspecialchars($class); ?>" <?php echo ($classFilter === $class) ? 'selected' : ''; ?>>
+                                                                <?php echo htmlspecialchars($class); ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label for="armFilter">Filter by Arm:</label>
-                                                    <select class="form-control form-select" id="armFilter">
+                                                    <select class="form-control form-select" id="armFilter" name="arm">
                                                         <option value="all">All Arms</option>
-                                                        <!-- Options will be loaded dynamically -->
+                                                        <?php foreach ($arms as $arm) : ?>
+                                                            <option value="<?php echo htmlspecialchars($arm); ?>" <?php echo ($armFilter === $arm) ? 'selected' : ''; ?>>
+                                                                <?php echo htmlspecialchars($arm); ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 d-flex align-items-end">
-                                                <button class="btn btn-primary" id="applyFilter">Apply Filter</button>
+                                                <button type="submit" class="btn btn-primary">Apply Filter</button>
                                             </div>
                                         </div>
-
-                                        <hr>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card card-round bg-primary p-5 text-white text-center">
-                                                    <h4>Students Owing</h4>
-                                                    <div class="value" id="studentsOwingCount">
-                                                        <h1>0</h1>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card card-round bg-success p-5 text-white text-center">
-                                                    <h4>Students Paid in Full</h4>
-                                                    <div class="value" id="studentsPaidCount">
-                                                        <h1>0</h1>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card card-round bg-danger p-5 text-white text-center">
-                                                    <h4>Total Outstanding Balance</h4>
-                                                    <div id="totalOutstandingBalance">
-                                                        <h1>₦0.00</h1>
-                                                    </div>
+                                    </form>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="card card-round bg-primary p-5 text-white text-center">
+                                                <h4>Students Owing</h4>
+                                                <div class="value">
+                                                    <h1><?php echo $response['owing_count']; ?></h1>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        </p>
+                                        <div class="col-md-4">
+                                            <div class="card card-round bg-success p-5 text-white text-center">
+                                                <h4>Students Paid in Full</h4>
+                                                <div class="value">
+                                                    <h1><?php echo $response['paid_count']; ?></h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card card-round bg-danger p-5 text-white text-center">
+                                                <h4>Total Outstanding Balance</h4>
+                                                <div>
+                                                    <h1>₦<?php echo number_format($response['total_outstanding'], 2); ?></h1>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
                     <div class="row">
-
                         <div class="col-md-6">
                             <div class="card card-round">
                                 <div class="card-header d-flex">
                                     <div class="card-head-row me-auto">
-                                        <div class="card-title">Students Owing </div>
+                                        <div class="card-title">Students Owing</div>
                                     </div>
                                     <button class="btn btn-secondary btn-sm" onclick="printTable('studentsOwingTable')">Print Owing List</button>
                                 </div>
                                 <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <p>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-striped" id="studentsOwingTable">
-                                                <thead>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped basic-datatables" id="studentsOwingTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Student Name</th>
+                                                    <th>Class</th>
+                                                    <th>Arm</th>
+                                                    <th>Amount Owing</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if (!empty($response['owing_students'])) : ?>
+                                                    <?php foreach ($response['owing_students'] as $student) : ?>
+                                                        <tr>
+                                                            <td><?php echo htmlspecialchars($student['student_name']); ?></td>
+                                                            <td><?php echo htmlspecialchars($student['class']); ?></td>
+                                                            <td><?php echo htmlspecialchars($student['arm']); ?></td>
+                                                            <td>₦<?php echo number_format((float)$student['amount_owing'], 2); ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                <?php else : ?>
                                                     <tr>
-                                                        <th>Student Name</th>
-                                                        <th>Class</th>
-                                                        <th>Arm</th>
-                                                        <th>Amount Owing</th>
+                                                        <td colspan="4" class="text-center">No students owing found.</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody id="studentsOwingTableBody">
-                                                    <!-- Data will be loaded dynamically -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        </p>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -156,39 +261,45 @@ $conn->close();
                             <div class="card card-round">
                                 <div class="card-header d-flex">
                                     <div class="card-head-row me-auto">
-                                        <div class="card-title">Student Paid in Full </div>
+                                        <div class="card-title">Student Paid in Full</div>
                                     </div>
                                     <button class="btn btn-secondary btn-sm" onclick="printTable('studentsPaidTable')">Print Paid List</button>
                                 </div>
                                 <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <p>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-striped" id="studentsPaidTable">
-                                                <thead>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped basic-datatables" id=" studentsPaidTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Student Name</th>
+                                                    <th>Class</th>
+                                                    <th>Arm</th>
+                                                    <th>Amount Paid</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if (!empty($response['paid_students'])) : ?>
+                                                    <?php foreach ($response['paid_students'] as $student) : ?>
+                                                        <tr>
+                                                            <td><?php echo htmlspecialchars($student['student_name']); ?></td>
+                                                            <td><?php echo htmlspecialchars($student['class']); ?></td>
+                                                            <td><?php echo htmlspecialchars($student['arm']); ?></td>
+                                                            <td>₦<?php echo number_format((float)$student['amount_paid'], 2); ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                <?php else : ?>
                                                     <tr>
-                                                        <th>Student Name</th>
-                                                        <th>Class</th>
-                                                        <th>Arm</th>
-                                                        <th>Amount Paid</th>
+                                                        <td colspan="4" class="text-center">No students paid in full found.</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody id="studentsPaidTableBody">
-                                                    <!-- Data will be loaded dynamically -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        </p>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
 
             <?php include('footer.php'); ?>
         </div>
@@ -199,108 +310,6 @@ $conn->close();
     </div>
     <?php include('scripts.php'); ?>
     <script>
-        $(document).ready(function() {
-            function loadDashboardData(classFilter = 'all', armFilter = 'all') {
-                $.ajax({
-                    url: 'bursary_dashboard_ajax.php', // This file will handle data fetching
-                    method: 'GET',
-                    data: {
-                        class: classFilter,
-                        arm: armFilter
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#studentsOwingCount').text(data.owing_count);
-                        $('#studentsPaidCount').text(data.paid_count);
-                        $('#totalOutstandingBalance').text('₦' + parseFloat(data.total_outstanding).toLocaleString('en-US', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        }));
-
-                        // Populate Students Owing Table
-                        let owingTableHtml = '';
-                        if (data.owing_students.length > 0) {
-                            data.owing_students.forEach(student => {
-                                owingTableHtml += `
-                                    <tr>
-                                        <td>${student.student_name}</td>
-                                        <td>${student.class}</td>
-                                        <td>${student.arm}</td>
-                                        <td>₦${parseFloat(student.amount_owing).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                    </tr>
-                                `;
-                            });
-                        } else {
-                            owingTableHtml = `<tr><td colspan="4" class="text-center">No students owing found.</td></tr>`;
-                        }
-                        $('#studentsOwingTableBody').html(owingTableHtml);
-
-                        // Populate Students Paid in Full Table
-                        let paidTableHtml = '';
-                        if (data.paid_students.length > 0) {
-                            data.paid_students.forEach(student => {
-                                paidTableHtml += `
-                                    <tr>
-                                        <td>${student.student_name}</td>
-                                        <td>${student.class}</td>
-                                        <td>${student.arm}</td>
-                                        <td>₦${parseFloat(student.amount_paid).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                    </tr>
-                                `;
-                            });
-                        } else {
-                            paidTableHtml = `<tr><td colspan="4" class="text-center">No students paid in full found.</td></tr>`;
-                        }
-                        $('#studentsPaidTableBody').html(paidTableHtml);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error loading dashboard data:", status, error);
-                        alert("Failed to load dashboard data. Please try again.");
-                    }
-                });
-            }
-
-            // Load initial data
-            loadDashboardData();
-
-            // Handle filter application
-            $('#applyFilter').on('click', function() {
-                const selectedClass = $('#classFilter').val();
-                const selectedArm = $('#armFilter').val();
-                loadDashboardData(selectedClass, selectedArm);
-            });
-
-            // Function to load class and arm options
-            function loadFilterOptions() {
-                $.ajax({
-                    url: 'bursary_dashboard_ajax.php', // Use the same AJAX file for options
-                    method: 'GET',
-                    data: {
-                        action: 'get_filters'
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        let classOptions = '<option value="all">All Classes</option>';
-                        data.classes.forEach(cls => {
-                            classOptions += `<option value="${cls}">${cls}</option>`;
-                        });
-                        $('#classFilter').html(classOptions);
-
-                        let armOptions = '<option value="all">All Arms</option>';
-                        data.arms.forEach(arm => {
-                            armOptions += `<option value="${arm}">${arm}</option>`;
-                        });
-                        $('#armFilter').html(armOptions);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error loading filter options:", status, error);
-                    }
-                });
-            }
-
-            loadFilterOptions();
-        });
-
         function printTable(tableId) {
             const printContents = document.getElementById(tableId).outerHTML;
             const originalContents = document.body.innerHTML;
