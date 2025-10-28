@@ -285,7 +285,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
           customizations: {
             title: "School Fees Payment (Parent)",
             description: "School Fees Payment for " + studentName + " - " + currentSession + " " + currentTerm,
-            logo: "https://your-school-logo.com/logo.png"
+            logo: "../assets/img/logodark.ico"
           }
         });
       });
