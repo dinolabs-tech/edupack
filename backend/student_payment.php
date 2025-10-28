@@ -325,12 +325,12 @@ $conn->close();
                                                                         <td><?php echo htmlspecialchars(number_format((float)$student_status['outstanding_balance'], 2)); ?></td>
 
                                                                         <td class=" d-flex">
-                                                                            <button type="button" class="btn btn-icon btn-round btn-info view-payments-btn me-3"
+                                                                            <!-- <button type="button" class="btn btn-icon btn-round btn-info view-payments-btn me-3"
                                                                                 data-bs-toggle="modal" data-bs-target="#viewPaymentsModal"
                                                                                 data-student-id="<?php echo htmlspecialchars($student_status['id']); ?>"
                                                                                 data-student-name="<?php echo htmlspecialchars($student_status['name']); ?>">
                                                                                 <i class="fas fa-eye"></i>
-                                                                            </button>
+                                                                            </button> -->
                                                                             <a href="print_student_transactions.php?student_id=<?php echo htmlspecialchars($student_status['id']); ?>&session=<?php echo htmlspecialchars($display_session); ?>&term=<?php echo htmlspecialchars($display_term); ?>" target="_blank" class="btn btn-icon btn-round btn-secondary"> <i class="fas fa-print"></i></a>
                                                                         </td>
                                                                     </tr>
