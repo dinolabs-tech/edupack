@@ -7,7 +7,7 @@ include('includes/config.php'); // Include the config file
 
 // Ensure the constants are defined
 if (!defined('FLUTTERWAVE_PUBLIC_KEY') || !defined('FLUTTERWAVE_SECRET_KEY')) {
-    die("Flutterwave API keys are not defined in config.php");
+  die("Flutterwave API keys are not defined in config.php");
 }
 
 // For demonstration purposes, assume a student ID is passed or retrieved from session
@@ -27,7 +27,7 @@ $student_result = $student_stmt->get_result();
 $student_data = $student_result->fetch_assoc();
 
 if (!$student_data) {
-    die("Student not found.");
+  die("Student not found.");
 }
 
 $student_name = $student_data['name'];
@@ -47,8 +47,8 @@ $tuckshop_stmt->bind_param("ss", $student_id, $student_name);
 $tuckshop_stmt->execute();
 $tuckshop_result = $tuckshop_stmt->get_result();
 if ($tuckshop_data = $tuckshop_result->fetch_assoc()) {
-    $is_tuckshop_registered = true;
-    $tuckshop_balance = (float)$tuckshop_data['vbalance'];
+  $is_tuckshop_registered = true;
+  $tuckshop_balance = (float)$tuckshop_data['vbalance'];
 }
 
 
@@ -126,7 +126,7 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
 
           </div>
 
-       
+
           <!-- PERSONAL AI ============================ -->
           <div class="row">
 
@@ -384,30 +384,30 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
         </div>
 
         <!-- Fund Tuckshop Modal -->
-    <div class="modal fade" id="fundTuckshopModal" tabindex="-1" aria-labelledby="fundTuckshopModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal fade" id="fundTuckshopModal" tabindex="-1" aria-labelledby="fundTuckshopModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="fundTuckshopModalLabel">Fund Tuckshop Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="fundTuckshopForm">
-                        <input type="hidden" id="tuckshop_student_id" value="<?php echo htmlspecialchars($student_id); ?>">
-                        <input type="hidden" id="tuckshop_student_name" value="<?php echo htmlspecialchars($student_name); ?>">
-                        <input type="hidden" id="tuckshop_student_email" value="<?php echo htmlspecialchars($student_email); ?>">
-                        <input type="hidden" id="tuckshop_current_session" value="<?php echo htmlspecialchars($current_session); ?>">
-                        <input type="hidden" id="tuckshop_current_term" value="<?php echo htmlspecialchars($current_term); ?>">
-                        <div class="mb-3">
-                            <label for="tuckshop_amount" class="form-label">Amount to Fund</label>
-                            <input type="number" class="form-control" id="tuckshop_amount" name="tuckshop_amount" step="0.01" min="1" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Proceed to Fund</button>
-                    </form>
-                </div>
+              <div class="modal-header">
+                <h5 class="modal-title" id="fundTuckshopModalLabel">Fund Tuckshop Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="fundTuckshopForm">
+                  <input type="hidden" id="tuckshop_student_id" value="<?php echo htmlspecialchars($student_id); ?>">
+                  <input type="hidden" id="tuckshop_student_name" value="<?php echo htmlspecialchars($student_name); ?>">
+                  <input type="hidden" id="tuckshop_student_email" value="<?php echo htmlspecialchars($student_email); ?>">
+                  <input type="hidden" id="tuckshop_current_session" value="<?php echo htmlspecialchars($current_session); ?>">
+                  <input type="hidden" id="tuckshop_current_term" value="<?php echo htmlspecialchars($current_term); ?>">
+                  <div class="mb-3">
+                    <label for="tuckshop_amount" class="form-label">Amount to Fund</label>
+                    <input type="number" class="form-control" id="tuckshop_amount" name="tuckshop_amount" step="0.01" min="1" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Proceed to Fund</button>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
 
         <div class="row">
           <div class="col-md-8">
@@ -461,6 +461,7 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
           </div>
         </div>
 
+        <!-- Academic calendar -->
         <div class="row">
           <div class="col-md-12">
             <div class="card card-round">
@@ -631,7 +632,7 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
                   <div class="card-body p-0">
 
                     <div class="table-responsive">
-                      <!-- Projects table -->
+                      <!-- Class peers table -->
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
@@ -863,85 +864,85 @@ $total_outstanding_cumulative = $outstanding_current_period + $sum_previous_outs
     window.onload = setChatbotHeader;
   </script>
 
- <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <script>
-        document.getElementById('fundTuckshopForm')?.addEventListener('submit', function(event) {
-            event.preventDefault();
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <script>
+    document.getElementById('fundTuckshopForm')?.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-            var studentId = document.getElementById('tuckshop_student_id').value;
-            var studentName = document.getElementById('tuckshop_student_name').value;
-            var studentEmail = document.getElementById('tuckshop_student_email').value;
-            var amount = parseFloat(document.getElementById('tuckshop_amount').value);
-            var currentSession = document.getElementById('tuckshop_current_session').value;
-            var currentTerm = document.getElementById('tuckshop_current_term').value;
+      var studentId = document.getElementById('tuckshop_student_id').value;
+      var studentName = document.getElementById('tuckshop_student_name').value;
+      var studentEmail = document.getElementById('tuckshop_student_email').value;
+      var amount = parseFloat(document.getElementById('tuckshop_amount').value);
+      var currentSession = document.getElementById('tuckshop_current_session').value;
+      var currentTerm = document.getElementById('tuckshop_current_term').value;
 
-            if (amount <= 0 || isNaN(amount)) {
-                alert('Please enter a valid amount.');
-                return;
-            }
+      if (amount <= 0 || isNaN(amount)) {
+        alert('Please enter a valid amount.');
+        return;
+      }
 
-            var tx_ref = "TUCK-TX-" + Math.floor(Math.random() * 1000000000) + "-" + Date.now();
+      var tx_ref = "TUCK-TX-" + Math.floor(Math.random() * 1000000000) + "-" + Date.now();
 
-            var paymentDetails = {
-                student_id: studentId,
-                amount: amount,
-                tx_ref: tx_ref,
-                session: currentSession,
-                term: currentTerm,
-                type: 'tuckshop' // Indicate this is a tuckshop payment
-            };
-            var encodedPaymentDetails = btoa(JSON.stringify(paymentDetails));
+      var paymentDetails = {
+        student_id: studentId,
+        amount: amount,
+        tx_ref: tx_ref,
+        session: currentSession,
+        term: currentTerm,
+        type: 'tuckshop' // Indicate this is a tuckshop payment
+      };
+      var encodedPaymentDetails = btoa(JSON.stringify(paymentDetails));
 
-            FlutterwaveCheckout({
-                public_key: "<?php echo FLUTTERWAVE_PUBLIC_KEY; ?>", // Use the public key from config
-                tx_ref: tx_ref,
-                amount: amount,
-                currency: "NGN",
-                country: "NG",
-                payment_options: "card, mobilemoney,banktransfer, ussd",
-                customer: {
-                    email: studentEmail,
-                    name: studentName
-                },
-                callback: function(data) {
-                    if (data.status === 'successful') {
-                        window.location.href = 'tuckshop_payment_callback.php?status=successful&tx_ref=' + data.tx_ref +
-                            '&transaction_id=' + data.transaction_id + '&payment_details=' + encodedPaymentDetails +
-                            '&student_id=' + studentId;
-                    } else if (data.status === 'cancelled') {
-                        window.location.href = 'students.php';
-                    } else {
-                        window.location.href = 'students.php';
-                    }
-                },
-                customizations: {
-                    title: "Tuckshop Account Funding",
-                    description: "Funding for " + studentName + "'s Tuckshop Account",
-                    logo: "../assets/img/logodark.ico"
-                }
-            });
-        });
+      FlutterwaveCheckout({
+        public_key: "<?php echo FLUTTERWAVE_PUBLIC_KEY; ?>", // Use the public key from config
+        tx_ref: tx_ref,
+        amount: amount,
+        currency: "NGN",
+        country: "NG",
+        payment_options: "card, mobilemoney,banktransfer, ussd",
+        customer: {
+          email: studentEmail,
+          name: studentName
+        },
+        callback: function(data) {
+          if (data.status === 'successful') {
+            window.location.href = 'tuckshop_payment_callback.php?status=successful&tx_ref=' + data.tx_ref +
+              '&transaction_id=' + data.transaction_id + '&payment_details=' + encodedPaymentDetails +
+              '&student_id=' + studentId;
+          } else if (data.status === 'cancelled') {
+            window.location.href = 'students.php';
+          } else {
+            window.location.href = 'students.php';
+          }
+        },
+        customizations: {
+          title: "Tuckshop Account Funding",
+          description: "Funding for " + studentName + "'s Tuckshop Account",
+          logo: "../assets/img/logodark.ico"
+        }
+      });
+    });
 
-        // Handle messages from tuckshop_payment_callback.php
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const status = urlParams.get('status');
-            const message = urlParams.get('message');
+    // Handle messages from tuckshop_payment_callback.php
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const status = urlParams.get('status');
+      const message = urlParams.get('message');
 
-            if (status && message) {
-                const alertDiv = document.createElement('div');
-                alertDiv.className = `alert alert-${status === 'successful' ? 'success' : 'danger'} mt-3`;
-                alertDiv.textContent = message;
-                document.querySelector('.container').prepend(alertDiv);
+      if (status && message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${status === 'successful' ? 'success' : 'danger'} mt-3`;
+        alertDiv.textContent = message;
+        document.querySelector('.container').prepend(alertDiv);
 
-                // Remove status and message from URL
-                urlParams.delete('status');
-                urlParams.delete('message');
-                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
-                window.history.replaceState({}, document.title, newUrl);
-            }
-        });
-    </script>
+        // Remove status and message from URL
+        urlParams.delete('status');
+        urlParams.delete('message');
+        const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+        window.history.replaceState({}, document.title, newUrl);
+      }
+    });
+  </script>
 
 </body>
 

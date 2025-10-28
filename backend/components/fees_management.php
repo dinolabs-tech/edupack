@@ -1,13 +1,45 @@
 <?php
 include('db_connection.php');
 
+// Helper function to update bursary records for students affected by a fee change
+function _updateBursaryForAffectedStudents($conn, $class, $arm, $hostel, $session, $term) {
+    $sql = "SELECT id FROM students WHERE class = ? AND arm = ?";
+    $params = [$class, $arm];
+    $types = "ss";
+
+    if ($hostel !== 'N/A' && $hostel !== null) {
+        $sql .= " AND hostel = ?";
+        $params[] = $hostel;
+        $types .= "s";
+    }
+
+    $students_stmt = $conn->prepare($sql);
+    if (!$students_stmt) {
+        error_log("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+        return;
+    }
+    
+    $students_stmt->bind_param($types, ...$params);
+    $students_stmt->execute();
+    $students_result = $students_stmt->get_result();
+    
+    while ($student = $students_result->fetch_assoc()) {
+        updateBursaryBalance($conn, $student['id'], $session, $term);
+    }
+}
+
 // Function to add a new fee definition
 function addFeeDefinition($conn, $class, $arm, $term, $service, $price, $hostel, $session)
 {
     $id = strtoupper(str_replace(' ', '-', $service)) . '-' . strtoupper(str_replace(' ', '-', $class)) . '-' . strtoupper(str_replace(' ', '-', $term)) . '-' . strtoupper(str_replace(' ', '-', $session));
     $stmt = $conn->prepare("INSERT INTO fee (id, class, arm, term, service, price, hostel, session) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssdss", $id, $class, $arm, $term, $service, $price, $hostel, $session);
-    return $stmt->execute();
+    $success = $stmt->execute();
+
+    if ($success) {
+        _updateBursaryForAffectedStudents($conn, $class, $arm, $hostel, $session, $term);
+    }
+    return $success;
 }
 
 // Function to get all fee definitions
@@ -29,17 +61,36 @@ function getFeeDefinitionById($conn, $fee_id)
 // Function to update a fee definition
 function updateFeeDefinition($conn, $id, $class, $arm, $term, $service, $price, $hostel, $session)
 {
+    $old_fee = getFeeDefinitionById($conn, $id);
+
     $stmt = $conn->prepare("UPDATE fee SET class = ?, arm = ?, term = ?, service = ?, price = ?, hostel = ?, session = ? WHERE id = ?");
     $stmt->bind_param("ssssdsss", $class, $arm, $term, $service, $price, $hostel, $session, $id);
-    return $stmt->execute();
+    $success = $stmt->execute();
+
+    if ($success) {
+        if ($old_fee) {
+            // Update students affected by the old fee parameters
+            _updateBursaryForAffectedStudents($conn, $old_fee['class'], $old_fee['arm'], $old_fee['hostel'], $old_fee['session'], $old_fee['term']);
+        }
+        // Update students affected by the new fee parameters
+        _updateBursaryForAffectedStudents($conn, $class, $arm, $hostel, $session, $term);
+    }
+    return $success;
 }
 
 // Function to delete a fee definition
 function deleteFeeDefinition($conn, $fee_id)
 {
+    $fee_to_delete = getFeeDefinitionById($conn, $fee_id);
+    
     $stmt = $conn->prepare("DELETE FROM fee WHERE id = ?");
     $stmt->bind_param("s", $fee_id);
-    return $stmt->execute();
+    $success = $stmt->execute();
+
+    if ($success && $fee_to_delete) {
+        _updateBursaryForAffectedStudents($conn, $fee_to_delete['class'], $fee_to_delete['arm'], $fee_to_delete['hostel'], $fee_to_delete['session'], $fee_to_delete['term']);
+    }
+    return $success;
 }
 
 // Function to record a student payment
@@ -105,7 +156,7 @@ function getPreviousOutstandingBalances($conn, $student_id, $current_session, $c
             FROM bursary
             WHERE id = ? AND outstanding > 0
             AND NOT (session = ? AND term = ?)
-            ORDER BY session ASC, term ASC"; // Order by session and term to show chronologically
+            ORDER BY session DESC, term DESC LIMIT 1"; // Fix: Get only the latest record to prevent inflated debt calculation
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $student_id, $current_session, $current_term);
     $stmt->execute();
