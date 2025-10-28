@@ -1,9 +1,26 @@
 <?php
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Start the session to maintain user state
+session_start();
 
-include('components/admin_logic.php');
+// Check if the user is logged in, otherwise redirect to login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Database connection
+include 'db_connection.php';
+
+// Check connection to the database
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// include('components/admin_logic.php');
 
 $message = '';
 $profile_message = '';
