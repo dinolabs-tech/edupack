@@ -152,22 +152,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <small class="form-text text-muted">Upload a new profile picture (JPG, PNG, GIF)</small>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <input class="form-control" placeholder="Full Name" type="text" id="" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
+                                        <input class="form-control" placeholder="Full Name" type="text" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" placeholder="Mobile" type="text" id="" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
+                                        <input class="form-control" placeholder="Mobile" type="text" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" placeholder="Email" type="email" id="" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
+                                        <input class="form-control" placeholder="Email" type="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
                                     </div>
                                     <div class="form-group col-md-12">
                                         <textarea class="form-control" id="address" name="address" placeholder="Address"><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" type="date" id="" name="date_of_birth" value="<?php echo htmlspecialchars($user_data['date_of_birth'] ?? ''); ?>">
+                                        <input class="form-control" type="date" name="date_of_birth" value="<?php echo htmlspecialchars($user_data['date_of_birth'] ?? ''); ?>">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <select class="form-control form-select" id="" name="gender">
+                                        <select class="form-control form-select" name="gender">
                                             <option value="" selected disabled>Select Gender</option>
                                             <option value="Male" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
                                             <option value="Female" <?php echo (isset($user_data['gender']) && $user_data['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
