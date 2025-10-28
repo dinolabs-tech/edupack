@@ -115,6 +115,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $user_data = $stmt->get_result()->fetch_assoc();
+    $mobile = $user_data['mobile'];
+    $email = $user_data['email'];
+    $address = $user_data['address'];
+    $date_of_birth = $user_data['date_of_birth'];
+    $gender = $user_data['gender'];
     $stmt->close();
 }
 ?>
