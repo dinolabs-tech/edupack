@@ -30,6 +30,11 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $student_name = $user_data['staffname'];
+$mobile = $user_data['mobile'];
+$email = $user_data['email'];
+$address = $user_data['address'];
+$date_of_birth = $user_data['date_of_birth'];
+$gender = $user_data['gender'];
 $stmt->close();
 
 
@@ -176,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 <input class="form-control" placeholder="Full Name" type="text" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input class="form-control" placeholder="Mobile" type="text" name="mobile" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>">
+                                                <input class="form-control" placeholder="Mobile" type="text" name="mobile" value="<?php echo $mobile; ?>">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <input class="form-control" placeholder="Email" type="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
