@@ -246,7 +246,4 @@ $stmt->bind_result($student_name);
 $stmt->fetch();
 $stmt->close();
 
-
-
-
 ?>
