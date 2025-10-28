@@ -29,6 +29,7 @@ $stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
+$student_name = $user_data['staffname'];
 $stmt->close();
 
 
