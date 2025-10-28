@@ -42,6 +42,10 @@ $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
+echo "<pre>";
+print_r($user_data);
+echo "</pre>";
+exit;
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
