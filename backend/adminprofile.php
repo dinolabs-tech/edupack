@@ -20,27 +20,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// include('components/admin_logic.php');
-
-// // Fetch the logged-in Staff name
-// $user_id = $_SESSION['user_id'];
-// $stmt = $conn->prepare("SELECT staffname FROM login WHERE id=?");
-// $stmt->bind_param("s", $user_id);
-// $stmt->execute();
-// $stmt->bind_result($student_name);
-// $stmt->fetch();
-// $stmt->close();
-
 $message = '';
 $profile_message = '';
 
 $user_id = $_SESSION['user_id'];
 
 $stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
-$stmt->bind_param("s", $user_id);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
-$student_name = $user_data['staffname'];
 $stmt->close();
 
 
@@ -50,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
         if ($_POST['new_password'] === $_POST['confirm_password']) {
             $stmt = $conn->prepare("UPDATE login SET password=? WHERE id=?");
-            $stmt->bind_param("ss", $_POST['new_password'], $user_id);
+            $stmt->bind_param("si", $_POST['new_password'], $user_id);
             $stmt->execute();
             $stmt->close();
             $message = "Password updated successfully!";
@@ -81,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $new_path)) {
                 $stmt = $conn->prepare("UPDATE login SET profile_picture=? WHERE id=?");
-                $stmt->bind_param("ss", $new_path, $user_id);
+                $stmt->bind_param("si", $new_path, $user_id);
                 $stmt->execute();
                 $stmt->close();
                 $profile_message = "Profile picture updated!";
@@ -108,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($updates)) {
         $query = "UPDATE login SET " . implode(", ", $updates) . " WHERE id=?";
         $params[] = $user_id;
-        $types .= "s";
+        $types .= "i";
         $stmt = $conn->prepare($query);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
@@ -118,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ✅ Refresh Data for Display
     $stmt = $conn->prepare("SELECT * FROM login WHERE id=?");
-    $stmt->bind_param("s", $user_id);
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $user_data = $stmt->get_result()->fetch_assoc();
     $stmt->close();
