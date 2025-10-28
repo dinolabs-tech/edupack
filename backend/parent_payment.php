@@ -81,9 +81,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
   <div class="wrapper">
     <!-- Sidebar -->
     <?php
-
     include('parentnav.php');
-
     ?>
     <!-- End Sidebar -->
 
@@ -96,7 +94,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
         </div>
         <!-- Navbar Header -->
         <?php
-        //  include('navbar.php'); 
+         include('navbar.php'); 
         ?>
         <!-- End Navbar -->
       </div>
