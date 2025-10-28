@@ -222,11 +222,11 @@ $conn->close();
                                     <div class="card-head-row me-auto">
                                         <div class="card-title">Students Owing</div>
                                     </div>
-                                    <button class="btn btn-secondary btn-sm" onclick="printTable('basic-datatables')">Print Owing List</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="printTable('studentsOwingTable')">Print Owing List</button>
                                 </div>
                                 <div class="card-body pb-0">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped " id="basic-datatables">
+                                        <table class="table table-bordered table-striped" id="studentsOwingTable">
                                             <thead>
                                                 <tr>
                                                     <th>Student Name</th>
@@ -267,7 +267,7 @@ $conn->close();
                                 </div>
                                 <div class="card-body pb-0">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped basic-datatables" id=" studentsPaidTable">
+                                        <table class="table table-bordered table-striped" id="studentsPaidTable">
                                             <thead>
                                                 <tr>
                                                     <th>Student Name</th>
