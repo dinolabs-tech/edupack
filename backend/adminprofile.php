@@ -22,14 +22,14 @@ if ($conn->connect_error) {
 
 // include('components/admin_logic.php');
 
-// Fetch the logged-in Staff name
-$user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT staffname FROM login WHERE id=?");
-$stmt->bind_param("s", $user_id);
-$stmt->execute();
-$stmt->bind_result($student_name);
-$stmt->fetch();
-$stmt->close();
+// // Fetch the logged-in Staff name
+// $user_id = $_SESSION['user_id'];
+// $stmt = $conn->prepare("SELECT staffname FROM login WHERE id=?");
+// $stmt->bind_param("s", $user_id);
+// $stmt->execute();
+// $stmt->bind_result($student_name);
+// $stmt->fetch();
+// $stmt->close();
 
 $message = '';
 $profile_message = '';
@@ -41,11 +41,6 @@ $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
-
-echo "<pre>";
-print_r($user_data);
-echo "</pre>";
-exit;
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
