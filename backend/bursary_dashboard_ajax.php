@@ -71,10 +71,10 @@ $sql_owing = "
         b.outstanding AS amount_owing
     FROM
         students s
-    JOIN
+    LEFT JOIN
         bursary b ON s.id = b.id
     " . $where_clause . "
-    AND b.outstanding > 0
+    AND (b.outstanding > 0 OR b.id IS NULL)
     ORDER BY
         b.outstanding DESC;
 ";
@@ -100,10 +100,10 @@ $sql_paid = "
         b.fee AS amount_paid
     FROM
         students s
-    JOIN
+    LEFT JOIN
         bursary b ON s.id = b.id
     " . $where_clause . "
-    AND b.outstanding <= 0
+    AND b.outstanding <= 0 AND b.id IS NOT NULL
     ORDER BY
         s.name ASC;
 ";
