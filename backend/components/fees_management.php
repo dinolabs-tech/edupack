@@ -280,9 +280,9 @@ function getHostels($conn)
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-// Function to get all students
+// Function to get all students (active not alumni)
 function getStudents($conn)
 {
-    $result = $conn->query("SELECT id, name, class, arm FROM students ORDER BY class, arm, name");
+    $result = $conn->query("SELECT id, name, class, arm FROM students WHERE status = 0 ORDER BY class, arm, name");
     return $result->fetch_all(MYSQLI_ASSOC);
 }
