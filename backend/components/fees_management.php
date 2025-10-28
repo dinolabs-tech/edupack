@@ -110,7 +110,31 @@ function recordStudentPayment($conn, $student_id, $fee_definition_id, $amount_pa
 // Function to get student payment history
 function getStudentPaymentHistory($conn, $student_id)
 {
-    $stmt = $conn->prepare("SELECT ft.*, f.service, f.class, f.arm FROM fee_transactions ft JOIN fee f ON ft.fee_definition_id = f.id WHERE ft.student_id = ? ORDER BY ft.payment_date DESC");
+    $stmt = $conn->prepare("
+        SELECT 
+            ft.transaction_id, 
+            ft.amount_paid, 
+            ft.payment_date, 
+            ft.payment_method, 
+            ft.transaction_ref, 
+            ft.recorded_by, 
+            ft.session, 
+            ft.term,
+            f.service, 
+            f.class, 
+            f.arm,
+            s.name as student_name
+        FROM 
+            fee_transactions ft 
+        JOIN 
+            fee f ON ft.fee_definition_id = f.id 
+        JOIN 
+            students s ON ft.student_id = s.id 
+        WHERE 
+            ft.student_id = ? 
+        ORDER BY 
+            ft.payment_date DESC
+    ");
     $stmt->bind_param("s", $student_id);
     $stmt->execute();
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
