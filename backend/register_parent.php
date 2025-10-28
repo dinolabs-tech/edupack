@@ -126,7 +126,8 @@ $stmt->close();
                                         <table id="basic-datatables" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
+                                                    <th>Student Name</th>
+                                                    <th>Guardian Name</th>
                                                     <th>Mobile</th>
                                                     <th>Occupation</th>
                                                     <th>Address</th>
@@ -137,12 +138,13 @@ $stmt->close();
                                             <tbody>
                                                 <?php
                                                 // Fetch parent details from the students table
-                                                $sql = "SELECT id, gname, mobile, goccupation, gaddress, grelationship FROM students";
+                                                $sql = "SELECT id, name, gname, mobile, goccupation, gaddress, grelationship FROM students";
                                                 $result = $conn->query($sql);
 
                                                 if ($result && $result->num_rows > 0) {
                                                     while ($row = $result->fetch_assoc()) { ?>
                                                         <tr>
+                                                            <td><?= htmlspecialchars($row['name']) ?></td>
                                                             <td><?= htmlspecialchars($row['gname']) ?></td>
                                                             <td><?= htmlspecialchars($row['mobile']) ?></td>
                                                             <td><?= htmlspecialchars($row['goccupation']) ?></td>
