@@ -436,7 +436,7 @@ $conn->close();
                 $('#modal_student_name').text(studentName);
 
                 $.ajax({
-                    url: 'fees_management_ajax.php',
+                    url: 'fees_management_ajax.php', // A new AJAX endpoint to fetch payment history
                     type: 'GET',
                     data: {
                         student_id: studentId,
@@ -448,11 +448,6 @@ $conn->close();
                         tbody.empty(); // Clear previous data
 
                         if (payments.length > 0) {
-                            // Update student name in modal from the first payment record
-                            if (payments[0].student_name) {
-                                $('#modal_student_name').text(payments[0].student_name);
-                            }
-                            
                             payments.forEach(function(payment) {
                                 tbody.append(
                                     '<tr>' +
