@@ -33,7 +33,7 @@ if ($role === 'Student' || $role === 'Alumni') {
     }
     $stmt->close();
 } elseif ($role === 'Parent') {
-    $stmt = $conn->prepare("SELECT name FROM parents WHERE id = ?");
+    $stmt = $conn->prepare("SELECT name FROM parent WHERE id = ?");
     $stmt->bind_param("s", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
