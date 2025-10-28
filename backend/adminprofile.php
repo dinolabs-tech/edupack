@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 <input class="form-control" placeholder="Full Name" type="text" name="staffname" value="<?php echo htmlspecialchars($user_data['staffname'] ?? ''); ?>" required>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input class="form-control" placeholder="Mobile" type="text" name="mobile" value="<?php echo htmlspecialchars($user_data['mobile'] ?? ''); ?>">
+                                                <input class="form-control" placeholder="Mobile" type="text" name="mobile" value="<?php echo htmlspecialchars($user_data['role'] ?? ''); ?>">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <input class="form-control" placeholder="Email" type="email" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" style="color: black !important;">
